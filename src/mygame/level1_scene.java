@@ -9,9 +9,12 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.Trigger;
-import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
+import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
+import com.jme3.scene.control.CameraControl;
 
 public class level1_scene extends SimpleApplication {
 
@@ -35,28 +38,32 @@ public class level1_scene extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        bulletAppState = new BulletAppState();
+        bulletAppState = new BulletAppState();  //Physics Lib
         stateManager.attach(bulletAppState);
 
-        Scene = (Node) assetManager.loadModel("Scenes/firstLevelScene.j3o");
-        //  scenePhy = new RigidBodyControl(0f);
-        //   Scene.addControl(scenePhy);
-        // bulletAppState.getPhysicsSpace().add(Scene);
-        // bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -9.81f, 0));
+        Scene = (Node) assetManager.loadModel("Scenes/firstLevelScene.j3o"); // Scene attachment
+        //Scene Physics 
+        scenePhy = new RigidBodyControl(0f);
+        Scene.addControl(scenePhy);
+        Scene.setLocalTranslation(0, 0, 0);
+        bulletAppState.getPhysicsSpace().add(Scene);
+        bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -9.81f, 0));
         //  bulletAppState.getPhysicsSpace().setAccuracy(0.016f);
         rootNode.attachChild(Scene);
 
-        player = (Node) Scene.getChild("Player");
-      //  player.rotate(0, FastMath.DEG_TO_RAD * 180, 0);
-        //player.setLocalTranslation(new Vector3f(0, 1.3f, 0));
+        player = (Node) Scene.getChild("Player"); // Player Attachment
+        // Player Physics
+        player.setLocalTranslation(new Vector3f(0,10f ,0 ));
 
-        //   playerControl = new BetterCharacterControl(1.5f, 6f, 1f);    //        playerControl = new BetterCharacterControl(1.7f, 2.2f, 30f);
-        //   player.addControl(playerControl);
-        //  playerControl.setJumpForce(new Vector3f(0, 5f, 0));
-        //  playerControl.setGravity(new Vector3f(0,-10f , 0));
-        //   playerControl.warp(new Vector3f(0, 10, 10));
-        //    bulletAppState.getPhysicsSpace().add(playerControl);
-        //  bulletAppState.getPhysicsSpace().addAll(player);
+        playerControl = new BetterCharacterControl(3f, 7f, 30f);    //        playerControl = new BetterCharacterControl(1.7f, 2.2f, 30f);
+        playerControl.setJumpForce(new Vector3f(0, 500f, 0));
+        playerControl.setGravity(new Vector3f(0, -10f, 0));
+        playerControl.warp(new Vector3f(0, 10, 10));
+
+        player.addControl(playerControl);
+
+        bulletAppState.getPhysicsSpace().add(playerControl);
+
         flyCam.setEnabled(false);
         flyCam.setMoveSpeed(200);
         flyCam.setZoomSpeed(200);
@@ -74,8 +81,7 @@ public class level1_scene extends SimpleApplication {
         inputManager.addListener(actionListener, new String[]{Move_LeftS});
         inputManager.addListener(actionListener, new String[]{Move_RightS});
         inputManager.addListener(actionListener, new String[]{Move_BackwardS});
-        
-         
+
     }
 
     //Action Listners
@@ -83,31 +89,40 @@ public class level1_scene extends SimpleApplication {
         @Override
         public void onAction(String name, boolean isPressed, float tpf) {
             System.out.println("You triggered: " + name);
-            
+            if (!isPressed) {
+                playerControl.setWalkDirection(new Vector3f(0, 0, 0));
+            }
             if (name.equals(JumpS) && !isPressed) {
                 // implement action here
-                player.move(0, 1, 0);
-            }
-            if (name.equals(Move_ForwardS) && !isPressed) {
-               // implement action here
-               
-                 player.move(-1, 0, 0);
+                // player.move(0, 1, 0);
+                playerControl.jump();
 
             }
-            if (name.equals(Move_BackwardS) && !isPressed) {
-               // implement action here
-               
-              player.move(1, 0, 0);
+            if (name.equals(Move_ForwardS) && isPressed) {
+                // implement action here
+
+                //  player.move(-1, 0, 0);
+                playerControl.setWalkDirection(new Vector3f(-10, 0, 0));
 
             }
-            if (name.equals(Move_LeftS) && !isPressed) {
-               // implement action here
-             player.move(0, 0, 1);
+
+            if (name.equals(Move_BackwardS) && isPressed) {
+                // implement action here
+
+                player.move(1, 0, 0);
+                playerControl.setWalkDirection(new Vector3f(10, 0, 0));
 
             }
-            if (name.equals(Move_RightS) && !isPressed) {
-              // implement action here
-              player.move(0, 0, -1);
+            if (name.equals(Move_LeftS) && isPressed) {
+                // implement action here
+                //  player.move(0, 0, 1);
+                playerControl.setWalkDirection(new Vector3f(0, 0, 10));
+
+            }
+            if (name.equals(Move_RightS) && isPressed) {
+                // implement action here
+                player.move(0, 0, -1);
+                playerControl.setWalkDirection(new Vector3f(0, 0, -10));
 
             }
         }
@@ -117,6 +132,7 @@ public class level1_scene extends SimpleApplication {
     public void simpleUpdate(float tpf) {
 
         // player.move(-0.02f, 0.01f, 0.01f);
+        System.out.println(player.getLocalTranslation());
 
     }
 

@@ -1,11 +1,7 @@
 package mygame;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Box;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -16,7 +12,9 @@ public class Main extends SimpleApplication {
 
     public static void main(String[] args) {
         level1_scene app = new level1_scene();
+        
         app.start();
+        
     }
 
     @Override

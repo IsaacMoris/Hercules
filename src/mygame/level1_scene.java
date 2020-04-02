@@ -20,6 +20,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
 
     Node Scene;
     Node player;
+    Node player2;
     private BulletAppState bulletAppState;
     private RigidBodyControl scenePhy;
     private BetterCharacterControl playerControl;
@@ -43,19 +44,28 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         rootNode.attachChild(Scene);
 
         player = (Node) Scene.getChild("Player"); // Player Attachment
+         
+         Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
+         ninja.scale(0.02f);
+        ninja.rotate(0.0f, -3.0f, 0.0f);
+        ninja.setLocalTranslation(10f, 3f, -2.0f);
+        rootNode.attachChild(ninja);
         player.center();
         // Player Physics
 
-        player.setLocalTranslation(new Vector3f(0, 10f, 0));
-        playerControl = new BetterCharacterControl(1f, 1f, 10f);    //        playerControl = new BetterCharacterControl(1.7f, 2.2f, 30f);
-        playerControl.setJumpForce(new Vector3f(0, 50f, 0));
+        player.setLocalTranslation(new Vector3f(8f, 1f, 0));
+        playerControl = new BetterCharacterControl(1.5f, 3f, 77f);    //        playerControl = new BetterCharacterControl(radius, Height, Weight);
+        playerControl.setJumpForce(new Vector3f(0, 1000f, 0));
         playerControl.setGravity(new Vector3f(0, 10f, 0));
         playerControl.warp(new Vector3f(0, 10, 0));
         bulletAppState.getPhysicsSpace().add(playerControl);
-
+        
         player.addControl(playerControl);
-
+       // ninja.addControl(playerControl);
         bulletAppState.setDebugEnabled(true);
+        
+        Scene.attachChild(player);
+       
 //        ChaseCamera chaseCam = new ChaseCamera(cam, player, inputManager);
 //        chaseCam.setSmoothMotion(true);
         // Controls Mapping
@@ -79,7 +89,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
             forward = false, backward = false;
     private float speed = 8;
     //Action Listners
-
+ 
     @Override
     public void onAction(String binding, boolean isPressed, float tpf) {
         if (binding.equals("Rotate Left")) {

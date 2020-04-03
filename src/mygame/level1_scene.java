@@ -4,10 +4,12 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.input.ChaseCamera;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.FastMath;
+import com.jme3.math.Matrix3f;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
@@ -15,11 +17,14 @@ import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.CameraControl;
+import com.jme3.util.TangentBinormalGenerator;
+
 
 public class level1_scene extends SimpleApplication implements ActionListener {
 
     Node Scene;
-    Node player;
+   // Node player;
+    Spatial player;
     Node player2;
     private BulletAppState bulletAppState;
     private RigidBodyControl scenePhy;
@@ -43,13 +48,10 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         bulletAppState.getPhysicsSpace().setAccuracy(0.016f);
         rootNode.attachChild(Scene);
 
-        player = (Node) Scene.getChild("Player"); // Player Attachment
-         
-         Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
-         ninja.scale(0.02f);
-        ninja.rotate(0.0f, -3.0f, 0.0f);
-        ninja.setLocalTranslation(10f, 3f, -2.0f);
-        rootNode.attachChild(ninja);
+    //    player = (Node) Scene.getChild("Player"); // Player Attachment
+          player= assetManager.loadModel("Models/character/player.j3o");
+         TangentBinormalGenerator.generate(player);
+         player.setLocalRotation(Matrix3f.IDENTITY);
         player.center();
         // Player Physics
 
@@ -61,13 +63,12 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         bulletAppState.getPhysicsSpace().add(playerControl);
         
         player.addControl(playerControl);
-       // ninja.addControl(playerControl);
         bulletAppState.setDebugEnabled(true);
         
         Scene.attachChild(player);
        
-//        ChaseCamera chaseCam = new ChaseCamera(cam, player, inputManager);
-//        chaseCam.setSmoothMotion(true);
+     ChaseCamera chaseCam = new ChaseCamera(cam, player, inputManager);
+      chaseCam.setSmoothMotion(true);
         // Controls Mapping
         inputManager.addMapping("Forward",
                 new KeyTrigger(KeyInput.KEY_W));
@@ -110,15 +111,15 @@ public class level1_scene extends SimpleApplication implements ActionListener {
     @Override
     public void simpleUpdate(float tpf) {
 
-        // System.out.println(player.getLocalTranslation());
-        // Disable the default flyby cam
+//        // System.out.println(player.getLocalTranslation());
+//        // Disable the default flyby cam
         flyCam.setEnabled(false);
         //create the camera Node
         camNode = new CameraNode("Camera Node", cam);
         //This mode means that camera copies the movements of the target:
         camNode.setControlDir(CameraControl.ControlDirection.SpatialToCamera);
         //Attach the camNode to the target:
-        player.attachChild(camNode);
+      //  player.att(camNode);
         //Move camNode, e.g. behind and above the target:
         camNode.setLocalTranslation(new Vector3f(-5, 5, -9));
         //Rotate the camNode to look at the target:

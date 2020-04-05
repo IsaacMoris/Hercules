@@ -49,7 +49,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         rootNode.attachChild(Scene);
 
     //    player = (Node) Scene.getChild("Player"); // Player Attachment
-          player= assetManager.loadModel("Models/character/player.j3o");
+          player= assetManager.loadModel("Models/Hercules/beforeConvertingToFBX.j3o");
          TangentBinormalGenerator.generate(player);
          player.setLocalRotation(Matrix3f.IDENTITY);
         player.center();

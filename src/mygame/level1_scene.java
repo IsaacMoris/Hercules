@@ -23,12 +23,13 @@ import com.jme3.util.TangentBinormalGenerator;
 public class level1_scene extends SimpleApplication implements ActionListener {
 
     Node Scene;
-   // Node player;
+
     Spatial player;
-    Node player2;
-    private BulletAppState bulletAppState;
+    public static BulletAppState bulletAppState;
     private RigidBodyControl scenePhy;
-    private BetterCharacterControl playerControl;
+    
+    private static boolean rotateLeft = false, rotateRight = false , forward = false, backward = false , jump=false ;
+    
     Spatial floor;
     @Override
     public void simpleInitApp() {
@@ -48,27 +49,18 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         bulletAppState.getPhysicsSpace().setAccuracy(0.016f);
         rootNode.attachChild(Scene);
 
-    //    player = (Node) Scene.getChild("Player"); // Player Attachment
           player= assetManager.loadModel("Models/Hercules/beforeConvertingToFBX.j3o");
          TangentBinormalGenerator.generate(player);
          player.setLocalRotation(Matrix3f.IDENTITY);
-        player.center();
-        // Player Physics
-
-        player.setLocalTranslation(new Vector3f(8f, 1f, 0));
-        playerControl = new BetterCharacterControl(1.5f, 3f, 77f);    //        playerControl = new BetterCharacterControl(radius, Height, Weight);
-        playerControl.setJumpForce(new Vector3f(0, 1000f, 0));
-        playerControl.setGravity(new Vector3f(0, 10f, 0));
-        playerControl.warp(new Vector3f(0, 10, 0));
-        bulletAppState.getPhysicsSpace().add(playerControl);
+         
+        player.addControl(new PlayerMovesControl(player));
         
-        player.addControl(playerControl);
-        bulletAppState.setDebugEnabled(true);
+       // bulletAppState.setDebugEnabled(true);
         
         Scene.attachChild(player);
-       
-     ChaseCamera chaseCam = new ChaseCamera(cam, player, inputManager);
-      chaseCam.setSmoothMotion(true);
+       ChaseCamera chaseCam = new ChaseCamera(cam, player, inputManager);
+       chaseCam.setSmoothMotion(true);
+     
         // Controls Mapping
         inputManager.addMapping("Forward",
                 new KeyTrigger(KeyInput.KEY_W));
@@ -84,11 +76,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         inputManager.addListener(this, "Forward", "Back", "Jump");
     }
 
-    private Vector3f walkDirection = new Vector3f(0, 0, 0);
-    private Vector3f viewDirection = new Vector3f(0, 0, 1);
-    private boolean rotateLeft = false, rotateRight = false,
-            forward = false, backward = false;
-    private float speed = 8;
+    
     //Action Listners
  
     @Override
@@ -102,7 +90,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         } else if (binding.equals("Back")) {
             backward = isPressed;
         } else if (binding.equals("Jump")) {
-            playerControl.jump();
+           jump=isPressed;
         }
     }
 
@@ -111,43 +99,26 @@ public class level1_scene extends SimpleApplication implements ActionListener {
     @Override
     public void simpleUpdate(float tpf) {
 
-//        // System.out.println(player.getLocalTranslation());
-//        // Disable the default flyby cam
-        flyCam.setEnabled(false);
-        //create the camera Node
-        camNode = new CameraNode("Camera Node", cam);
-        //This mode means that camera copies the movements of the target:
-        camNode.setControlDir(CameraControl.ControlDirection.SpatialToCamera);
-        //Attach the camNode to the target:
-      //  player.att(camNode);
-        //Move camNode, e.g. behind and above the target:
-        camNode.setLocalTranslation(new Vector3f(-5, 5, -9));
-        //Rotate the camNode to look at the target:
-        camNode.lookAt(player.getLocalTranslation(), Vector3f.UNIT_Y);
+    }
 
-        // Get current forward and left vectors of the playerNode:
-        Vector3f modelForwardDir = player.getWorldRotation().mult(Vector3f.UNIT_Z);
-        Vector3f modelLeftDir = player.getWorldRotation().mult(Vector3f.UNIT_X);
-        // Determine the change in direction
-        walkDirection.set(0, 0, 0);
-        if (forward) {
-            walkDirection.addLocal(modelForwardDir.mult(speed));
-        } else if (backward) {
-            walkDirection.addLocal(modelForwardDir.mult(speed).
-                    negate());
-        }
-        playerControl.setWalkDirection(walkDirection); // walk!
-        // Determine the change in rotation
-        if (rotateLeft) {
-            Quaternion rotateL = new Quaternion().
-                    fromAngleAxis(FastMath.PI * tpf, Vector3f.UNIT_Y);
-            rotateL.multLocal(viewDirection);
-        } else if (rotateRight) {
-            Quaternion rotateR = new Quaternion().
-                    fromAngleAxis(-FastMath.PI * tpf, Vector3f.UNIT_Y);
-            rotateR.multLocal(viewDirection);
-        }
-        playerControl.setViewDirection(viewDirection); // turn!
+    public static boolean isRotateLeft() {
+        return rotateLeft;
+    }
+
+    public static boolean isRotateRight() {
+        return rotateRight;
+    }
+
+    public static boolean isForward() {
+        return forward;
+    }
+
+    public static  boolean isBackward() {
+        return backward;
+    }
+
+    public static boolean isJump() {
+        return jump;
     }
 
     @Override

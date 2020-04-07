@@ -19,23 +19,20 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.control.CameraControl;
 import com.jme3.util.TangentBinormalGenerator;
 
-
 public class level1_scene extends SimpleApplication implements ActionListener {
 
     Node Scene;
 
     Spatial player;
-    public static BulletAppState bulletAppState;
+    private BulletAppState bulletAppState;
     private RigidBodyControl scenePhy;
-    
-    private static boolean rotateLeft = false, rotateRight = false , forward = false, backward = false , jump=false ;
-    
+    PlayerMovesControl playerMoves;
+
     Spatial floor;
+
     @Override
     public void simpleInitApp() {
 
-       
-        
         bulletAppState = new BulletAppState();  //Physics Lib
         stateManager.attach(bulletAppState);
 
@@ -49,18 +46,18 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         bulletAppState.getPhysicsSpace().setAccuracy(0.016f);
         rootNode.attachChild(Scene);
 
-          player= assetManager.loadModel("Models/Hercules/beforeConvertingToFBX.j3o");
-         TangentBinormalGenerator.generate(player);
-         player.setLocalRotation(Matrix3f.IDENTITY);
-         
-        player.addControl(new PlayerMovesControl(player));
-        
-       // bulletAppState.setDebugEnabled(true);
-        
+        player = assetManager.loadModel("Models/Hercules/beforeConvertingToFBX.j3o");
+        TangentBinormalGenerator.generate(player);
+        player.setLocalRotation(Matrix3f.IDENTITY);
+
+        playerMoves = new PlayerMovesControl(player,bulletAppState);
+        player.addControl(playerMoves);
+
+        // bulletAppState.setDebugEnabled(true);
         Scene.attachChild(player);
-       ChaseCamera chaseCam = new ChaseCamera(cam, player, inputManager);
-       chaseCam.setSmoothMotion(true);
-     
+        ChaseCamera chaseCam = new ChaseCamera(cam, player, inputManager);
+        chaseCam.setSmoothMotion(true);
+
         // Controls Mapping
         inputManager.addMapping("Forward",
                 new KeyTrigger(KeyInput.KEY_W));
@@ -76,21 +73,20 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         inputManager.addListener(this, "Forward", "Back", "Jump");
     }
 
-    
     //Action Listners
- 
     @Override
     public void onAction(String binding, boolean isPressed, float tpf) {
         if (binding.equals("Rotate Left")) {
-            rotateLeft = isPressed;
+            playerMoves.setRotateLeft(isPressed);
         } else if (binding.equals("Rotate Right")) {
-            rotateRight = isPressed;
+            playerMoves.setRotateRight(isPressed);
+
         } else if (binding.equals("Forward")) {
-            forward = isPressed;
+           playerMoves.setForward(isPressed);
         } else if (binding.equals("Back")) {
-            backward = isPressed;
+            playerMoves.setBackward(isPressed);
         } else if (binding.equals("Jump")) {
-           jump=isPressed;
+            playerMoves.setJump(isPressed);
         }
     }
 
@@ -99,26 +95,6 @@ public class level1_scene extends SimpleApplication implements ActionListener {
     @Override
     public void simpleUpdate(float tpf) {
 
-    }
-
-    public static boolean isRotateLeft() {
-        return rotateLeft;
-    }
-
-    public static boolean isRotateRight() {
-        return rotateRight;
-    }
-
-    public static boolean isForward() {
-        return forward;
-    }
-
-    public static  boolean isBackward() {
-        return backward;
-    }
-
-    public static boolean isJump() {
-        return jump;
     }
 
     @Override

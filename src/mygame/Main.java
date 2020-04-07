@@ -19,9 +19,7 @@ public class Main extends SimpleApplication {
         app.setSettings(settings);
         app.setShowSettings(false);
         app.start();
-        
-        
-        
+   
     }
 
     @Override

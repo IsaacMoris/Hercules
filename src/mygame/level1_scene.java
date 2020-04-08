@@ -1,5 +1,7 @@
 package mygame;
 
+import com.jme3.animation.AnimChannel;
+import com.jme3.animation.AnimControl;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.BetterCharacterControl;
@@ -23,10 +25,11 @@ public class level1_scene extends SimpleApplication implements ActionListener {
 
     Node Scene;
 
-    Spatial player;
+    Node player;
     private BulletAppState bulletAppState;
     private RigidBodyControl scenePhy;
     PlayerMovesControl playerMoves;
+    private AnimationManager animManager;
 
     Spatial floor;
 
@@ -46,7 +49,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         bulletAppState.getPhysicsSpace().setAccuracy(0.016f);
         rootNode.attachChild(Scene);
 
-        player = assetManager.loadModel("Models/Hercules/beforeConvertingToFBX.j3o");
+        player = (Node)assetManager.loadModel("Models/Hercules/HercWithAnim/herc.j3o");
         TangentBinormalGenerator.generate(player);
         player.setLocalRotation(Matrix3f.IDENTITY);
 
@@ -71,6 +74,9 @@ public class level1_scene extends SimpleApplication implements ActionListener {
                 new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addListener(this, "Rotate Left", "Rotate Right");
         inputManager.addListener(this, "Forward", "Back", "Jump");
+        
+        //Animation
+        animManager = new AnimationManager(player);
     }
 
     //Action Listners
@@ -83,10 +89,17 @@ public class level1_scene extends SimpleApplication implements ActionListener {
 
         } else if (binding.equals("Forward")) {
            playerMoves.setForward(isPressed);
+           if(isPressed){
+                animManager.setAnimation("walk");
+            }
+            else{
+                animManager.setAnimation("idle");
+            }
         } else if (binding.equals("Back")) {
             playerMoves.setBackward(isPressed);
         } else if (binding.equals("Jump")) {
             playerMoves.setJump(isPressed);
+            //animation: jump
         }
     }
 

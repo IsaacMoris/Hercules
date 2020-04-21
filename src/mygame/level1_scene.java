@@ -3,6 +3,7 @@ package mygame;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.app.SimpleApplication;
+import com.jme3.audio.AudioData;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -37,6 +38,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
     private RigidBodyControl scenePhy;
     PlayerMovesControl playerMoves;
     private AnimationManager animManager;
+    private AudioManager audioManager;
      public int health=100;
     BitmapText helloText;
     Geometry healthbar;
@@ -156,6 +158,11 @@ viewPort.addProcessor(processor);
         
         //Animation
         animManager = new AnimationManager(player);
+        
+        //Sound
+        audioManager = new AudioManager(assetManager, "Music/soundTracks/basicGame.ogg",
+                AudioData.DataType.Stream);
+        audioManager.play();
     }
 
     //Action Listners
@@ -216,7 +223,9 @@ viewPort.addProcessor(processor);
          
          }
                           
-
+        //to listen to the played audio
+        //listener.setLocation(cam.getLocation());
+        //listener.setRotation(cam.getRotation());
      }
 //          Scene.detachChild(sword);
 //          

@@ -12,10 +12,12 @@ public class AnimationManager {
 
     public AnimationManager(Node player) {
         this.player = player;
+        
         animControl = player.getChild("Armature").getControl(AnimControl.class);
        // animControl.addListener(this);
         animChannal = animControl.createChannel();
        animChannal.setAnim("idle");
+        
     }
     
     public void setAnimation(String name){

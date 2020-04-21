@@ -1,5 +1,7 @@
 package mygame;
 
+import com.jme3.animation.AnimChannel;
+import com.jme3.animation.AnimControl;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.BetterCharacterControl;
@@ -29,7 +31,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
     //Node Shapes;
     Node player;
     Spatial Grass; Node test;
-    Spatial dragon;
+    Node dragon; Node Coin;
     BetterCharacterControl dragoncontrol;
     private BulletAppState bulletAppState;
     private RigidBodyControl scenePhy;
@@ -87,10 +89,24 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         healthbar.addControl(billboard);
         
 //        Dragon
-        // dragon = assetManager.loadModel("Models/Fire Dragon/dragon.j3o");
+        dragon =(Node) Scene.getChild("Dragon");
+       AnimControl animControl = dragon.getChild("Armature").getControl(AnimControl.class);
+       // animControl.addListener(this);
+      AnimChannel  animChannal = animControl.createChannel();
+       animChannal.setAnim("flying");
+         for (String anim : animControl.getAnimationNames()) {
+    System.out.println(anim);
+}
          
-         
-
+      //Coin
+      Coin =(Node) Scene.getChild("Coin");
+        animControl = Coin.getChild("CoinObj").getControl(AnimControl.class);
+       // animControl.addListener(this);
+        animChannal = animControl.createChannel();
+       animChannal.setAnim("CoinObj|Coin");
+         for (String anim : animControl.getAnimationNames()) {
+    System.out.println(anim);}
+      
 
 
         playerMoves = new PlayerMovesControl(player,bulletAppState);

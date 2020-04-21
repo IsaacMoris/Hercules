@@ -1,7 +1,10 @@
 Material My Material : Common/MatDefs/Misc/Unshaded.j3md {
      MaterialParameters {
-        LightMap : Flip "Models/character/texture000.jpg"
+        LightMap : Flip "Models/Hercules/New folder/texture000.jpg"
      }
     AdditionalRenderState {
+      PointSprite On
+      DepthWrite Off
+      ColorWrite On
     }
 }

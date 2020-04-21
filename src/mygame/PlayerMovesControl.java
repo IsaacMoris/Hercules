@@ -34,7 +34,7 @@ public class PlayerMovesControl extends AbstractControl {
         this.bulletAppState=bulletAppState;
         
         spatial.setLocalTranslation(new Vector3f(8f, 1f, 0));
-        playerControl = new BetterCharacterControl(0.5f, 2.3f, 77f);    //        playerControl = new BetterCharacterControl(radius, Height, Weight);
+        playerControl = new BetterCharacterControl(0.5f, 4f, 77f);    //        playerControl = new BetterCharacterControl(radius, Height, Weight);
         playerControl.setJumpForce(new Vector3f(0, 200f, 0));
         playerControl.setGravity(new Vector3f(0, 10f, 0));
         playerControl.warp(new Vector3f(0, 10, 0));

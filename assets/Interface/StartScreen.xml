@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nifty xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://nifty-gui.lessvoid.com/nifty-gui" xsi:schemaLocation="https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd">
+    <useControls filename="nifty-default-controls.xml"/>
+    <useStyles filename="nifty-default-styles.xml"/>
+    <screen id="Start">
+        <layer id="GLayer0" childLayout="vertical" backgroundColor="red"  >
+            <panel id="GPanel0" childLayout="absolute" width="*" height="*">
+                <control name="button" id="newGameBttn" childLayout="center" x="30px" width="300.0px" y="240px" label="New Game" height="65.0px"/>
+                <control name="button" id="loadGameBttn" childLayout="center" x="29" width="300.0px" y="323" label="Load Game" height="65.0px"/>
+                <control name="button" id="optionsBttn" childLayout="center" x="29" width="300.0px" y="411" label="Options" height="65.0px"/>
+                <control name="button" id="quitBttn" childLayout="center" x="27" width="300.0px" y="494" label="Quit" height="65.0px"/>
+            </panel>
+        </layer>
+    </screen>
+</nifty>

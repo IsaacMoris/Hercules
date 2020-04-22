@@ -15,14 +15,14 @@ public class AnimationManager {
         
         animControl = player.getChild("Armature").getControl(AnimControl.class);
        // animControl.addListener(this);
-        animChannal = animControl.createChannel();
+       animChannal = animControl.createChannel();
        animChannal.setAnim("idle");
         
     }
     
     public void setAnimation(String name){
         try {
-            animChannal.setAnim(name);
+            animChannal.setAnim(name, 0.5f);
         } catch (Exception e) {
             System.out.print("Animation Name Not Found .. Error: " + e);
         }
@@ -38,4 +38,10 @@ public class AnimationManager {
         animChannal.setLoopMode(loopMode);
     }
     
+    public void jump(){
+        String lastAnim = animChannal.getAnimationName();
+        setAnimation("crouched to standing");
+        if(lastAnim != null)
+            setAnimation(lastAnim);
+    }
 }

@@ -7,19 +7,22 @@ import com.jme3.audio.AudioNode;
 public class AudioManager {
     private AudioNode audio;
     private String audioName;
-
-    public AudioManager(AssetManager assetManager, String path, AudioData.DataType audioType) {
+    private static AssetManager assetManager;
+    
+    public AudioManager(AssetManager assetManager, String name) {
         /*
             AudioData.DataType.Buffer for short sounds e.g: gun shot
             AudioData.DataType.Stream for long sounds e.g: background music
         */
         try {
-            audioName = path.substring(path.lastIndexOf('-') + 1);
-            audio = new AudioNode(assetManager, path, audioType);
+            audioName = name;
+            AudioManager.assetManager = assetManager;
+            audio = new AudioNode(assetManager, "Music/soundTracks/" + name);     
             audio.setDirectional(false);
             audio.setPositional(false);
         } catch (Exception e) {
-            System.out.printf("Something went wrong with %s file, ERROR: %s\n", audioName, e.getMessage());
+            System.out.printf("Something went wrong with %s file .. Error: %s\n",
+                    audioName, e.getMessage());
         }
     }
     
@@ -34,15 +37,15 @@ public class AudioManager {
     public void play(){
         audio.play();
     }
-    public void playInstance(){
+    public static void playInstance(String name){
         /* 
             play instance of the sound that can be overlapped
             Must be BUFFER
         */
         try {
-            if(audio.getType() != AudioData.DataType.Buffer)
-                throw new Exception(audioName + " is not a buffer");
-            audio.playInstance();
+            AudioNode myAudio = new AudioNode(assetManager, "Music/soundEffects/" + name,
+                    AudioData.DataType.Buffer);
+            myAudio.playInstance();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

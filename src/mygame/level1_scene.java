@@ -160,8 +160,7 @@ viewPort.addProcessor(processor);
         animManager = new AnimationManager(player);
         
         //Sound
-        audioManager = new AudioManager(assetManager, "Music/soundTracks/basicGame.ogg",
-                AudioData.DataType.Stream);
+        audioManager = new AudioManager(assetManager, "basicGame.ogg");
         audioManager.play();
     }
 
@@ -195,17 +194,8 @@ viewPort.addProcessor(processor);
             playerMoves.setJump(isPressed);
             //animation: jump
             if(isPressed){
-               
-                    animManager.setAnimation("crouched to standing");
-                    
-
-            
-            }
-            else{
-                //animManager.setAnimation("standing to crouch");
-                animManager.setAnimation("idle");
-            }
-            
+                animManager.jump(); 
+            }            
         }
     }
 

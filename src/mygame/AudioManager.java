@@ -14,21 +14,30 @@ public class AudioManager {
             AudioData.DataType.Buffer for short sounds e.g: gun shot
             AudioData.DataType.Stream for long sounds e.g: background music
         */
+        audioName = name;
+        AudioManager.assetManager = assetManager;
+        initialize();
+    }
+
+    private void initialize(){
         try {
-            audioName = name;
-            AudioManager.assetManager = assetManager;
-            audio = new AudioNode(assetManager, "Music/soundTracks/" + name);     
+            if(audio != null)
+                audio.stop();
+            audio = new AudioNode(assetManager, "Music/soundTracks/" + audioName);     
             audio.setDirectional(false);
             audio.setPositional(false);
+            audio.setLooping(true);
         } catch (Exception e) {
             System.out.printf("Something went wrong with %s file .. Error: %s\n",
                     audioName, e.getMessage());
         }
     }
     
-    public void setLooping(boolean loop){
-        audio.setLooping(loop);
+    public void setTrack(String name){
+        audioName = name;
+        initialize();
     }
+    
     public void setVolume(float volume){
         /*at 0: sound is muted, at 2: it is twice as loud, etc.*/
         audio.setVolume(volume);
@@ -50,10 +59,7 @@ public class AudioManager {
             System.out.println(e.getMessage());
         }
     }
-    
-    public AudioData.DataType getType(){
-        return audio.getType();
-    }
+
     public void stop(){
         audio.stop();
     }

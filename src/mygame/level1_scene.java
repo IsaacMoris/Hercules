@@ -194,7 +194,7 @@ viewPort.addProcessor(processor);
             playerMoves.setJump(isPressed);
             //animation: jump
             if(isPressed){
-                animManager.jump(); 
+                animManager.jump();
             }            
         }
     }

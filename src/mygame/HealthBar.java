@@ -9,7 +9,7 @@ import com.jme3.texture.Texture2D;
 import com.jme3.ui.Picture;
 import jme3tools.optimize.TextureAtlas;
 
-public class HealthBar extends AbstractControl{
+public class HealthBar extends AbstractControl {
 
     private Picture health, Face;
     private Texture2D healthTexture;
@@ -20,14 +20,15 @@ public class HealthBar extends AbstractControl{
     final private float HealthHeight, HealthWidth;
     final private float CircleRatio = 170.0f / 247.0f;
     final private float LeftPart = 31.0f / 247.0f, Bottompart = 60.0f / 251.0f;
-    
-    final private float FaceRatio=247.0f/251.0f;
-    
-    final private float FaceX, FaceY , HealthX , healthY;
-    
-    final private int MaxHealth=175 ;
-    private int CurHealth=175;
-    private int Damage ;
+
+    final private float FaceRatio = 247.0f / 251.0f;
+
+    final private float FaceX, FaceY, HealthX, healthY;
+
+    final private int MaxHealth = 175;
+    private int CurHealth = 175;
+    private int Damage;
+
     public HealthBar(AssetManager assetManager, float Width, float Height) {
 
         this.assetManager = assetManager;
@@ -36,30 +37,29 @@ public class HealthBar extends AbstractControl{
         this.SettingsWidth = Width;
 
         FaceHeight = SettingsHeight / 6.0f;
-        FaceWidth = FaceHeight *FaceRatio;
+        FaceWidth = FaceHeight * FaceRatio;
 
         HealthHeight = HealthWidth = CircleRatio * FaceWidth;
-        
-        FaceX=0  ;
-        FaceY =SettingsHeight - FaceHeight ;
-        
-        HealthX=FaceX+LeftPart*FaceWidth;
-        healthY=FaceY + Bottompart*FaceHeight;
+
+        FaceX = 0;
+        FaceY = SettingsHeight - FaceHeight * 1.2f;
+
+        HealthX = FaceX + LeftPart * FaceWidth;
+        healthY = FaceY + Bottompart * FaceHeight;
         Initial();
     }
 
     void Initial() {
 
         healthTexture = (Texture2D) assetManager.loadTexture("Textures/Health.png");
-        
-        
+
         health = new Picture("Health Pic");
         health.setTexture(assetManager, healthTexture, true);
         health.setWidth(HealthWidth);
-        
+
         health.setHeight(HealthHeight);
         health.setPosition(HealthX, healthY);
-        
+
         Face = new Picture("Face Picture");
         Face.setImage(assetManager, "Textures/Face.png", true);
 
@@ -78,19 +78,23 @@ public class HealthBar extends AbstractControl{
 
     public void setDamage(int Damage) {
         this.Damage += Damage;
-       
+
     }
+    float x = 0;
 
     @Override
     protected void controlUpdate(float tpf) {
-        if(Damage>=1)
-        {
-            CurHealth-=1;
-            Damage-=1;
-            healthTexture.getImage().setHeight(CurHealth);
-            health.setHeight(HealthHeight*CurHealth/MaxHealth);
-            System.out.println(CurHealth);
+        if (Damage >= 1) {
+            x += 0.2f;
+            if (x >= 1f) {
+                CurHealth -= 1;
+                x -= 1;
+                Damage -= 1;
+                healthTexture.getImage().setHeight(CurHealth);
+                health.setHeight(HealthHeight * CurHealth / MaxHealth);
+            }
         }
+
     }
 
     @Override

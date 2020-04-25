@@ -49,7 +49,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
     @Override
     public void simpleInitApp() {
 
-       /* bulletAppState = new BulletAppState();  //Physics Lib
+        bulletAppState = new BulletAppState();  //Physics Lib
         stateManager.attach(bulletAppState);
 
         Scene = (Node) assetManager.loadModel("Scenes/TrainingLevel.j3o"); // Scene attachment
@@ -68,7 +68,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         //bulletAppState.cleanup();
         //   Grass.setLocalTranslation(10,0,10);
         //  rootNode.attachChild(Grass);
-       // rootNode.attachChild(Scene);
+        rootNode.attachChild(Scene);
         bulletAppState.update(60);
 
         // Player
@@ -102,7 +102,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
             System.out.println(anim);
         }*/
 
-       /* playerMoves = new PlayerMovesControl(player, bulletAppState);
+        playerMoves = new PlayerMovesControl(player, bulletAppState);
 
         player.addControl(playerMoves);
         //  bulletAppState.setDebugEnabled(true);
@@ -128,10 +128,13 @@ public class level1_scene extends SimpleApplication implements ActionListener {
 
         //Animation
         animManager = new AnimationManager(player);
-*/
+
         //Sound
-        //audioManager = new AudioManager(assetManager, "basicGame.ogg");
-        //audioManager.play();
+        audioManager = new AudioManager(assetManager, "basicGame.ogg");
+        audioManager.play();
+        
+        
+        
         healthbar=new HealthBar(assetManager,settings.getWidth(),settings.getHeight());
         guiNode.addControl(healthbar);
         guiNode.attachChild(healthbar.getHealth());

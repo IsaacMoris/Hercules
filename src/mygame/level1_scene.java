@@ -3,35 +3,23 @@ package mygame;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.app.SimpleApplication;
-import com.jme3.audio.AudioData;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.font.BitmapText;
 import com.jme3.input.ChaseCamera;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.Matrix3f;
 import com.jme3.math.Vector3f;
-import com.jme3.post.FilterPostProcessor;
 import com.jme3.renderer.RenderManager;
-import com.jme3.scene.CameraNode;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.control.BillboardControl;
-import com.jme3.scene.shape.Quad;
-import com.jme3.texture.Texture;
-import com.jme3.texture.Texture2D;
 import com.jme3.util.TangentBinormalGenerator;
 
 public class level1_scene extends SimpleApplication implements ActionListener {
 
     Node Scene;
-    //Node Shapes;
     Node player;
     Spatial Grass;
     Node test;
@@ -83,14 +71,11 @@ public class level1_scene extends SimpleApplication implements ActionListener {
        
 
 //      Dragon
-       /* dragon = (Node) Scene.getChild("Dragon");
+        dragon = (Node) Scene.getChild("Dragon");
         AnimControl animControl = dragon.getChild("Armature").getControl(AnimControl.class);
         // animControl.addListener(this);
         AnimChannel animChannal = animControl.createChannel();
         animChannal.setAnim("flying");
-        for (String anim : animControl.getAnimationNames()) {
-            System.out.println(anim);
-        }
 
         //Coin
         Coin = (Node) Scene.getChild("Coin");
@@ -98,9 +83,6 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         // animControl.addListener(this);
         animChannal = animControl.createChannel();
         animChannal.setAnim("CoinObj|Coin");
-        for (String anim : animControl.getAnimationNames()) {
-            System.out.println(anim);
-        }*/
 
         playerMoves = new PlayerMovesControl(player, bulletAppState);
 
@@ -139,10 +121,10 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         guiNode.addControl(healthbar);
         guiNode.attachChild(healthbar.getHealth());
         guiNode.attachChild(healthbar.getFace());
-      
         healthbar.setDamage(175);
 
-
+        Effects Fire = new Effects("fire" , "dragonMouth_node" , Scene , rootNode , assetManager);
+        dragon.addControl(Fire);
     }
 
     //Action Listners

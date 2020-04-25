@@ -1,12 +1,15 @@
 package mygame;
 
 import com.jme3.asset.AssetManager;
+import com.jme3.renderer.RenderManager;
+import com.jme3.renderer.ViewPort;
+import com.jme3.scene.control.AbstractControl;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture2D;
 import com.jme3.ui.Picture;
 import jme3tools.optimize.TextureAtlas;
 
-public class HealthBar {
+public class HealthBar extends AbstractControl{
 
     private Picture health, Face;
     private Texture2D healthTexture;
@@ -20,8 +23,11 @@ public class HealthBar {
     
     final private float FaceRatio=247.0f/251.0f;
     
-   final private float FaceX, FaceY , HealthX , healthY;
+    final private float FaceX, FaceY , HealthX , healthY;
     
+    final private int MaxHealth=175 ;
+    private int CurHealth=175;
+    private int Damage ;
     public HealthBar(AssetManager assetManager, float Width, float Height) {
 
         this.assetManager = assetManager;
@@ -46,6 +52,7 @@ public class HealthBar {
 
         healthTexture = (Texture2D) assetManager.loadTexture("Textures/Health.png");
         
+        
         health = new Picture("Health Pic");
         health.setTexture(assetManager, healthTexture, true);
         health.setWidth(HealthWidth);
@@ -67,6 +74,27 @@ public class HealthBar {
 
     public Picture getFace() {
         return Face;
+    }
+
+    public void setDamage(int Damage) {
+        this.Damage += Damage;
+       
+    }
+
+    @Override
+    protected void controlUpdate(float tpf) {
+        if(Damage>=1)
+        {
+            CurHealth-=1;
+            Damage-=1;
+            healthTexture.getImage().setHeight(CurHealth);
+            health.setHeight(HealthHeight*CurHealth/MaxHealth);
+            System.out.println(CurHealth);
+        }
+    }
+
+    @Override
+    protected void controlRender(RenderManager rm, ViewPort vp) {
     }
 
 }

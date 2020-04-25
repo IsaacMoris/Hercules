@@ -133,10 +133,11 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         //audioManager = new AudioManager(assetManager, "basicGame.ogg");
         //audioManager.play();
         healthbar=new HealthBar(assetManager,settings.getWidth(),settings.getHeight());
+        guiNode.addControl(healthbar);
         guiNode.attachChild(healthbar.getHealth());
         guiNode.attachChild(healthbar.getFace());
       
-      
+        healthbar.setDamage(175);
 
 
     }

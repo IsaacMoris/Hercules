@@ -60,7 +60,8 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         bulletAppState.update(60);
 
         // Player
-        player = (Node) assetManager.loadModel("Models/Hercules/HercWithAnim/herc.j3o");
+        player = (Node) assetManager.loadModel("Models/Hercules/Hercules.j3o"
+        );
         TangentBinormalGenerator.generate(player);
         player.setLocalRotation(Matrix3f.IDENTITY);
 
@@ -144,7 +145,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
             }
         } else if (binding.equals("Back")) {
             if (isPressed) {
-                animManager.setAnimation("walk");
+                animManager.setAnimation("walk_backwards");
 
             } else {
                 animManager.setAnimation("idle");

@@ -40,7 +40,7 @@ public class AnimationManager {
     
     public void jump(){
         String lastAnim = animChannal.getAnimationName();
-        setAnimation("crouched to standing");
+        setAnimation("jump");
         if(lastAnim != null)
             setAnimation(lastAnim);
     }

@@ -1,7 +1,0 @@
-Material My Material : Common/MatDefs/Misc/Unshaded.j3md {
-     MaterialParameters {
-        LightMap : "Models/character/texture000.jpg"
-     }
-    AdditionalRenderState {
-    }
-}

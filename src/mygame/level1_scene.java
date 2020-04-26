@@ -12,6 +12,7 @@ import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.Matrix3f;
 import com.jme3.math.Vector3f;
+import com.jme3.post.FilterPostProcessor;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
@@ -60,8 +61,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         bulletAppState.update(60);
 
         // Player
-        player = (Node) assetManager.loadModel("Models/Hercules/Hercules.j3o"
-        );
+        player = (Node) assetManager.loadModel("Models/Hercules/Hercules.j3o" );
         TangentBinormalGenerator.generate(player);
         player.setLocalRotation(Matrix3f.IDENTITY);
 
@@ -88,13 +88,13 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         playerMoves = new PlayerMovesControl(player, bulletAppState);
 
         player.addControl(playerMoves);
-        //  bulletAppState.setDebugEnabled(true);
+        //bulletAppState.setDebugEnabled(true);
         Scene.attachChild(player);
         ChaseCamera chaseCam = new ChaseCamera(cam, player, inputManager);
         chaseCam.setSmoothMotion(true);
 
-       // FilterPostProcessor processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
-      //  viewPort.addProcessor(processor);
+        FilterPostProcessor processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
+         viewPort.addProcessor(processor);
         // Controls Mapping
         inputManager.addMapping("Forward",
                 new KeyTrigger(KeyInput.KEY_W));

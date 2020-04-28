@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/kirlos/JMEProjects/Hercules/src/mygame/level1_scene.java</file>
             <file>file:/home/kirlos/JMEProjects/Hercules/assets/Scenes/TrainingLevel.j3o</file>
+=======
+            <file>file:/F:/University/Projects/Second%20Year/JMonkeyEngine3%20Projects/Hercules/assets/Models/Hercules/Hercules.j3o</file>
+            <file>file:/F:/University/Projects/Second%20Year/JMonkeyEngine3%20Projects/Hercules/src/mygame/level1_scene.java</file>
+>>>>>>> f19fd43a01bdbe219636ad854de8cbf58474e929
         </group>
     </open-files>
 </project-private>

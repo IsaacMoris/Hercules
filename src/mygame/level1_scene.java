@@ -17,6 +17,7 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.util.TangentBinormalGenerator;
+import java.util.List;
 
 public class level1_scene extends SimpleApplication implements ActionListener {
 
@@ -28,37 +29,44 @@ public class level1_scene extends SimpleApplication implements ActionListener {
     Node Coin;
     BetterCharacterControl dragoncontrol;
     private BulletAppState bulletAppState;
-    private RigidBodyControl scenePhy;
+    private RigidBodyControl[] scenePhy;
     PlayerMovesControl playerMoves;
     private AnimationManager animManager;
     private AudioManager audioManager;
-    
+    Node T;List<Spatial>A;
     HealthBar healthbar ;
     
     @Override
     public void simpleInitApp() {
 
         bulletAppState = new BulletAppState();  //Physics Lib
+        bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
         stateManager.attach(bulletAppState);
+        
 
         Scene = (Node) assetManager.loadModel("Scenes/TrainingLevel.j3o"); // Scene attachment
-        //Grass = Scene.getChild("Grass");
-        // Scene.detachChild(Grass);
-        //    Grass.removeFromParent();
+        rootNode.attachChild(Scene);
+
+        T= (Node) Scene.getChild("Ground");
+        A=T.getChildren();
+ 
         //Scene Physics 
-        scenePhy = new RigidBodyControl(0f);
-        Scene.addControl(scenePhy);
+         scenePhy= new RigidBodyControl[A.size()];
+        for(int i=0;i<A.size();i++){    
+          scenePhy[i]=new RigidBodyControl(0f);
+        //    System.out.println(A.size());
+         //   System.out.println(A.get(i).getName());
+        A.get(i).addControl(scenePhy[i]);
+       bulletAppState.getPhysicsSpace().add(scenePhy[i]);
+
+        }
+         
 
         Scene.setLocalTranslation(0, 0, 0);
-        bulletAppState.getPhysicsSpace().add(Scene);
         bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -9.81f, 0));
         bulletAppState.getPhysicsSpace().setAccuracy(0.016f);
 
-        //bulletAppState.cleanup();
-        //   Grass.setLocalTranslation(10,0,10);
-        //  rootNode.attachChild(Grass);
-        rootNode.attachChild(Scene);
-        bulletAppState.update(60);
+     
 
         // Player
         player = (Node) assetManager.loadModel("Models/Hercules/Hercules.j3o" );
@@ -84,11 +92,12 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         // animControl.addListener(this);
         animChannal = animControl.createChannel();
         animChannal.setAnim("CoinObj|Coin");
-
+               
+         
+        
         playerMoves = new PlayerMovesControl(player, bulletAppState);
 
         player.addControl(playerMoves);
-        //bulletAppState.setDebugEnabled(true);
         Scene.attachChild(player);
         ChaseCamera chaseCam = new ChaseCamera(cam, player, inputManager);
         chaseCam.setSmoothMotion(true);
@@ -126,6 +135,8 @@ public class level1_scene extends SimpleApplication implements ActionListener {
 
         Effects Fire = new Effects("fire" , "dragonMouth_node" , Scene , rootNode , assetManager);
         dragon.addControl(Fire);
+        
+      //  bulletAppState.setDebugEnabled(true);
     }
 
     //Action Listners
@@ -165,12 +176,16 @@ public class level1_scene extends SimpleApplication implements ActionListener {
 
     @Override
     public void simpleUpdate(float tpf) {
+    
+
 
     }
 
     @Override
     public void simpleRender(RenderManager rm) {
         //TODO: add render code
+               
+
 
     }
 }

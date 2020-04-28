@@ -32,6 +32,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
     PlayerMovesControl playerMoves;
     private AnimationManager animManager;
     private AudioManager audioManager;
+    private Vector3f offSet;
     
     HealthBar healthbar ;
     
@@ -77,6 +78,10 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         // animControl.addListener(this);
         AnimChannel animChannal = animControl.createChannel();
         animChannal.setAnim("flying");
+        
+        //const distance between herclues and the dragon
+        offSet = new Vector3f(15, 15, -15);
+        dragon.setLocalTranslation(player.getLocalTranslation().add(offSet));
 
         //Coin
         Coin = (Node) Scene.getChild("Coin");
@@ -158,14 +163,16 @@ public class level1_scene extends SimpleApplication implements ActionListener {
             if (isPressed) {
                 animManager.jump();
             }
-        }
-        
-        
+        }    
     }
 
     @Override
     public void simpleUpdate(float tpf) {
-
+        //dragon follow player
+        dragon.setLocalRotation(player.getLocalRotation());
+        dragon.move(
+                player.getLocalTranslation().subtract(dragon.getLocalTranslation().subtract(offSet))
+        );
     }
 
     @Override

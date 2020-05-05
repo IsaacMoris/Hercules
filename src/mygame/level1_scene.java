@@ -26,6 +26,7 @@ public class level1_scene extends SimpleApplication {
     Node test;
     Node dragon;
     Node Coin;
+    rayCasting rycast;
     BetterCharacterControl dragoncontrol;
     private BulletAppState bulletAppState;
     private RigidBodyControl[] scenePhy;
@@ -124,11 +125,14 @@ public class level1_scene extends SimpleApplication {
         dragon.addControl(Fire);
 
         //  bulletAppState.setDebugEnabled(true);
+        //ray casting
+        rycast=new rayCasting(rootNode, player, Scene);
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         //dragon follow player
+        rycast.detect();
         npcManager.setPositionToGO(player.getLocalTranslation());
     }
 

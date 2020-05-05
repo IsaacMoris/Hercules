@@ -33,7 +33,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
     PlayerMovesControl playerMoves;
     private AnimationManager animManager;
     private AudioManager audioManager;
-    private Vector3f offSet;
+    private NPCManager npcManager;
     Node T;List<Spatial>A;
     HealthBar healthbar ;
     
@@ -73,7 +73,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         player = (Node) assetManager.loadModel("Models/Hercules/Hercules.j3o" );
         TangentBinormalGenerator.generate(player);
         player.setLocalRotation(Matrix3f.IDENTITY);
-
+        player.setLocalTranslation(Vector3f.ZERO);
         test = (Node) Scene.getChild("Dummy");
         test.scale(3);
         rootNode.attachChild(test);
@@ -86,10 +86,6 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         // animControl.addListener(this);
         AnimChannel animChannal = animControl.createChannel();
         animChannal.setAnim("flying");
-        
-        //const distance between herclues and the dragon
-        offSet = new Vector3f(15, 15, -15);
-        dragon.setLocalTranslation(player.getLocalTranslation().add(offSet));
 
         //Coin
         Coin = (Node) Scene.getChild("Coin");
@@ -130,7 +126,12 @@ public class level1_scene extends SimpleApplication implements ActionListener {
         audioManager = new AudioManager(assetManager, "basicGame.ogg");
         audioManager.play();
         
-        
+        //NPC custom control
+        npcManager = new NPCManager((Spatial) dragon);
+        npcManager.setZOffSet(15f);
+        npcManager.setSpeed(5f);
+        npcManager.setEnabled(true);
+        dragon.addControl(npcManager);
         
         healthbar=new HealthBar(assetManager,settings.getWidth(),settings.getHeight());
         guiNode.addControl(healthbar);
@@ -180,10 +181,7 @@ public class level1_scene extends SimpleApplication implements ActionListener {
     @Override
     public void simpleUpdate(float tpf) {
         //dragon follow player
-        dragon.setLocalRotation(player.getLocalRotation());
-        dragon.move(
-                player.getLocalTranslation().subtract(dragon.getLocalTranslation().subtract(offSet))
-        );
+        npcManager.setPositionToGO(player.getLocalTranslation());
     }
 
     @Override

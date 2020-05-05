@@ -5,6 +5,7 @@
  */
 package mygame;
 
+import com.jme3.animation.AnimControl;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.input.InputManager;
@@ -15,11 +16,13 @@ import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.math.FastMath;
+import com.jme3.math.Matrix3f;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.CameraNode;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 
@@ -28,6 +31,8 @@ import com.jme3.scene.control.AbstractControl;
  * @author isaac
  */
 public class PlayerMovesControl extends AbstractControl {
+
+    private AnimationManager animManager;
 
     private BetterCharacterControl playerControl;
     private BulletAppState bulletAppState;
@@ -44,6 +49,8 @@ public class PlayerMovesControl extends AbstractControl {
         this.inputManager = inputManager;
         this.camNode = camNode;
 
+        player.setLocalRotation(Matrix3f.IDENTITY);
+
         spatial.setLocalTranslation(new Vector3f(8f, 1f, 0));
         playerControl = new BetterCharacterControl(0.5f, 4f, 77f); // playerControl = new BetterCharacterControl(radius, Height, Weight);
         playerControl.setJumpForce(new Vector3f(0f, 200f, 0f));
@@ -52,6 +59,9 @@ public class PlayerMovesControl extends AbstractControl {
 
         spatial.addControl(playerControl);
         bulletAppState.getPhysicsSpace().add(playerControl);
+        
+        //Animation
+        animManager = new AnimationManager(((Node)player).getChild("Armature").getControl(AnimControl.class), "idle");
         //intialKeys();
     }
 
@@ -63,10 +73,17 @@ public class PlayerMovesControl extends AbstractControl {
         walkDirection.set(0, 0, 0);
 
         if (BetterInputManager.Forward) {
-            walkDirection.addLocal(modelForwardDir.mult(speed));
+            float x=1;
+            if(BetterInputManager.Run)
+                x=2;
+            walkDirection.addLocal(modelForwardDir.mult((float)speed * x));
+            animManager.setAnimation("walk",x);
         } else if (BetterInputManager.BackWard) {
             walkDirection.addLocal(modelForwardDir.mult(speed).negate());
+            animManager.setAnimation("walk_backwards");
         }
+        else
+            animManager.setAnimation("idle");
         if (BetterInputManager.Right) {
             walkDirection.addLocal(modelSideDir.mult(speed).negate());
         } else if (BetterInputManager.Left) {
@@ -75,17 +92,18 @@ public class PlayerMovesControl extends AbstractControl {
         playerControl.setWalkDirection(walkDirection); // walk!
 
         if (BetterInputManager.Jump) {
+            animManager.setAnimation("jump",1);
             playerControl.jump();
         }
-
         Quaternion rotateRL = new Quaternion().
                 fromAngleAxis(FastMath.PI * (BetterInputManager.MouseX), Vector3f.UNIT_Y);
         rotateRL.multLocal(viewDirection);
         playerControl.setViewDirection(viewDirection); // turn!
-        
-        
+
+        float theta = (float) (Math.PI / 2 - camNode.getCamera().getDirection().angleBetween(modelForwardDir) - 1e-6);
         Quaternion rotateUD = new Quaternion().
-                fromAngleAxis(FastMath.PI * (BetterInputManager.MouseY), Vector3f.UNIT_X);
+                fromAngleAxis(BetterInputManager.dir * Float.min(FastMath.PI * (BetterInputManager.MouseY), theta), Vector3f.UNIT_X);
+
         camNode.rotate(rotateUD);
         BetterInputManager.MouseX = BetterInputManager.MouseY = 0;
     }

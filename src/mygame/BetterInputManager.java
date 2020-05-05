@@ -25,7 +25,7 @@ public class BetterInputManager {
     private InputManager inputManager;
     public static boolean Forward = false, BackWard = false, Left = false, Right = false, Jump =false , Run=false;
     public static float MouseX = 0, MouseY = 0;
-
+    public static int dir=0;
     public BetterInputManager(InputManager inputManager) {
         this.inputManager = inputManager;
         intialKeys();
@@ -93,10 +93,12 @@ public class BetterInputManager {
                         MouseX = -value;
                         break;
                     case "Mouse Up":
-                        MouseY = value;
+                        MouseY = value ;
+                        dir=1;
                         break;
                     case "Mouse Down":
-                        MouseY = -value;
+                        MouseY = value;
+                        dir=-1;
                         break;
                     default:                    
                         break;

@@ -16,6 +16,8 @@ public class AnimationManager {
     
     public void setAnimation(String animName){
         try {
+           String lastAnim = animChannal.getAnimationName();
+           if(lastAnim.equals(animName)==false)
             animChannal.setAnim(animName, 0.5f);
         } catch (Exception e) {
             System.out.print("Animation Name Not Found .. Error: " + e);

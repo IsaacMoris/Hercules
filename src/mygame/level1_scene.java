@@ -9,6 +9,7 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Matrix3f;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
+import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
@@ -17,7 +18,7 @@ import com.jme3.scene.control.CameraControl;
 import com.jme3.util.TangentBinormalGenerator;
 import java.util.List;
 
-public class level1_scene extends SimpleApplication  {
+public class level1_scene extends SimpleApplication {
 
     Node Scene;
     Node player;
@@ -29,17 +30,17 @@ public class level1_scene extends SimpleApplication  {
     private BulletAppState bulletAppState;
     private RigidBodyControl[] scenePhy;
     PlayerMovesControl playerMoves;
-    private AnimationManager animManager;
+    
     private AudioManager audioManager;
     private NPCManager npcManager;
     Node T;
     List<Spatial> A;
     HealthBar healthbar;
     BetterInputManager betterInput;
+
     @Override
     public void simpleInitApp() {
-        
-        betterInput= new BetterInputManager(inputManager);
+        betterInput = new BetterInputManager(inputManager);
         bulletAppState = new BulletAppState();  //Physics Lib
         bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
         stateManager.attach(bulletAppState);
@@ -68,8 +69,14 @@ public class level1_scene extends SimpleApplication  {
         // Player
         player = (Node) assetManager.loadModel("Models/Hercules/Hercules.j3o");
         TangentBinormalGenerator.generate(player);
-        player.setLocalRotation(Matrix3f.IDENTITY);
-        player.setLocalTranslation(Vector3f.ZERO);
+        
+        Scene.attachChild(player);
+        CameraNode camNode = new CameraNode("CamNode", cam);
+        camNode.setControlDir(CameraControl.ControlDirection.SpatialToCamera);
+        player.attachChild(camNode);
+        camNode.setLocalTranslation(0, 200, -500);
+        
+
         test = (Node) Scene.getChild("Dummy");
         test.scale(3);
         rootNode.attachChild(test);
@@ -88,26 +95,18 @@ public class level1_scene extends SimpleApplication  {
         animChannal = animControl.createChannel();
         animChannal.setAnim("CoinObj|Coin");
 
-
-        Scene.attachChild(player);
-        CameraNode camNode = new CameraNode("CamNode", cam);
-        camNode.setControlDir(CameraControl.ControlDirection.SpatialToCamera);
-        player.attachChild(camNode);
-        camNode.setLocalTranslation(0, 200, -500);
-        
-        playerMoves = new PlayerMovesControl(player, bulletAppState,camNode);
+        playerMoves = new PlayerMovesControl(player, bulletAppState, camNode);
         player.addControl(playerMoves);
 
         FilterPostProcessor processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
         viewPort.addProcessor(processor);
+
         
-        //Animation
-        animManager = new AnimationManager(player.getChild("Armature").getControl(AnimControl.class), "idle");
 
         //Sound
         audioManager = new AudioManager(assetManager, "basicGame.ogg");
         audioManager.play();
-        
+
         //NPC custom control
         npcManager = new NPCManager((Spatial) dragon);
         npcManager.setZOffSet(15f);
@@ -115,7 +114,6 @@ public class level1_scene extends SimpleApplication  {
         npcManager.setEnabled(true);
         dragon.addControl(npcManager);
 
-        
         healthbar = new HealthBar(assetManager, settings.getWidth(), settings.getHeight());
         guiNode.addControl(healthbar);
         guiNode.attachChild(healthbar.getHealth());
@@ -127,7 +125,6 @@ public class level1_scene extends SimpleApplication  {
 
         //  bulletAppState.setDebugEnabled(true);
     }
-
 
     @Override
     public void simpleUpdate(float tpf) {

@@ -9,6 +9,11 @@ import com.jme3.texture.Texture2D;
 import com.jme3.ui.Picture;
 import jme3tools.optimize.TextureAtlas;
 
+/**
+ *
+ * @author isaac
+ */
+
 public class HealthBar extends AbstractControl {
 
     private Picture health, Face;

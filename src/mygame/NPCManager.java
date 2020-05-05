@@ -5,7 +5,6 @@
  */
 package mygame;
 
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
@@ -59,9 +58,6 @@ public class NPCManager extends AbstractControl{
                 spatial.move(Vector3f.UNIT_Z.mult(tpf * speed));
             else if(positionToGO.z + Math.abs(zOffSet) < spatial.getLocalTranslation().z)
                 spatial.move(Vector3f.UNIT_Z.mult(tpf * speed * -1));
-            
-            System.out.println("dragon pos " + spatial.getLocalTranslation().z + "\n"
-            + "herc pos " + positionToGO.z);
         }
     }
 

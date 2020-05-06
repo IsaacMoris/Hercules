@@ -2,30 +2,53 @@ package mygame;
 
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
+import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
+import com.jme3.app.state.AppStateManager;
+import com.jme3.app.state.BaseAppState;
+import com.jme3.asset.AssetManager;
+import com.jme3.audio.AudioRenderer;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.input.FlyByCamera;
+import com.jme3.input.InputManager;
 import com.jme3.math.Matrix3f;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
+import com.jme3.renderer.ViewPort;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.CameraControl;
+import com.jme3.system.AppSettings;
 import com.jme3.util.TangentBinormalGenerator;
 import java.util.List;
 
-public class level1_scene extends SimpleApplication {
-
+public class level1_scene extends BaseAppState
+{
+    
+    private ViewPort viewPort;
+    private Node rootNode;
+    private Node guiNode;
+    private Camera cam;
+    private AppSettings settings;
+    private AssetManager assetManager;
+    private InputManager inputManager;
+    private AppStateManager stateManager;
+    private Main app;
+    private Node localRootNode = new Node("level1 RootNode");
+    private Node localGuiNode = new Node("level1 GuiNode");
+    
     Node Scene;
     Node player;
     Spatial Grass;
     Node test;
     Node dragon;
     Node Coin;
+    FilterPostProcessor processor;
     rayCasting rycast;
     BetterCharacterControl dragoncontrol;
     private BulletAppState bulletAppState;
@@ -34,12 +57,27 @@ public class level1_scene extends SimpleApplication {
     
     private AudioManager audioManager;
     private NPCManager npcManager;
-    Node T;
-    List<Spatial> A;
+    Node StaticGroundObjectsParent;
+    List<Spatial> StaticGroundObjectsChildren;
     HealthBar healthbar;
     BetterInputManager betterInput;
 
-    @Override
+    
+    public void init(AppStateManager stateManager, Application app)
+    {
+        this.app = (Main) app;
+        this.rootNode = this.app.getRootNode();
+        this.viewPort = this.app.getViewPort();
+        this.guiNode = this.app.getGuiNode();
+        this.assetManager = this.app.getAssetManager();
+        this.inputManager=this.app.getInputManager(); 
+        this.stateManager = this.app.getStateManager();
+        this.cam = this.app.getCamera();
+        this.settings = this.app.settings;
+        
+        simpleInitApp();
+    }
+    
     public void simpleInitApp() {
         betterInput = new BetterInputManager(inputManager);
         bulletAppState = new BulletAppState();  //Physics Lib
@@ -47,18 +85,18 @@ public class level1_scene extends SimpleApplication {
         stateManager.attach(bulletAppState);
 
         Scene = (Node) assetManager.loadModel("Scenes/TrainingLevel.j3o"); // Scene attachment
-        rootNode.attachChild(Scene);
+        localRootNode.attachChild(Scene);
 
-        T = (Node) Scene.getChild("Ground");
-        A = T.getChildren();
+        StaticGroundObjectsParent = (Node) Scene.getChild("Ground");
+        StaticGroundObjectsChildren = StaticGroundObjectsParent.getChildren();
 
         //Scene Physics 
-        scenePhy = new RigidBodyControl[A.size()];
-        for (int i = 0; i < A.size(); i++) {
+        scenePhy = new RigidBodyControl[StaticGroundObjectsChildren.size()];
+        for (int i = 0; i < StaticGroundObjectsChildren.size(); i++) {
             scenePhy[i] = new RigidBodyControl(0f);
-            //    System.out.println(A.size());
-            //   System.out.println(A.get(i).getName());
-            A.get(i).addControl(scenePhy[i]);
+            //    System.out.println(StaticGroundObjectsChildren.size());
+            //   System.out.println(StaticGroundObjectsChildren.get(i).getName());
+            StaticGroundObjectsChildren.get(i).addControl(scenePhy[i]);
             bulletAppState.getPhysicsSpace().add(scenePhy[i]);
 
         }
@@ -80,7 +118,7 @@ public class level1_scene extends SimpleApplication {
 
         test = (Node) Scene.getChild("Dummy");
         test.scale(3);
-        rootNode.attachChild(test);
+        localRootNode.attachChild(test);
 
 //      Dragon
         dragon = (Node) Scene.getChild("Dragon");
@@ -99,8 +137,7 @@ public class level1_scene extends SimpleApplication {
         playerMoves = new PlayerMovesControl(player, bulletAppState, camNode);
         player.addControl(playerMoves);
 
-        FilterPostProcessor processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
-        viewPort.addProcessor(processor);
+        processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
 
         
 
@@ -116,29 +153,60 @@ public class level1_scene extends SimpleApplication {
         dragon.addControl(npcManager);
 
         healthbar = new HealthBar(assetManager, settings.getWidth(), settings.getHeight());
-        guiNode.addControl(healthbar);
-        guiNode.attachChild(healthbar.getHealth());
-        guiNode.attachChild(healthbar.getFace());
+        localGuiNode.addControl(healthbar);
+        localGuiNode.attachChild(healthbar.getHealth());
+        localGuiNode.attachChild(healthbar.getFace());
         healthbar.setDamage(175);
 
-        Effects Fire = new Effects("fire", "dragonMouth_node", Scene, rootNode, assetManager);
+        Effects Fire = new Effects("fire", "dragonMouth_node", Scene, localRootNode, assetManager);
         dragon.addControl(Fire);
 
         //  bulletAppState.setDebugEnabled(true);
         //ray casting
-        rycast=new rayCasting(rootNode, player, Scene);
+        rycast=new rayCasting(localRootNode, player, Scene);
     }
-
+    
     @Override
-    public void simpleUpdate(float tpf) {
+    public void update(float tpf) {
         //dragon follow player
         rycast.detect();
         npcManager.setPositionToGO(player.getLocalTranslation());
     }
+    
+    
+    public void Load()
+    {
+        rootNode.attachChild(localRootNode);
+        guiNode.attachChild(localGuiNode);
+        viewPort.addProcessor(processor);
+    }
+    
+    public void Unload()
+    {
+        bulletAppState.cleanup(); // Physics Cleaner
+        rootNode.detachChild(localRootNode);
+        guiNode.detachChild(localGuiNode);
+        viewPort.removeProcessor(processor);
+        
+    }
 
     @Override
-    public void simpleRender(RenderManager rm) {
-        //TODO: add render code
+    protected void initialize(Application app)
+    {
+    }
 
+    @Override
+    protected void cleanup(Application app)
+    {
+    }
+
+    @Override
+    protected void onEnable()
+    {
+    }
+
+    @Override
+    protected void onDisable()
+    {
     }
 }

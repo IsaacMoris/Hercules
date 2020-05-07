@@ -45,7 +45,7 @@ public class level1_scene extends BaseAppState
     Node Scene;
     Node player;
     Spatial Grass;
-    Node test;
+    Node Dummy;
     Node dragon;
     Node Coin;
     FilterPostProcessor processor;
@@ -110,15 +110,16 @@ public class level1_scene extends BaseAppState
         TangentBinormalGenerator.generate(player);
         
         Scene.attachChild(player);
+        cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, 1000f);
         CameraNode camNode = new CameraNode("CamNode", cam);
         camNode.setControlDir(CameraControl.ControlDirection.SpatialToCamera);
         player.attachChild(camNode);
         camNode.setLocalTranslation(0, 200, -500);
         
-
-        test = (Node) Scene.getChild("Dummy");
-        test.scale(3);
-        localRootNode.attachChild(test);
+          // Dummy
+        Dummy = (Node) Scene.getChild("Dummy");
+        Dummy.scale(3);
+        localRootNode.attachChild(Dummy);
 
 //      Dragon
         dragon = (Node) Scene.getChild("Dragon");

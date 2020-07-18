@@ -5,6 +5,7 @@
  */
 package mygame;
 
+import com.jme3.app.SimpleApplication;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
@@ -25,7 +26,7 @@ public class BetterInputManager {
 
     private InputManager inputManager;
     public static boolean Forward = false, BackWard = false, Left = false, 
-            Right = false, Jump =false , Run=false,Punch=false,Power_Punch=false,Sword_Attack=false;
+            Right = false, Jump =false , Run=false,Punch=false,Power_Punch=false,Sword_Attack=false, Pause=false;
     public static float MouseX = 0, MouseY = 0;
     public static int dir=0;
     public BetterInputManager(InputManager inputManager) {
@@ -51,10 +52,13 @@ public class BetterInputManager {
         inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("Punch", new KeyTrigger(KeyInput.KEY_LCONTROL));
         inputManager.addMapping("Power Punch", new KeyTrigger(KeyInput.KEY_LMENU));
+        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_EXIT);
+        inputManager.addMapping("Pause", new KeyTrigger(KeyInput.KEY_ESCAPE), new KeyTrigger(KeyInput.KEY_P), new KeyTrigger(KeyInput.KEY_PAUSE));
        
         inputManager.addListener(actionListener, "Left", "Right");
         inputManager.addListener(actionListener, "Forward", "Back", "Jump" , "Run");
         inputManager.addListener(actionListener, "Punch","Power Punch","Sword Attack");
+        inputManager.addListener(actionListener, "Pause");
     }
 
     private final ActionListener actionListener = new ActionListener() {
@@ -91,6 +95,8 @@ public class BetterInputManager {
                  case "Sword Attack":
                     Sword_Attack=keyPressed;
                         break; 
+                case "Pause":
+                    Pause=keyPressed;
                 default:
                     break;
             }

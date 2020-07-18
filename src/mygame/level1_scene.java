@@ -145,8 +145,8 @@ public class level1_scene extends BaseAppState
         
 
         //Sound
-        audioManager = new AudioManager(assetManager, "basicGame.ogg");
-        audioManager.play();
+        /*audioManager = new AudioManager(assetManager, "basicGame.ogg");
+        audioManager.play();*/    //Moved to main 
 
         //NPC custom control
         npcManager = new NPCManager((Spatial) dragon);
@@ -188,7 +188,7 @@ public class level1_scene extends BaseAppState
     
     public void Unload()
     {
-        bulletAppState.cleanup(); // Physics Cleaner
+        //bulletAppState.cleanup(); // Physics Cleaner
         rootNode.detachChild(localRootNode);
         guiNode.detachChild(localGuiNode);
         viewPort.removeProcessor(processor);

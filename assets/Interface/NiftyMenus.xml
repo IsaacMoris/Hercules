@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd" xmlns:xsi="http://
+www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://niftygui.sourceforge.net/nifty-1.3.xsd http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
+ <!-- include the style file for the standard controls -->
+<useStyles filename="nifty-default-styles.xml" />
+<!-- include the standard controls -->
+<useControls filename="nifty-default-controls.xml" />
+
+
+ <screen id="start" controller="mygame.NiftyGui">
+     <layer childLayout="center">
+         <image filename="Textures/startMenuImage2.jpg" width="100%" height="100%" visibleToMouse="true" />
+     </layer>
+     
+    
+     <layer childLayout="center">
+         
+            <panel childLayout="vertical" height="40%">
+            </panel>
+            
+            
+            <!-- Player Name Panel -->
+            <panel id="playerNamePanel" childLayout="vertical" align="center" valign="center" height="35%" visible="true">
+                
+                <panel childLayout="horizontal" margin="20%, 40%, 0%, 30%">
+                    <control  name="label"  text="Name: " font="Interface/Fonts/ComicSansMS.fnt"  align="right" margin="2%"/>
+                    <control id = "playerNameField" name="textfield" width="20%" />
+                </panel>
+                
+                <panel childLayout="center" margin = "15%,0px, 0px, 0px">
+                    <control id="btnPlayerNameOk" name="button" width="20%" height="50px" margin="20%, 40%, 0%, 40%"/>
+                     <control id="" name="label"  text="OK" font="Interface/Fonts/ComicSansMS.fnt"  margin="10%,0px,0%, 0%" />
+                </panel>
+            </panel>
+            
+            
+            <!-- Level Password Panel -->
+            <panel id="levelPasswordPanel" childLayout="vertical" backgroundColor="#000a" align="center" valign="center" height="35%" visible="false">
+                
+                <panel childLayout="horizontal" margin="20%, 40%, 0%, 30%">
+                    <control  name="label"  text="Level Password: " font="Interface/Fonts/ComicSansMS.fnt"  align="right" margin="2%"/>
+                    <control id = "levelPasswordField" name="textfield" width="20%" />
+                </panel>
+                
+                <panel childLayout="horizontal" alugn ="center" margin = "0%, 0%, 0%, 25%">
+                    <panel childLayout="center" margin="8px">
+                        <control  id="btnSubmitLevelPassword" name="button" width="150px" height="40px"  margin="80%, 0%, 0%, 25%" />               
+                        <control id="" name="label"  text="Ok" font="Interface/Fonts/ComicSansMS.fnt"  margin="80%,0%,0%, 25%"/>
+                    </panel>
+                    
+                    <panel childLayout="center" margin="8px">
+                        <control  id="btnCancelLevelPassword" name="button" width="150px" height="40px"  margin="80%, 0%, 0%, 50%" />               
+                        <control id="" name="label"  text="Cancel" font="Interface/Fonts/ComicSansMS.fnt"  margin="80%,0%,0%, 50%"/>
+                    </panel>
+                </panel>
+                
+            </panel>
+            
+            
+            <!-- Sound Control Panel -->
+            <panel id="soundPanel" childLayout="vertical" align="left" valign="bottom" height="35%" visible="false">
+                <panel childLayout="horizontal">
+                    <control  name="label"  text="Sound" font="Interface/Fonts/ComicSansMS.fnt"  align="right" margin="5%"/>
+                    <control id="soundSlider" name="horizontalSlider" width="40%" align="center" margin="5%"/>               
+                </panel>
+                <panel childLayout="center" margin="25%"> 
+                        <control id="btnBack" name="button" width="200px" height="50px" />
+                        <control id="" name="label"  text="Back" font="Interface/Fonts/ComicSansMS.fnt"  />
+                </panel>
+            </panel>
+            
+            
+            <!-- Levels Panel -->
+            <panel id="levelsPanel" childLayout="vertical" align="left" valign="bottom" height="55%" visible="false">
+                <panel childLayout="center" margin="8px">
+                    <control  id="btnLevel_1" name="button" width="150px" height="40px"  margin="0px,0px,3%, 10%" />               
+                    <control id="1" name="label"  text="Level One" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 10%"/>
+                </panel>
+                
+                <panel childLayout="center" margin="8px">
+                    <control  id="btnLevel_2" name="button" width="150px" height="40px"  margin="0px,0px,3%, 25%" />   
+                    <control  id="" name="label"  text="Level two" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 25%"/>           
+                </panel>
+                
+                <panel childLayout="center" margin="8px">
+                    <control  id="btnLevel_3" name="button" width="150px" height="40px"  margin="0px,0px,3%, 45%" />   
+                    <control  id="" name="label"  text="Level three" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 45%"/>           
+                </panel>
+                
+                <panel childLayout="center" margin="20%, 0%, 0%, 120%">
+                    <control  id="btnBack" name="button" width="200px" height="50px"  margin="0px,0px,3%, 25%" />   
+                    <control  id="" name="label"  text="Back" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 25%"/>           
+                </panel>
+            </panel>
+            
+            <!-- Main Screen Panel -->
+            <panel id="mainMenuPanel" childLayout="vertical" align="left" valign="bottom" height="55%" visible="false">
+                   <panel childLayout="center" margin="5px"> 
+                        <control id="btnStart" name="button" width="200px" height="50px" margin="0px,0px,3%, 10%" />
+                        <control id="" name="label"  text="Start" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 10%" />
+                    </panel>
+                    
+                    <panel childLayout="center" margin="5px"> 
+                        <control id="btnLevels" name="button" width="200px" height="50px" margin="0px,0px,3%, 15%" />
+                        <control  name="label"  text="Levels" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 15%"/>
+                    </panel>
+                
+                    <panel childLayout="center" margin="5px"> 
+                        <control id="btnOptions" name="button" width="200px" height="50px" margin="0px,0px,3%, 20%" />
+                        <control  name="label"  text="Options" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 20%"/>
+                    </panel>
+                
+                    <panel childLayout="center" margin="5px">
+                        <control id="btnScore" name="button" width="200px" height="50px" margin="0px,0px,3%, 25%" />
+                        <control name="label"  text="Score" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 25%"/>
+                    </panel>
+                      
+                    <panel childLayout="center" margin="5px">
+                        <control id="btnExit" name="button" width="200px" height="50px" margin="0px,0px,3%, 30%"/>
+                        <control  name="label"  text="Exit" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 30%"/>
+                    </panel>
+            </panel>
+     </layer>
+     
+ </screen>
+ 
+ 
+ 
+ <screen id="pause" controller="mygame.NiftyGui">
+     <layer childLayout="center">
+         <image filename="Textures/startMenuImage2.jpg" width="100%" height="100%" visibleToMouse="true" />
+            
+         <!-- Sound Control Panel -->
+            <panel id="soundPanel" childLayout="vertical" align="left" valign="bottom" height="35%" visible="false">
+                <panel childLayout="horizontal">
+                    <control  name="label"  text="Sound" font="Interface/Fonts/ComicSansMS.fnt"  align="right" margin="5%"/>
+                    <control id="soundSlider" name="horizontalSlider" width="40%" align="center" margin="5%"/>               
+                </panel>
+                <panel childLayout="center" margin="25%"> 
+                        <control id="btnBackPauseScreen" name="button" width="200px" height="50px" />
+                        <control id="" name="label"  text="Back" font="Interface/Fonts/ComicSansMS.fnt"  />
+                </panel>
+            </panel>
+            
+            <!--Pause Menu Panel -->
+            <panel id="pausePanel" childLayout="vertical" align="left" valign="bottom" height="45%" visible="true">
+                   <panel childLayout="center" margin="5px"> 
+                        <control id="btnResume" name="button" width="200px" height="50px" margin="0px,0px,3%, 20%" />
+                        <control id="" name="label"  text="Resume" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 20%" />
+                    </panel>
+                    
+                    <panel childLayout="center" margin="5px"> 
+                        <control id="btnOptionsPauseScreen" name="button" width="200px" height="50px" margin="0px,0px,3%, 25%" />
+                        <control  name="label"  text="Options" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 25%"/>
+                    </panel>
+                
+                    <panel childLayout="center" margin="5px"> 
+                        <control id="btnEndGame" name="button" width="200px" height="50px" margin="0px,0px,3%, 30%" />
+                        <control  name="label"  text="End Game" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 30%"/>
+                    </panel>
+            </panel>
+     </layer>
+     
+ </screen>
+</nifty>

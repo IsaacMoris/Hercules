@@ -111,11 +111,13 @@ public class level1_scene extends BaseAppState
         
         Scene.attachChild(player);
         cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, 1000f);
+       // cam.setLocation(new Vector3f(3, 3, 3));
         CameraNode camNode = new CameraNode("CamNode", cam);
         camNode.setControlDir(CameraControl.ControlDirection.SpatialToCamera);
+       // camNode.setLocalTranslation(3, 3, 3);
         player.attachChild(camNode);
-        camNode.setLocalTranslation(0, 200, -500);
-        
+       camNode.setLocalTranslation(0, 300, -500);
+        camNode.setLodLevel(4);
           // Dummy
         Dummy = (Node) Scene.getChild("Dummy");
         Dummy.scale(3);
@@ -165,11 +167,12 @@ public class level1_scene extends BaseAppState
         //  bulletAppState.setDebugEnabled(true);
         //ray casting
         rycast=new rayCasting(localRootNode, player, Scene);
+        update(1);
     }
     
     @Override
     public void update(float tpf) {
-        //dragon follow player
+        System.out.println("I'm working");
         rycast.detect();
         npcManager.setPositionToGO(player.getLocalTranslation());
     }

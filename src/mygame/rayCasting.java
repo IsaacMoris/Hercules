@@ -57,7 +57,7 @@ public class rayCasting {
               Scene.detachChild(N);
         
           colwithherc.clear();
-      //  System.out.println("  You shot " + hit + " at " + pt + ", " + dist + " wu away.");
+        System.out.println("  You shot " + hit + " at " + pt + ", " + dist + " wu away.");
 }
         }
      }

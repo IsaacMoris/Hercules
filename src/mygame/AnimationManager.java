@@ -11,7 +11,8 @@ public class AnimationManager {
     public AnimationManager(AnimControl control, String animName) {
         animControl = control;
         animChannal = animControl.createChannel();
-        animChannal.setAnim(animName);  
+        animChannal.setAnim(animName);
+      
     }
     
     public void setAnimation(String animName){

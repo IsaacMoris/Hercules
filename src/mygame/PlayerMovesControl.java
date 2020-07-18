@@ -6,6 +6,7 @@
 package mygame;
 
 import com.jme3.animation.AnimControl;
+import com.jme3.animation.LoopMode;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.input.InputManager;
@@ -64,14 +65,16 @@ public class PlayerMovesControl extends AbstractControl {
         animManager = new AnimationManager(((Node)player).getChild("Armature").getControl(AnimControl.class), "idle");
         //intialKeys();
     }
-
+//float time;           Delay
     @Override
     protected void controlUpdate(float tpf) {
-
+//time+=tpf;
+//System.out.println(time);
         Vector3f modelForwardDir = spatial.getWorldRotation().mult(Vector3f.UNIT_Z);
         Vector3f modelSideDir = spatial.getWorldRotation().mult(Vector3f.UNIT_X);
         walkDirection.set(0, 0, 0);
-
+//if (time>0.4){
+ //   time=0;
         if (BetterInputManager.Forward) {
             float x=1;
             if(BetterInputManager.Run)
@@ -81,20 +84,39 @@ public class PlayerMovesControl extends AbstractControl {
         } else if (BetterInputManager.BackWard) {
             walkDirection.addLocal(modelForwardDir.mult(speed).negate());
             animManager.setAnimation("walk_backwards");
-        }
-        else
-            animManager.setAnimation("idle");
-        if (BetterInputManager.Right) {
+        } else if (BetterInputManager.Right) {
+          animManager.setAnimation("right strife walk",1);
             walkDirection.addLocal(modelSideDir.mult(speed).negate());
         } else if (BetterInputManager.Left) {
             walkDirection.addLocal(modelSideDir.mult(speed));
+            animManager.setAnimation("left strife walk ",1);
         }
-        playerControl.setWalkDirection(walkDirection); // walk!
+           else if(BetterInputManager.Punch){
+        animManager.setAnimation("punch");
 
-        if (BetterInputManager.Jump) {
-            animManager.setAnimation("jump",1);
-            playerControl.jump();
         }
+           else if(BetterInputManager.Power_Punch){
+        animManager.setAnimation("cross punch with left",0.8f);
+
+        } else if (BetterInputManager.Sword_Attack){
+         animManager.setAnimation("sword skill 3",0.8f);
+        } 
+          else
+            animManager.setAnimation("idle");
+        
+        
+         if (BetterInputManager.Jump) {
+            
+            animManager.setAnimation("jump");
+             playerControl.jump();
+            
+        }
+    //}
+        playerControl.setWalkDirection(walkDirection); // walk!
+        
+
+        
+
         Quaternion rotateRL = new Quaternion().
                 fromAngleAxis(FastMath.PI * (BetterInputManager.MouseX), Vector3f.UNIT_Y);
         rotateRL.multLocal(viewDirection);

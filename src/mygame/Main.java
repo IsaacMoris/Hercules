@@ -59,6 +59,7 @@ public class Main extends SimpleApplication
             //else if(moveToNextWindow == 2) To be implemented later
             moveToNextWindow = false;
         }
+        
     }
     public static void increasecurrentWindowIndix()
     {

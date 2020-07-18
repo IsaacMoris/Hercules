@@ -48,7 +48,7 @@ public class mainMenuScreen extends BaseAppState implements ScreenController
         nifty = niftyDisplay.getNifty();
         nifty.fromXml("Interface/startMenu.xml", "start");
         screen = nifty.getCurrentScreen();
-        flyCam.setEnabled(false);
+      //  flyCam.setEnabled(false);
     }
     
     public void Load()

@@ -31,8 +31,7 @@ public class Main extends SimpleApplication
     public void simpleInitApp()
     {
        settings = new AppSettings(true);
-       settings.setHeight(1280);
-       settings.setWidth(720);
+
        this.setSettings(settings);
        this.setShowSettings(true);
         

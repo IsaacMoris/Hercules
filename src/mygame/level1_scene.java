@@ -155,7 +155,8 @@ public class level1_scene extends BaseAppState
         npcManager.setEnabled(true);
         dragon.addControl(npcManager);
 
-        healthbar = new HealthBar(assetManager, settings.getWidth(), settings.getHeight());
+        healthbar = new HealthBar(assetManager, this.settings.getWidth(), this.settings.getHeight());
+        System.out.println(this.settings.getWidth() + "\n" + this.settings.getHeight());
         localGuiNode.addControl(healthbar);
         localGuiNode.attachChild(healthbar.getHealth());
         localGuiNode.attachChild(healthbar.getFace());

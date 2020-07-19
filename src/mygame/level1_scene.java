@@ -162,8 +162,12 @@ public class level1_scene extends BaseAppState
         localGuiNode.attachChild(healthbar.getFace());
         healthbar.setDamage(175);
 
-        Effects Fire = new Effects("fire", "dragonMouth_node", Scene, localRootNode, assetManager);
+   
+
+        //Effect
+        Effects Fire = new Effects("smoke", "dragonMouth_node", Scene, localRootNode, assetManager, 5.0f);
         dragon.addControl(Fire);
+
 
         //  bulletAppState.setDebugEnabled(true);
         //ray casting

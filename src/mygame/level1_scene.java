@@ -173,8 +173,9 @@ public class level1_scene extends BaseAppState
     
     @Override
     public void update(float tpf) {
-        System.out.println("I'm working");
+       // System.out.println("I'm working");
         rycast.detect();
+        rycast.attack_detect(player);
         npcManager.setPositionToGO(player.getLocalTranslation());
     }
     

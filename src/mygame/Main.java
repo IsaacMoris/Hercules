@@ -23,6 +23,7 @@ public class Main extends SimpleApplication
     level1_scene level1;
     AppSettings settings;
     BetterInputManager betterInputManager;
+    boolean the_level_is_working=false;
     
     static private AudioManager audioManager;
     
@@ -53,19 +54,24 @@ public class Main extends SimpleApplication
        audioManager = new AudioManager(assetManager, "menuTrack.ogg");
        playMusic("menuTrack.ogg");
        betterInputManager = new BetterInputManager(this.getInputManager());
+       level1 = new level1_scene();
+      
     }
 
     @Override
     public void simpleUpdate(float tpf)
     {
+        if(the_level_is_working)
+            level1.update(tpf);
         if(moveToNextLevel == true )
         {
             if(currentLevel == 1)
             {
                 menu.Unload();
-                level1 = new level1_scene();
                 level1.init(stateManager, this);
                 level1.Load();
+                the_level_is_working=true;
+                level1.update(tpf);
                 
                 playMusic("basicGame.ogg");
             }
@@ -78,8 +84,11 @@ public class Main extends SimpleApplication
         {
             playMusic("basicGame.ogg");
             menu.Unload();
-           if(currentLevel == 1)
-               level1.Load();
+           if(currentLevel == 1){
+            level1.Load();
+            the_level_is_working=true;
+           }
+               
            else if(currentLevel == 2){} //To be implemented later
            
            isResumed = false;
@@ -87,6 +96,7 @@ public class Main extends SimpleApplication
         if(BetterInputManager.Pause && currentLevel > 0 && isResumed == false )
         {
             level1.Unload();
+            the_level_is_working=false;
             menu.gotoPauseMenu();
             menu.Load();
             

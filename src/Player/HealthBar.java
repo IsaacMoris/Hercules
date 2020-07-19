@@ -1,8 +1,10 @@
-package mygame;
+package Player;
 
 import com.jme3.asset.AssetManager;
+import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
+import com.jme3.scene.Node;
 import com.jme3.scene.control.AbstractControl;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture2D;
@@ -13,7 +15,6 @@ import jme3tools.optimize.TextureAtlas;
  *
  * @author isaac
  */
-
 public class HealthBar extends AbstractControl {
 
     private Picture health, Face;
@@ -34,13 +35,15 @@ public class HealthBar extends AbstractControl {
     private int CurHealth = 175;
     private int Damage;
 
-    public HealthBar(AssetManager assetManager, float Width, float Height) {
+    public HealthBar(AssetManager assetManager, Camera cam, Node Gui) {
 
         this.assetManager = assetManager;
 
-        this.SettingsHeight = Height;
-        this.SettingsWidth = Width;
-
+        this.SettingsHeight = cam.getHeight();
+        this.SettingsWidth = cam.getWidth();
+        
+        
+        
         FaceHeight = SettingsHeight / 6.0f;
         FaceWidth = FaceHeight * FaceRatio;
 
@@ -51,10 +54,10 @@ public class HealthBar extends AbstractControl {
 
         HealthX = FaceX + LeftPart * FaceWidth;
         healthY = FaceY + Bottompart * FaceHeight;
-        Initial();
+        Initial(Gui);
     }
 
-    void Initial() {
+    void Initial(Node Gui) {
 
         healthTexture = (Texture2D) assetManager.loadTexture("Textures/Health.png");
 
@@ -71,6 +74,9 @@ public class HealthBar extends AbstractControl {
         Face.setWidth(FaceWidth);
         Face.setHeight(FaceHeight);
         Face.setPosition(FaceX, FaceY);
+        
+        Gui.attachChild(getHealth());
+        Gui.attachChild(getFace());
     }
 
     public Picture getHealth() {

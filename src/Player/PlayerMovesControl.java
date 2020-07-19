@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mygame;
+package Player;
 
 import com.jme3.animation.AnimControl;
-import com.jme3.animation.LoopMode;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.input.InputManager;
-import com.jme3.input.KeyInput;
-import com.jme3.input.MouseInput;
-import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.AnalogListener;
-import com.jme3.input.controls.KeyTrigger;
-import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.math.FastMath;
 import com.jme3.math.Matrix3f;
 import com.jme3.math.Quaternion;
@@ -26,6 +19,8 @@ import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
+import mygame.AnimationManager;
+import mygame.BetterInputManager;
 
 /**
  *
@@ -40,14 +35,12 @@ public class PlayerMovesControl extends AbstractControl {
     private Vector3f walkDirection = new Vector3f(0, 0, 0);
     private Vector3f viewDirection = new Vector3f(0, 0, 1);
     private float speed = 8;
-    private InputManager inputManager;
     private CameraNode camNode;
 
     public PlayerMovesControl(Spatial player, BulletAppState bulletAppState, CameraNode camNode) {
 
         spatial = player;
         this.bulletAppState = bulletAppState;
-        this.inputManager = inputManager;
         this.camNode = camNode;
 
         player.setLocalRotation(Matrix3f.IDENTITY);

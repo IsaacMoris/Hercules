@@ -1,4 +1,7 @@
 package mygame;
+import Player.HealthBar;
+import Player.PlayerMovesControl;
+import Player.*;
 
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
@@ -59,9 +62,8 @@ public class level1_scene extends BaseAppState
     private NPCManager npcManager;
     Node StaticGroundObjectsParent;
     List<Spatial> StaticGroundObjectsChildren;
-    HealthBar healthbar;
     BetterInputManager betterInput;
-
+    private Player playerClass ;
     
     public void init(AppStateManager stateManager, Application app)
     {
@@ -79,6 +81,7 @@ public class level1_scene extends BaseAppState
     }
     
     public void simpleInitApp() {
+        
         betterInput = new BetterInputManager(inputManager);
         bulletAppState = new BulletAppState();  //Physics Lib
         bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
@@ -106,18 +109,17 @@ public class level1_scene extends BaseAppState
         bulletAppState.getPhysicsSpace().setAccuracy(0.016f);
 
         // Player
-        player = (Node) assetManager.loadModel("Models/Hercules/Hercules.j3o");
+        CameraNode camNode = new CameraNode("CamNode", cam);
+        playerClass = new  Player(assetManager , bulletAppState,camNode,localGuiNode);
+        player = playerClass.getPlayer();
         TangentBinormalGenerator.generate(player);
         
         Scene.attachChild(player);
         cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, 1000f);
-       // cam.setLocation(new Vector3f(3, 3, 3));
-        CameraNode camNode = new CameraNode("CamNode", cam);
-        camNode.setControlDir(CameraControl.ControlDirection.SpatialToCamera);
-       // camNode.setLocalTranslation(3, 3, 3);
-        player.attachChild(camNode);
-       camNode.setLocalTranslation(0, 300, -500);
-        camNode.setLodLevel(4);
+        
+        
+       
+        
           // Dummy
         Dummy = (Node) Scene.getChild("Dummy");
         Dummy.scale(3);
@@ -137,8 +139,7 @@ public class level1_scene extends BaseAppState
         animChannal = animControl.createChannel();
         animChannal.setAnim("CoinObj|Coin");
 
-        playerMoves = new PlayerMovesControl(player, bulletAppState, camNode);
-        player.addControl(playerMoves);
+       
 
         processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
 
@@ -155,14 +156,6 @@ public class level1_scene extends BaseAppState
         npcManager.setEnabled(true);
         dragon.addControl(npcManager);
 
-        healthbar = new HealthBar(assetManager, this.settings.getWidth(), this.settings.getHeight());
-        System.out.println(this.settings.getWidth() + "\n" + this.settings.getHeight());
-        localGuiNode.addControl(healthbar);
-        localGuiNode.attachChild(healthbar.getHealth());
-        localGuiNode.attachChild(healthbar.getFace());
-        healthbar.setDamage(175);
-
-   
 
         //Effect
         Effects Fire = new Effects("smoke", "dragonMouth_node", Scene, localRootNode, assetManager, 5.0f);
@@ -199,7 +192,6 @@ public class level1_scene extends BaseAppState
         viewPort.removeProcessor(processor);
         
     }
-
     @Override
     protected void initialize(Application app)
     {

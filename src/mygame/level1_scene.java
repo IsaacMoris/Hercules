@@ -164,7 +164,7 @@ public class level1_scene extends BaseAppState
 
         //  bulletAppState.setDebugEnabled(true);
         //ray casting
-        rycast=new rayCasting(localRootNode, player, Scene);
+        rycast=new rayCasting(localRootNode, player, Scene,cam);
         update(1);
     }
     
@@ -172,7 +172,7 @@ public class level1_scene extends BaseAppState
     public void update(float tpf) {
        // System.out.println("I'm working");
         rycast.detect();
-        rycast.attack_detect(player);
+        //rycast.attack_detect(cam);
         npcManager.setPositionToGO(player.getLocalTranslation());
     }
     

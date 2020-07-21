@@ -4,8 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/HP/Documents/GitHub/Hercules/src/mygame/Main.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Hercules/src/Player/Player.java</file>
             <file>file:/C:/Users/HP/Documents/GitHub/Hercules/assets/Scenes/TrainingLevel.j3o</file>
             <file>file:/C:/Users/HP/Documents/GitHub/Hercules/src/mygame/rayCasting.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Hercules/src/Player/HealthBar.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Hercules/src/mygame/ManageCollidables.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Hercules/src/Player/PlayerMovesControl.java</file>
             <file>file:/C:/Users/HP/Documents/GitHub/Hercules/src/mygame/level1_scene.java</file>
         </group>
     </open-files>

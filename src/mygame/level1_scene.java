@@ -51,6 +51,7 @@ public class level1_scene extends BaseAppState
     Node Dummy;
     Node dragon;
     Node Coin;
+    Node HealthDrink;
     FilterPostProcessor processor;
     rayCasting rycast;
     BetterCharacterControl dragoncontrol;
@@ -138,7 +139,11 @@ public class level1_scene extends BaseAppState
         // animControl.addListener(this);
         animChannal = animControl.createChannel();
         animChannal.setAnim("CoinObj|Coin");
-
+        
+        //healthDrink
+        HealthDrink = (Node) Scene.getChild("HealthDrink");
+        HealthDrink.setLocalScale((float) (HealthDrink.getLocalScale().x+0.5), (float) (HealthDrink.getLocalScale().y+0.5), (float) (HealthDrink.getLocalScale().z+0.5));
+        
        
 
         processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
@@ -171,8 +176,8 @@ public class level1_scene extends BaseAppState
     @Override
     public void update(float tpf) {
        // System.out.println("I'm working");
-        rycast.detect();
-        //rycast.attack_detect(cam);
+       rycast.detect();
+      
         npcManager.setPositionToGO(player.getLocalTranslation());
     }
     

@@ -20,6 +20,7 @@ public class Player {
     private final PlayerMovesControl PlayerMoves;
     private final HealthBar Health;
     private final Node Gui;
+    private static int HealthCounter,CoinCounter,HeartCounter;
 
     public Player(AssetManager assetManager, BulletAppState bulletAppState, CameraNode camNode, Node Gui) {
         // intialize Player Attributes

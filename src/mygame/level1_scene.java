@@ -44,7 +44,7 @@ public class level1_scene extends BaseAppState
     private Main app;
     private Node localRootNode = new Node("level1 RootNode");
     private Node localGuiNode = new Node("level1 GuiNode");
-    
+    private GamePlay GP;
     Node Scene;
     Node player;
     Spatial Grass;
@@ -170,15 +170,17 @@ public class level1_scene extends BaseAppState
         //  bulletAppState.setDebugEnabled(true);
         //ray casting
         rycast=new rayCasting(localRootNode, player, Scene,cam);
+        //GamePlay
+        GP=new GamePlay(rycast, playerClass,Scene);
         update(1);
     }
     
     @Override
     public void update(float tpf) {
        // System.out.println("I'm working");
-       rycast.detect();
       
         npcManager.setPositionToGO(player.getLocalTranslation());
+        GP.update();
     }
     
     

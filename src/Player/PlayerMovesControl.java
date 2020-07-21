@@ -32,6 +32,10 @@ public class PlayerMovesControl extends AbstractControl {
 
     private BetterCharacterControl playerControl;
     private BulletAppState bulletAppState;
+
+    public AnimationManager getAnimManager() {
+        return animManager;
+    }
     private Vector3f walkDirection = new Vector3f(0, 0, 0);
     private Vector3f viewDirection = new Vector3f(0, 0, 1);
     private float speed = 8;

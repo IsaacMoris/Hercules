@@ -4,6 +4,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
 import NiftyGui.*;
+import GameLevel.*;
 /**
  * This is the Main Class of your Game. You should only do initialization here.
  * Move your Logic into AppStates or Controls
@@ -19,8 +20,9 @@ public class Main extends SimpleApplication
     private static String playerName;
     PlayerNameMenu startMenu;
     PauseMenu pauseMenu;
-    level1_scene level1;
-    AppSettings settings;
+    Level1 level1;
+    Level2 level2;
+    public AppSettings settings;
     BetterInputManager betterInputManager;
     boolean the_level_is_working=false;
     
@@ -43,7 +45,7 @@ public class Main extends SimpleApplication
         
         //Declare Screens
        startMenu = new PlayerNameMenu();
-       level1 = new level1_scene();
+       level1 = new Level1();
        
        //Inizialize Screens
        startMenu.init(stateManager, this); 
@@ -60,17 +62,20 @@ public class Main extends SimpleApplication
     public void simpleUpdate(float tpf)
     {
         if(the_level_is_working)
-            level1.update(tpf);
+            level2.update(tpf);//level1.update(tpf);
         if(moveToNextLevel == true )
         {
             if(currentLevel == 1)
             {
                 startMenu.Unload();
-                level1 = new level1_scene();
+                /*level1 = new Level1();
                 level1.init(stateManager, this);
-                level1.Load();
+                level1.Load();*/
                 the_level_is_working=true;
-                level1.update(tpf);
+                //level1.update(tpf);
+                level2 = new Level2();
+                level2.init(stateManager, this);
+                level2.Load();
                 
                 playMusic("basicGame.ogg");
             }
@@ -94,7 +99,8 @@ public class Main extends SimpleApplication
         }
         if(pauseButton)
         {
-            level1.Unload();
+            //level1.Unload();
+            level2.Unload();
             the_level_is_working=false;
             
             pauseMenu = new PauseMenu();

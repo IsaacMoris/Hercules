@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package NiftyGui;
 
-import com.jme3.app.Application;
-import com.jme3.app.state.BaseAppState;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
 import de.lessvoid.nifty.controls.TextField;
@@ -15,16 +8,11 @@ import de.lessvoid.nifty.elements.events.NiftyMousePrimaryClickedEvent;
 import de.lessvoid.nifty.input.NiftyInputEvent;
 import de.lessvoid.nifty.input.NiftyStandardInputEvent;
 import de.lessvoid.nifty.screen.Screen;
-import de.lessvoid.nifty.screen.ScreenController;
 
-/**
- *
- * @author Besh
- */
-public class LevelsMenu extends BaseAppState implements ScreenController{
+
+
+public class LevelsMenu extends Menu{
     
-    private Nifty nifty;
-    private Screen screen;
     private Element levelPasswordPanel;
     
      @NiftyEventSubscriber(pattern="btnLevel_.*")
@@ -87,18 +75,4 @@ public class LevelsMenu extends BaseAppState implements ScreenController{
         this.screen = screen;
         levelPasswordPanel = screen.findElementById("levelPasswordPanel");
     }
-    
-    @Override
-    protected void initialize(Application app) {}
-    @Override
-    protected void cleanup(Application app) {}
-    @Override
-    protected void onEnable() {}
-    @Override
-    protected void onDisable() {}
-    @Override
-    public void onStartScreen() {}
-    @Override
-    public void onEndScreen() {}
-    
 }

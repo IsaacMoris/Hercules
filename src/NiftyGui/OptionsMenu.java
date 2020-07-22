@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package NiftyGui;
 
-import com.jme3.app.Application;
-import com.jme3.app.state.BaseAppState;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
 import de.lessvoid.nifty.controls.Slider;
@@ -14,16 +7,11 @@ import de.lessvoid.nifty.controls.SliderChangedEvent;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.events.NiftyMousePrimaryClickedEvent;
 import de.lessvoid.nifty.screen.Screen;
-import de.lessvoid.nifty.screen.ScreenController;
 import mygame.Main;
 
-/**
- *
- * @author Besh
- */
-public class OptionsMenu extends BaseAppState implements ScreenController{
-    private Nifty nifty;
-    private Screen screen;
+
+public class OptionsMenu extends Menu{
+    
     private Slider soundSlider;
     static public ParentScreen parentScreen;
     
@@ -62,16 +50,4 @@ public class OptionsMenu extends BaseAppState implements ScreenController{
         this.screen = screen;
         soundSlider = screen.findNiftyControl("soundSlider", Slider.class);
     }
-    
-    
-    @Override
-    protected void initialize(Application app) {}
-    @Override
-    protected void cleanup(Application app) {}
-    @Override
-    protected void onEnable() {}
-    @Override
-    protected void onDisable() {}  
-    @Override
-    public void onEndScreen() {}
 }

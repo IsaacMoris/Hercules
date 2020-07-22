@@ -19,9 +19,8 @@ import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
-import java.util.ArrayList;
+import mygame.Animation;
 import mygame.AnimationManager;
-import mygame.BetterAnimation;
 import mygame.BetterInputManager;
 
 /**
@@ -29,12 +28,14 @@ import mygame.BetterInputManager;
  * @author isaac
  */
 public class PlayerMovesControl extends AbstractControl {
-    BetterAnimation betterAnimation;
+
+    private AnimationManager animManager;
+
     private BetterCharacterControl playerControl;
     private BulletAppState bulletAppState;
 
-    public BetterAnimation getAnimManager() {
-        return betterAnimation;
+    public AnimationManager getAnimManager() {
+        return animManager;
     }
     private Vector3f walkDirection = new Vector3f(0, 0, 0);
     private Vector3f viewDirection = new Vector3f(0, 0, 1);
@@ -59,13 +60,7 @@ public class PlayerMovesControl extends AbstractControl {
         bulletAppState.getPhysicsSpace().add(playerControl);
 
         //Animation
-        ArrayList<String> UpperBones = new ArrayList<>(), LowerBones = new ArrayList<>();
-        UpperBones.add("mixamorig:Spine");
-        LowerBones.add("mixamorig:RightUpLeg");
-        LowerBones.add("mixamorig:LeftUpLeg");
-        betterAnimation = new BetterAnimation(((Node) player).getChild("Armature").getControl(AnimControl.class),
-                "idle", UpperBones, LowerBones);
-        //animManager = new AnimationManager(((Node) player).getChild("Armature").getControl(AnimControl.class), "idle");
+        animManager = new Animation(((Node) player).getChild("Armature").getControl(AnimControl.class), "idle");
         //intialKeys();
     }
 //float time;           Delay
@@ -81,34 +76,34 @@ public class PlayerMovesControl extends AbstractControl {
         //   time=0;
         if (BetterInputManager.Forward && BetterInputManager.Run) {
             walkDirection.addLocal(modelForwardDir.mult(speed * 2));
-            betterAnimation.setAnimation("running", 1);
+            animManager.setAnimation("running", 1);
         } else if (BetterInputManager.Forward) {
             walkDirection.addLocal(modelForwardDir.mult(speed));
-            betterAnimation.setAnimation("walk", 1);
+            animManager.setAnimation("walk", 1);
         } else if (BetterInputManager.BackWard) {
             walkDirection.addLocal(modelForwardDir.mult(speed).negate());
-            betterAnimation.setAnimation("walk_backwards");
+            animManager.setAnimation("walk_backwards");
         } else if (BetterInputManager.Right) {
-            betterAnimation.setAnimation("right strife walk", 1);
+            animManager.setAnimation("right strife walk", 1);
             walkDirection.addLocal(modelSideDir.mult(speed).negate());
         } else if (BetterInputManager.Left) {
             walkDirection.addLocal(modelSideDir.mult(speed));
-            betterAnimation.setAnimation("left strife walk ", 1);
+            animManager.setAnimation("left strife walk ", 1);
         } else if (BetterInputManager.Punch) {
-            betterAnimation.setUpperBodyAnimation("punch" , 1);
+            animManager.setAnimation("punch" , 1);
 
         } else if (BetterInputManager.Power_Punch) {
-            betterAnimation.setUpperBodyAnimation("cross punch with left", 1);
+            animManager.setAnimation("cross punch with left", 1);
 
         } else if (BetterInputManager.Sword_Attack) {
-            betterAnimation.setUpperBodyAnimation("sword skill 3", 1);
+            animManager.setAnimation("sword skill 3", 1);
         } else {
-            betterAnimation.setAnimation("idle");
+            animManager.setAnimation("idle");
         }
 
         if (BetterInputManager.Jump) {
 
-            betterAnimation.setLowerBodyAnimation("jump");
+            animManager.setAnimation("jump");
             playerControl.jump();
 
         }

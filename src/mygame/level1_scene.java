@@ -86,7 +86,7 @@ public class level1_scene extends BaseAppState
         bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
         stateManager.attach(bulletAppState);
 
-        Scene = (Node) assetManager.loadModel("Scenes/TrainingLevel.j3o"); // Scene attachment
+        Scene = (Node) assetManager.loadModel("Scenes/BossLevel.j3o"); // Scene attachment
         localRootNode.attachChild(Scene);
 
         StaticGroundObjectsParent = (Node) Scene.getChild("Ground");
@@ -107,44 +107,44 @@ public class level1_scene extends BaseAppState
         bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -9.81f, 0));
         bulletAppState.getPhysicsSpace().setAccuracy(0.016f);
 
-        // Player
-        CameraNode camNode = new CameraNode("CamNode", cam);
-        playerClass = new  Player(assetManager , bulletAppState,camNode,localGuiNode);
-        playerNode = playerClass.getPlayer();
-        TangentBinormalGenerator.generate(playerNode);
-        
-        Scene.attachChild(playerNode);
-        cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, 1000f);
-        
-        
+//        // Player
+//        CameraNode camNode = new CameraNode("CamNode", cam);
+//        playerClass = new  Player(assetManager , bulletAppState,camNode,localGuiNode);
+//        playerNode = playerClass.getPlayer();
+//        TangentBinormalGenerator.generate(playerNode);
+//        
+//        Scene.attachChild(playerNode);
+//        cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, 1000f);
+//        
+//        
        
         
-          // Dummy
-        Dummy = (Node) Scene.getChild("Dummy");
-        Dummy.scale(3);
-        localRootNode.attachChild(Dummy);
-
-//      Dragon
-        dragon = (Node) Scene.getChild("Dragon");
-        AnimControl animControl = dragon.getChild("Armature").getControl(AnimControl.class);
-        // animControl.addListener(this);
-        AnimChannel animChannal = animControl.createChannel();
-        animChannal.setAnim("flying");
-
-        //Coin
-        Coin = (Node) Scene.getChild("Coin");
-        animControl = Coin.getChild("CoinObj").getControl(AnimControl.class);
-        // animControl.addListener(this);
-        animChannal = animControl.createChannel();
-        animChannal.setAnim("CoinObj|Coin");
-        
-        //healthDrink
-        HealthDrink = (Node) Scene.getChild("HealthDrink");
-        HealthDrink.setLocalScale((float) (HealthDrink.getLocalScale().x+0.5), (float) (HealthDrink.getLocalScale().y+0.5), (float) (HealthDrink.getLocalScale().z+0.5));
-        
+//          // Dummy
+//        Dummy = (Node) Scene.getChild("Dummy");
+//        Dummy.scale(3);
+//        localRootNode.attachChild(Dummy);
+//
+////      Dragon
+//        dragon = (Node) Scene.getChild("Dragon");
+//        AnimControl animControl = dragon.getChild("Armature").getControl(AnimControl.class);
+//        // animControl.addListener(this);
+//        AnimChannel animChannal = animControl.createChannel();
+//        animChannal.setAnim("flying");
+//
+//        //Coin
+//        Coin = (Node) Scene.getChild("Coin");
+//        animControl = Coin.getChild("CoinObj").getControl(AnimControl.class);
+//        // animControl.addListener(this);
+//        animChannal = animControl.createChannel();
+//        animChannal.setAnim("CoinObj|Coin");
+//        
+//        //healthDrink
+//        HealthDrink = (Node) Scene.getChild("HealthDrink");
+//        HealthDrink.setLocalScale((float) (HealthDrink.getLocalScale().x+0.5), (float) (HealthDrink.getLocalScale().y+0.5), (float) (HealthDrink.getLocalScale().z+0.5));
+//        
        
 
-        processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
+       processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
 
         
 
@@ -153,23 +153,23 @@ public class level1_scene extends BaseAppState
         audioManager.play();*/    //Moved to main 
 
         //NPC custom control
-        npcManager = new NPCManager((Spatial) dragon);
-        npcManager.setZOffSet(15f);
-        npcManager.setSpeed(5f);
-        npcManager.setEnabled(true);
-        dragon.addControl(npcManager);
-
-
-        //Effect
-        Effects Fire = new Effects("smoke", "dragonMouth_node", Scene, localRootNode, assetManager, 5.0f);
-        dragon.addControl(Fire);
-
-
-        //  bulletAppState.setDebugEnabled(true);
-        //ray casting
-        
-        //GamePlay
-        GP=new GamePlay(playerClass,Scene);
+//        npcManager = new NPCManager((Spatial) dragon);
+//        npcManager.setZOffSet(15f);
+//        npcManager.setSpeed(5f);
+//        npcManager.setEnabled(true);
+//        dragon.addControl(npcManager);
+//
+//
+//        //Effect
+//        Effects Fire = new Effects("smoke", "dragonMouth_node", Scene, localRootNode, assetManager, 5.0f);
+//        dragon.addControl(Fire);
+//
+//
+//        //  bulletAppState.setDebugEnabled(true);
+//        //ray casting
+//        
+//        //GamePlay
+//        GP=new GamePlay(playerClass,Scene);
         update(1);
     }
     
@@ -177,9 +177,9 @@ public class level1_scene extends BaseAppState
     public void update(float tpf) {
        // System.out.println("I'm working");
       
-        npcManager.setPositionToGO(playerNode.getLocalTranslation());
-        GP.update();
-        
+//        npcManager.setPositionToGO(playerNode.getLocalTranslation());
+//        GP.update();
+//        
         if(BetterInputManager.Pause)
             Main.pauseButton =true;
     }

@@ -19,6 +19,7 @@ import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
+import mygame.Animation;
 import mygame.AnimationManager;
 import mygame.BetterInputManager;
 
@@ -59,7 +60,7 @@ public class PlayerMovesControl extends AbstractControl {
         bulletAppState.getPhysicsSpace().add(playerControl);
 
         //Animation
-        animManager = new AnimationManager(((Node) player).getChild("Armature").getControl(AnimControl.class), "idle");
+        animManager = new Animation(((Node) player).getChild("Armature").getControl(AnimControl.class), "idle");
         //intialKeys();
     }
 //float time;           Delay

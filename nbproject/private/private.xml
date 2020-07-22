@@ -6,8 +6,13 @@
             <file>file:/home/kirlos/JMEProjects/Hercules/src/mygame/NPCManager.java</file>
             <file>file:/home/kirlos/JMEProjects/Hercules/src/mygame/Main.java</file>
             <file>file:/home/kirlos/JMEProjects/Hercules/src/Player/Player.java</file>
+<<<<<<< HEAD
             <file>file:/home/kirlos/JMEProjects/Hercules/src/mygame/Throwable.java</file>
             <file>file:/home/kirlos/JMEProjects/Hercules/src/Player/PlayerMovesControl.java</file>
+=======
+            <file>file:/home/kirlos/JMEProjects/Hercules/src/Player/PlayerMovesControl.java</file>
+            <file>file:/home/kirlos/JMEProjects/Hercules/src/mygame/AnimationManager.java</file>
+>>>>>>> Better-Animation
         </group>
     </open-files>
 </project-private>

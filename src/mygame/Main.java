@@ -62,20 +62,21 @@ public class Main extends SimpleApplication
     public void simpleUpdate(float tpf)
     {
         if(the_level_is_working)
-            level2.update(tpf);//level1.update(tpf);
+            //level2.update(tpf);
+            level1.update(tpf);
         if(moveToNextLevel == true )
         {
             if(currentLevel == 1)
             {
                 startMenu.Unload();
-                /*level1 = new Level1();
+                level1 = new Level1();
                 level1.init(stateManager, this);
-                level1.Load();*/
+                level1.Load();
                 the_level_is_working=true;
-                //level1.update(tpf);
-                level2 = new Level2();
-                level2.init(stateManager, this);
-                level2.Load();
+                level1.update(tpf);
+//                level2 = new Level2();
+//                level2.init(stateManager, this);
+//                level2.Load();
                 
                 playMusic("basicGame.ogg");
             }
@@ -99,8 +100,8 @@ public class Main extends SimpleApplication
         }
         if(pauseButton)
         {
-            //level1.Unload();
-            level2.Unload();
+            level1.Unload();
+            //level2.Unload();
             the_level_is_working=false;
             
             pauseMenu = new PauseMenu();

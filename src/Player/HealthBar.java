@@ -9,6 +9,7 @@ import com.jme3.scene.control.AbstractControl;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture2D;
 import com.jme3.ui.Picture;
+import java.sql.Time;
 import jme3tools.optimize.TextureAtlas;
 
 /**
@@ -35,13 +36,18 @@ public class HealthBar extends AbstractControl {
     private int CurHealth = 175;
     private int Damage = 0, HeartCounter = 0;
 
+    private boolean Shild = false;
+    private Long LastAttacked , ShildTime;
+
     public HealthBar(AssetManager assetManager, Camera cam, Node Gui) {
 
         this.assetManager = assetManager;
 
         this.SettingsHeight = cam.getHeight();
         this.SettingsWidth = cam.getWidth();
-
+        LastAttacked = System.currentTimeMillis();
+        this.ShildTime=4000L;
+        
         FaceHeight = SettingsHeight / 6.0f;
         FaceWidth = FaceHeight * FaceRatio;
 
@@ -91,7 +97,12 @@ public class HealthBar extends AbstractControl {
     }
 
     public void DecreaseHealth(int health) {
+        if (Shild) {
+            return;
+        }
         this.Damage += health;
+        Shild = true;
+        LastAttacked = System.currentTimeMillis();
 
     }
 
@@ -105,6 +116,9 @@ public class HealthBar extends AbstractControl {
 
     @Override
     protected void controlUpdate(float tpf) {
+        if (System.currentTimeMillis() - LastAttacked > ShildTime) {
+            Shild = false;
+        }
         if (Math.abs(Damage) >= 1) {
             CurHealth += Damage > 0 ? -1 : 1;
             Damage += Damage > 0 ? -1 : 1;

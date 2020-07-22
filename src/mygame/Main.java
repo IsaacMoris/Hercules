@@ -1,12 +1,9 @@
 package mygame;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.bullet.BulletAppState;
-import com.jme3.input.KeyInput;
-import com.jme3.input.controls.KeyTrigger;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
-
+import NiftyGui.*;
 /**
  * This is the Main Class of your Game. You should only do initialization here.
  * Move your Logic into AppStates or Controls
@@ -16,10 +13,12 @@ public class Main extends SimpleApplication
 {
     private static int currentLevel=0;
     private static boolean isResumed = false;
+    public static boolean pauseButton = false;
     private static boolean moveToNextLevel;
     private static float soundLevel = 0.1f;
     private static String playerName;
-    NiftyGui menu;
+    PlayerNameMenu startMenu;
+    PauseMenu pauseMenu;
     level1_scene level1;
     AppSettings settings;
     BetterInputManager betterInputManager;
@@ -43,18 +42,17 @@ public class Main extends SimpleApplication
        this.setShowSettings(true);
         
         //Declare Screens
-       menu = new NiftyGui();
+       startMenu = new PlayerNameMenu();
        level1 = new level1_scene();
        
        //Inizialize Screens
-       menu.init(stateManager, this, "start"); 
-       menu.Load();
+       startMenu.init(stateManager, this); 
+       startMenu.Load();
        
        //Audio Manager
        audioManager = new AudioManager(assetManager, "menuTrack.ogg");
        playMusic("menuTrack.ogg");
        betterInputManager = new BetterInputManager(this.getInputManager());
-       level1 = new level1_scene();
       
     }
 
@@ -67,7 +65,8 @@ public class Main extends SimpleApplication
         {
             if(currentLevel == 1)
             {
-                menu.Unload();
+                startMenu.Unload();
+                level1 = new level1_scene();
                 level1.init(stateManager, this);
                 level1.Load();
                 the_level_is_working=true;
@@ -83,7 +82,7 @@ public class Main extends SimpleApplication
         if(isResumed)
         {
             playMusic("basicGame.ogg");
-            menu.Unload();
+            pauseMenu.Unload();
            if(currentLevel == 1){
             level1.Load();
             the_level_is_working=true;
@@ -93,14 +92,18 @@ public class Main extends SimpleApplication
            
            isResumed = false;
         }
-        if(BetterInputManager.Pause && currentLevel > 0 && isResumed == false )
+        if(pauseButton)
         {
             level1.Unload();
             the_level_is_working=false;
-            menu.gotoPauseMenu();
-            menu.Load();
+            
+            pauseMenu = new PauseMenu();
+            pauseMenu.init(stateManager, this);
+            pauseMenu.Load();
             
             playMusic("menuTrack.ogg");
+            
+            pauseButton = false;
         }
     }
     public static void setCurrentLevel(int level)

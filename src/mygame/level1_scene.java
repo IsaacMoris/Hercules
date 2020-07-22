@@ -179,6 +179,9 @@ public class level1_scene extends BaseAppState
       
         npcManager.setPositionToGO(playerNode.getLocalTranslation());
         GP.update();
+        
+        if(BetterInputManager.Pause)
+            Main.pauseButton =true;
     }
     
     

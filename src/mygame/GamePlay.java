@@ -83,7 +83,7 @@ public class GamePlay {
             String name = child.getName();
             String parent = "";
             if (name.equals("12190_Heart_v1_L3-geom-0")) {
-                player.getControl(HealthBar.class).increaseHeartCounter();
+              playerClass.increaseHeartCounter();
                 parent = "HeartShape";
             }
             if (name.equals("HealthDrink")) {

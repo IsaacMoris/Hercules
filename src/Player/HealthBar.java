@@ -18,101 +18,81 @@ import jme3tools.optimize.TextureAtlas;
  */
 public class HealthBar extends AbstractControl {
 
-    private Picture health, Face;
-    private Texture2D healthTexture;
-    private AssetManager assetManager;
     private float SettingsHeight, SettingsWidth;
+    private Picture BloodPic, FramePic;
+    private Texture2D BloodTexture;
+    final private float BloodHeight, BloodWidth;
+    final private float BloodX, BloodY;
 
-    final private float FaceHeight, FaceWidth;
-    final private float HealthHeight, HealthWidth;
+    final private float FrameHeight, FrameWidth;
+    final private float FrameX, FrameY;
+
     final private float CircleRatio = 170.0f / 247.0f;
     final private float LeftPart = 31.0f / 247.0f, Bottompart = 60.0f / 251.0f;
-
     final private float FaceRatio = 247.0f / 251.0f;
-
-    final private float FaceX, FaceY, HealthX, healthY;
 
     final private int MaxHealth = 175;
     private int CurHealth = 175;
-    private int Damage = 0, HeartCounter = 0;
+    private int Damage = 0;
 
     private boolean Shild = false;
-    private Long LastAttacked , ShildTime;
+    private Long LastAttacked, ShildTime;
 
-    public HealthBar(AssetManager assetManager, Camera cam, Node Gui) {
+    public HealthBar(Camera cam, Node GuiNode, Long shildTime, boolean Left) {
 
-        this.assetManager = assetManager;
-
-        this.SettingsHeight = cam.getHeight();
+        this.SettingsHeight = cam.getHeight();  // set the height and width of screen to cam height and width
         this.SettingsWidth = cam.getWidth();
+        this.ShildTime = shildTime;               // Shild time that protect the health from decreasing
+
         LastAttacked = System.currentTimeMillis();
-        this.ShildTime=4000L;
-        
-        FaceHeight = SettingsHeight / 6.0f;
-        FaceWidth = FaceHeight * FaceRatio;
 
-        HealthHeight = HealthWidth = CircleRatio * FaceWidth;
+        FrameHeight = SettingsHeight / 6.0f;
+        FrameWidth = FrameHeight * FaceRatio;
+        FrameX = Left ? 0 : SettingsWidth - FrameWidth * 1.2f;
+        FrameY = SettingsHeight - FrameHeight * 1.2f;
 
-        FaceX = 0;
-        FaceY = SettingsHeight - FaceHeight * 1.2f;
+        BloodHeight = BloodWidth = CircleRatio * FrameWidth;
+        BloodX = FrameX + LeftPart * FrameWidth;
+        BloodY = FrameY + Bottompart * FrameHeight;
 
-        HealthX = FaceX + LeftPart * FaceWidth;
-        healthY = FaceY + Bottompart * FaceHeight;
-        Initial(Gui);
+        BloodPic = new Picture("Blood Pic");
+        FramePic = new Picture("Frame Picture");
+
+        GuiNode.attachChild(BloodPic);
+        GuiNode.attachChild(FramePic);
     }
 
-    void Initial(Node Gui) {
+    public void SetHealthPic(AssetManager assetManager, String Frame, String Blood) {
 
-        healthTexture = (Texture2D) assetManager.loadTexture("Textures/Health.png");
+        BloodTexture = (Texture2D) assetManager.loadTexture(Blood);
+        BloodPic.setTexture(assetManager, BloodTexture, true);
+        BloodPic.setWidth(BloodWidth);
+        BloodPic.setHeight(BloodHeight);
+        BloodPic.setPosition(BloodX, BloodY);
 
-        health = new Picture("Health Pic");
-        health.setTexture(assetManager, healthTexture, true);
-        health.setWidth(HealthWidth);
-
-        health.setHeight(HealthHeight);
-        health.setPosition(HealthX, healthY);
-
-        Face = new Picture("Face Picture");
-        Face.setImage(assetManager, "Textures/Face.png", true);
-
-        Face.setWidth(FaceWidth);
-        Face.setHeight(FaceHeight);
-        Face.setPosition(FaceX, FaceY);
-
-        Gui.attachChild(getHealth());
-        Gui.attachChild(getFace());
-    }
-
-    public Picture getHealth() {
-        return health;
-    }
-
-    public Picture getFace() {
-        return Face;
-    }
-
-    public void IncreaseHealth(int Damage) {
-        this.Damage -= Damage;
+        FramePic.setImage(assetManager, Frame, true);
+        FramePic.setWidth(FrameWidth);
+        FramePic.setHeight(FrameHeight);
+        FramePic.setPosition(FrameX, FrameY);
 
     }
 
-    public void DecreaseHealth(int health) {
+    public void IncreaseHealth(int health) {
+        this.Damage -= health;
+
+    }
+
+    public void DecreaseHealth(int Damage) {
         if (Shild) {
             return;
         }
-        this.Damage += health;
+        this.Damage += Damage;
         Shild = true;
         LastAttacked = System.currentTimeMillis();
 
     }
 
-    public int getHeartCounter() {
-        return HeartCounter;
-    }
 
-    public void increaseHeartCounter() {
-        HeartCounter++;
-    }
 
     @Override
     protected void controlUpdate(float tpf) {
@@ -124,8 +104,8 @@ public class HealthBar extends AbstractControl {
             Damage += Damage > 0 ? -1 : 1;
             CurHealth = CurHealth > MaxHealth ? MaxHealth : CurHealth;
         }
-        healthTexture.getImage().setHeight(CurHealth);
-        health.setHeight(HealthHeight * CurHealth / MaxHealth);
+        BloodTexture.getImage().setHeight(CurHealth);
+        BloodPic.setHeight(BloodHeight * CurHealth / MaxHealth);
     }
 
     @Override

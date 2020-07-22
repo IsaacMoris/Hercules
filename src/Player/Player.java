@@ -22,34 +22,42 @@ public class Player {
     private final BulletAppState bulletAppState;
     private final CameraNode camNode;
     private final Node player;
-    private final PlayerMovesControl PlayerMoves;
+    private PlayerMovesControl PlayerMoves;
     private HealthBar Health;
     private final Node Gui;
-    private int CoinCounter;
+    private int CoinCounter = 0, HeartCounter = 0;
+    ;
     private AnimationManager animManager;
 
-    public Player(AssetManager assetManager, BulletAppState bulletAppState, CameraNode camNode, Node Gui) {
+    public Player(AssetManager assetManager, BulletAppState bulletAppState, CameraNode camNode, Node GuiNode) {
         // intialize Player Attributes
         this.assetManager = assetManager;
         this.bulletAppState = bulletAppState;
         this.camNode = camNode;
-        this.Gui = Gui;
+        this.Gui = GuiNode;
         this.CoinCounter = 0;
 
         player = (Node) assetManager.loadModel("Models/Hercules/Hercules.j3o");
 
         CustomizeCamera();
 
-        PlayerMoves = new PlayerMovesControl(player, bulletAppState, camNode);
-        Health = new HealthBar(assetManager, camNode.getCamera(), Gui);
-        this.animManager = PlayerMoves.getAnimManager();
+        LoadHealth(GuiNode);
+        LoadMoveMents();
+    }
 
-        player.addControl(PlayerMoves);
+    private void LoadHealth(Node GuiNode) {
+        Health = new HealthBar(camNode.getCamera(), GuiNode, 4000L, false);
+        Health.SetHealthPic(assetManager, "Textures/Hercules/Frame.png", "Textures/Hercules/Blood.png");
         player.addControl(Health);
     }
 
-    private void CustomizeCamera() {
+    private void LoadMoveMents() {
+        PlayerMoves = new PlayerMovesControl(player, bulletAppState, camNode);
+        this.animManager = PlayerMoves.getAnimManager();
+        player.addControl(PlayerMoves);
+    }
 
+    private void CustomizeCamera() {
         camNode.setControlDir(CameraControl.ControlDirection.SpatialToCamera);
         player.attachChild(camNode);
         camNode.setLocalTranslation(0, 300, -500);
@@ -71,5 +79,14 @@ public class Player {
     public void increaseCoinCounter() {
         CoinCounter++;
     }
+
+    public int getHeartCounter() {
+        return HeartCounter;
+    }
+
+    public void increaseHeartCounter() {
+        HeartCounter++;
+    }
+    
 
 }

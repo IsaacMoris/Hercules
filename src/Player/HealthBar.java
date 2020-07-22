@@ -33,7 +33,7 @@ public class HealthBar extends AbstractControl {
 
     final private int MaxHealth = 175;
     private int CurHealth = 175;
-    private int Damage;
+    private int Damage = 0, HeartCounter = 0;
 
     public HealthBar(AssetManager assetManager, Camera cam, Node Gui) {
 
@@ -41,9 +41,7 @@ public class HealthBar extends AbstractControl {
 
         this.SettingsHeight = cam.getHeight();
         this.SettingsWidth = cam.getWidth();
-        
-        
-        
+
         FaceHeight = SettingsHeight / 6.0f;
         FaceWidth = FaceHeight * FaceRatio;
 
@@ -74,7 +72,7 @@ public class HealthBar extends AbstractControl {
         Face.setWidth(FaceWidth);
         Face.setHeight(FaceHeight);
         Face.setPosition(FaceX, FaceY);
-        
+
         Gui.attachChild(getHealth());
         Gui.attachChild(getFace());
     }
@@ -87,25 +85,33 @@ public class HealthBar extends AbstractControl {
         return Face;
     }
 
-    public void setDamage(int Damage) {
-        this.Damage += Damage;
+    public void IncreaseHealth(int Damage) {
+        this.Damage -= Damage;
 
     }
-    float x = 0;
+
+    public void DecreaseHealth(int health) {
+        this.Damage += health;
+
+    }
+
+    public int getHeartCounter() {
+        return HeartCounter;
+    }
+
+    public void increaseHeartCounter() {
+        HeartCounter++;
+    }
 
     @Override
     protected void controlUpdate(float tpf) {
-        if (Damage >= 1) {
-            x += 0.2f;
-            if (x >= 1f) {
-                CurHealth -= 1;
-                x -= 1;
-                Damage -= 1;
-                healthTexture.getImage().setHeight(CurHealth);
-                health.setHeight(HealthHeight * CurHealth / MaxHealth);
-            }
+        if (Math.abs(Damage) >= 1) {
+            CurHealth += Damage > 0 ? -1 : 1;
+            Damage += Damage > 0 ? -1 : 1;
+            CurHealth = CurHealth > MaxHealth ? MaxHealth : CurHealth;
         }
-
+        healthTexture.getImage().setHeight(CurHealth);
+        health.setHeight(HealthHeight * CurHealth / MaxHealth);
     }
 
     @Override

@@ -57,12 +57,13 @@ public class PlayerMovesControl extends AbstractControl {
 
         spatial.addControl(playerControl);
         bulletAppState.getPhysicsSpace().add(playerControl);
-        
+
         //Animation
-        animManager = new AnimationManager(((Node)player).getChild("Armature").getControl(AnimControl.class), "idle");
+        animManager = new AnimationManager(((Node) player).getChild("Armature").getControl(AnimControl.class), "idle");
         //intialKeys();
     }
 //float time;           Delay
+
     @Override
     protected void controlUpdate(float tpf) {
 //time+=tpf;
@@ -71,54 +72,48 @@ public class PlayerMovesControl extends AbstractControl {
         Vector3f modelSideDir = spatial.getWorldRotation().mult(Vector3f.UNIT_X);
         walkDirection.set(0, 0, 0);
 //if (time>0.4){
- //   time=0;
-        if (BetterInputManager.Forward) {
-            float x=1;
-            if(BetterInputManager.Run)
-                x=2;
-            walkDirection.addLocal(modelForwardDir.mult((float)speed * x));
-            animManager.setAnimation("walk",x);
+        //   time=0;
+        if (BetterInputManager.Forward && BetterInputManager.Run) {
+            walkDirection.addLocal(modelForwardDir.mult(speed * 2));
+            animManager.setAnimation("running", 1);
+        } else if (BetterInputManager.Forward) {
+            walkDirection.addLocal(modelForwardDir.mult(speed));
+            animManager.setAnimation("walk", 1);
         } else if (BetterInputManager.BackWard) {
             walkDirection.addLocal(modelForwardDir.mult(speed).negate());
             animManager.setAnimation("walk_backwards");
         } else if (BetterInputManager.Right) {
-          animManager.setAnimation("right strife walk",1);
+            animManager.setAnimation("right strife walk", 1);
             walkDirection.addLocal(modelSideDir.mult(speed).negate());
         } else if (BetterInputManager.Left) {
             walkDirection.addLocal(modelSideDir.mult(speed));
-            animManager.setAnimation("left strife walk ",1);
-        }
-           else if(BetterInputManager.Punch){
-        animManager.setAnimation("punch");
+            animManager.setAnimation("left strife walk ", 1);
+        } else if (BetterInputManager.Punch) {
+            animManager.setAnimation("punch" , 1);
 
-        }
-           else if(BetterInputManager.Power_Punch){
-        animManager.setAnimation("cross punch with left",0.8f);
+        } else if (BetterInputManager.Power_Punch) {
+            animManager.setAnimation("cross punch with left", 1);
 
-        } else if (BetterInputManager.Sword_Attack){
-         animManager.setAnimation("sword skill 3",0.8f);
-        } 
-          else
+        } else if (BetterInputManager.Sword_Attack) {
+            animManager.setAnimation("sword skill 3", 1);
+        } else {
             animManager.setAnimation("idle");
-        
-        
-         if (BetterInputManager.Jump) {
-            
-            animManager.setAnimation("jump");
-             playerControl.jump();
-            
         }
-    //}
-        playerControl.setWalkDirection(walkDirection); // walk!
-        
 
-        
+        if (BetterInputManager.Jump) {
+
+            animManager.setAnimation("jump");
+            playerControl.jump();
+
+        }
+        //}
+        playerControl.setWalkDirection(walkDirection); // walk!
 
         Quaternion rotateRL = new Quaternion().
                 fromAngleAxis(FastMath.PI * (BetterInputManager.MouseX), Vector3f.UNIT_Y);
         rotateRL.multLocal(viewDirection);
         playerControl.setViewDirection(viewDirection); // turn!
-
+        
         float theta = (float) (Math.PI / 2 - camNode.getCamera().getDirection().angleBetween(modelForwardDir) - 1e-6);
         Quaternion rotateUD = new Quaternion().
                 fromAngleAxis(BetterInputManager.dir * Float.min(FastMath.PI * (BetterInputManager.MouseY), theta), Vector3f.UNIT_X);

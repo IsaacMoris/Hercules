@@ -5,7 +5,7 @@
  */
 package mygame;
 
-import Player.Player;
+import Player.*;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import java.util.List;
@@ -20,10 +20,12 @@ public class GamePlay {
     rayCasting rycast;
     Node Scene;
     private Player playerClass;
+    private Node player;
 
-    public GamePlay(rayCasting rycast, Player playerClass, Node Scene) {
-        this.rycast = rycast;
+    public GamePlay(Player playerClass, Node Scene) {
         this.playerClass = playerClass;
+        this.player = this.playerClass.getPlayer();
+        this.rycast = new rayCasting(player, Scene);
         this.Scene = Scene;
     }
 
@@ -41,7 +43,7 @@ public class GamePlay {
             }
 
             while (N != null && !N.getName().equals(parent) && N.getParent() != Scene) {
-                 N.detachAllChildren();
+                N.detachAllChildren();
                 N = N.getParent();
 
             }
@@ -56,37 +58,36 @@ public class GamePlay {
     }
 
     public void update() {
-        if(BetterInputManager.Sword_Attack){
-        detected = rycast.attack_detect();
-        for (int i = 0; i < detected.size(); i++) {
-            Geometry child = detected.get(i);
-            String name = child.getName();
-            String parent = "";
-           
-            if (name.equals("Box001_Material #41_0")) {
-                //playerClass.TakeDamage(50);
-                parent = "Bagmy";
+        if (BetterInputManager.Sword_Attack) {
+            detected = rycast.attack_detect();
+            for (int i = 0; i < detected.size(); i++) {
+                Geometry child = detected.get(i);
+                String name = child.getName();
+                String parent = "";
 
+                if (name.equals("Box001_Material #41_0")) {
+                    //playerClass.TakeDamage(50);
+                    parent = "Bagmy";
+
+                }
+                Node N = find_parent(child, parent);
+                if (N != null) {
+                    Scene.detachChild(N);
+                }
             }
-            Node N=find_parent(child, parent);
-            if(N!=null)
-            Scene.detachChild(N);
         }
-        System.out.println(playerClass.getHealthCounter());
-        }
-        
+
         detected = rycast.touch_detect();
         for (int i = 0; i < detected.size(); i++) {
             Geometry child = detected.get(i);
             String name = child.getName();
             String parent = "";
             if (name.equals("12190_Heart_v1_L3-geom-0")) {
-                playerClass.increaseHeartCounter();
+                player.getControl(HealthBar.class).increaseHeartCounter();
                 parent = "HeartShape";
             }
             if (name.equals("HealthDrink")) {
-                playerClass.setHealthCounter(50);
-                playerClass.TakeDamage(-50);
+                player.getControl(HealthBar.class).IncreaseHealth(50);
                 parent = "HealthDrink";
 
             }
@@ -96,18 +97,16 @@ public class GamePlay {
 
             }
             if (name.equals("Box001_Material #41_0")) {
-                playerClass.TakeDamage(50);
+                player.getControl(HealthBar.class).DecreaseHealth(50);
                 parent = "Bagmy";
                 continue;
 
             }
-            Node N=find_parent(child, parent);
-            if(N!=null)
-            Scene.detachChild(N);
+            Node N = find_parent(child, parent);
+            if (N != null) {
+                Scene.detachChild(N);
+            }
         }
-        
-    }
-    }
-  
 
-
+    }
+}

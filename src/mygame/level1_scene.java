@@ -46,18 +46,16 @@ public class level1_scene extends BaseAppState
     private Node localGuiNode = new Node("level1 GuiNode");
     private GamePlay GP;
     Node Scene;
-    Node player;
+    Node playerNode;
     Spatial Grass;
     Node Dummy;
     Node dragon;
     Node Coin;
     Node HealthDrink;
     FilterPostProcessor processor;
-    rayCasting rycast;
     BetterCharacterControl dragoncontrol;
     private BulletAppState bulletAppState;
     private RigidBodyControl[] scenePhy;
-    PlayerMovesControl playerMoves;
     
     private AudioManager audioManager;
     private NPCManager npcManager;
@@ -112,10 +110,10 @@ public class level1_scene extends BaseAppState
         // Player
         CameraNode camNode = new CameraNode("CamNode", cam);
         playerClass = new  Player(assetManager , bulletAppState,camNode,localGuiNode);
-        player = playerClass.getPlayer();
-        TangentBinormalGenerator.generate(player);
+        playerNode = playerClass.getPlayer();
+        TangentBinormalGenerator.generate(playerNode);
         
-        Scene.attachChild(player);
+        Scene.attachChild(playerNode);
         cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, 1000f);
         
         
@@ -169,9 +167,9 @@ public class level1_scene extends BaseAppState
 
         //  bulletAppState.setDebugEnabled(true);
         //ray casting
-        rycast=new rayCasting(localRootNode, player, Scene,cam);
+        
         //GamePlay
-        GP=new GamePlay(rycast, playerClass,Scene);
+        GP=new GamePlay(playerClass,Scene);
         update(1);
     }
     
@@ -179,7 +177,7 @@ public class level1_scene extends BaseAppState
     public void update(float tpf) {
        // System.out.println("I'm working");
       
-        npcManager.setPositionToGO(player.getLocalTranslation());
+        npcManager.setPositionToGO(playerNode.getLocalTranslation());
         GP.update();
     }
     

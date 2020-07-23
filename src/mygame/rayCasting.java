@@ -48,18 +48,18 @@ public class rayCasting {
         this.Sword = (Node) Scene.getChild(check_with);
         if (check_with.equals("Hercules")) {
             this.Sword = player;
+        }else if(check_with.equals("Sword")){
+        this.Sword=(Node)player.getChild("Sword");
         }
 
         List<Geometry> touched = new ArrayList<>();
         for (int i = 0; i < collidables_list.size(); i++) {
-            CollisionResults results = new CollisionResults(), attackRes = new CollisionResults();
-            player.collideWith(collidables_list.get(i).getWorldBound(), results);
-            Sword.collideWith(collidables_list.get(i).getWorldBound(), attackRes);
-            String name = collidables_list.get(i).getName();
-            String parent = "";
+            CollisionResults results = new CollisionResults();
+            Sword.collideWith(collidables_list.get(i).getWorldBound(), results);
 
-            if (collidables_list.get(i) != null) {
+            if (results.size()>0&&collidables_list.get(i) != null) {
                 touched.add(collidables_list.get(i));
+                System.out.println("hi i took "+collidables_list.get(i).getName());
             }
 
         }
@@ -81,9 +81,9 @@ public class rayCasting {
                     || name.equals("HealthDrink")
                     || name.equals("CoinObj_Coin_0")
                     || name.equals("Box001_Material #41_0")
-                    || name.equals("Object_texture000.jpg.001")
-                    || name.equals("Object_texture001.jpg.001")
-                    || name.equals("Object_texture002.jpg.001")
+                   // || name.equals("Object_texture000.jpg.001")
+                   // || name.equals("Object_texture001.jpg.001")
+                   // || name.equals("Object_texture002.jpg.001")
                     || name.equals("rdmobj00mesh.008")
                     || name.equals("rdmobj01mesh.008")
                     || name.equals("rdmobj02mesh.008")) {

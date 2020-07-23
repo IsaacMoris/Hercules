@@ -5,10 +5,11 @@
  */
 package Hades;
 
-import mygame.HealthBar;
+import mygame.*;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.Vector3f;
+import static com.jme3.post.filters.BloomFilter.GlowMode.Scene;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 
@@ -20,10 +21,12 @@ public class HadesClass {
 
     Node Hades;
     Node Hercules;
+    Effects headFire , handFire;
     private HealthBar HadesHealth;
     private HadesMovement hadescontrol;
 
-    public HadesClass(Node Hercules, AssetManager assetManager, BulletAppState bulletAppState, CameraNode camNode, Node GuiNode) {
+    public HadesClass(Node Hercules, AssetManager assetManager, BulletAppState bulletAppState, CameraNode camNode, Node GuiNode)
+    {
 
         Hades = (Node) assetManager.loadModel("Models/Hades/Hades.j3o");
         Hades.setLocalTranslation(8, 1, 0);
@@ -36,6 +39,8 @@ public class HadesClass {
 
         hadescontrol = new HadesMovement(Hercules, Hades, bulletAppState);
         Hades.addControl(hadescontrol);
+       
+
     }
 
     public Node getHades() {

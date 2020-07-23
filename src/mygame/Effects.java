@@ -35,7 +35,7 @@ public class Effects extends AbstractControl
             effect.setImagesY(2); // 2x2 texture animation
             effect.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 2, 0));
             effect.setStartSize(size);
-            effect.setEndSize(0.1f);
+            effect.setEndSize(size);
             effect.setGravity(0, 0, 0);
             effect.setLowLife(1f);
             effect.setHighLife(3f);

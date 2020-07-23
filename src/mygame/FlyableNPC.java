@@ -45,14 +45,14 @@ public class FlyableNPC extends NPCManager {
     @Override
     protected void controlUpdate(float tpf) {
         moveForward(tpf);
-        Vector3f moveValue = Vector3f.UNIT_Y.mult(tpf * getSpeed());
+        Vector3f moveValue = Vector3f.UNIT_Y.mult(tpf * -getSpeed());
         if((stayOnGround && moveValue.y + spatial.getLocalTranslation().y >= 0)
                 || (!stayOnGround && moveValue.y + spatial.getLocalTranslation().y >= yOffSet)){
             spatial.move(moveValue);
         }else if(stayOnGround){
             spatial.setLocalTranslation(Vector3f.ZERO);
-        }else if(moveValue.y - spatial.getLocalTranslation().y <= yOffSet){
-            spatial.move(moveValue);
+        }else if((moveValue.y * -1) + spatial.getLocalTranslation().y <= yOffSet){
+            spatial.move(moveValue.mult(-1f));
         }
     }
 

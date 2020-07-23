@@ -79,7 +79,7 @@ public class Level2 extends Level {
         Hades.setLocalTranslation(10, 8, 10);
         Hades.scale(1.5f);
         Scene.attachChild(Hades);
-        HadesHealth = new HealthBar(cam, guiNode, 0L, false);
+        HadesHealth = new HealthBar(cam, localGuiNode, 0L, false);
         HadesHealth.SetHealthPic(assetManager, "Textures/Hades/Frame.png", "Textures/Hades/Blood.png");
         Hades.addControl(HadesHealth);
 

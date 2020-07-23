@@ -67,7 +67,7 @@ public class Player {
     private void CustomizeCamera() {
         camNode.setControlDir(CameraControl.ControlDirection.SpatialToCamera);
         player.attachChild(camNode);
-        camNode.setLocalTranslation(0, 250, -500);
+        camNode.setLocalTranslation(0, 350, -600);
         camNode.setLodLevel(4);
     }
     

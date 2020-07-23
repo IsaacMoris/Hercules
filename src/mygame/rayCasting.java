@@ -40,39 +40,17 @@ public class rayCasting {
 
     }
 
-    Node find_parent(Geometry geo, String parent) {
-        try {
-            Node N = geo.getParent();
-
-            //if(N==null)System.out.println("i am null");
-            Node par = null;
-            if (Scene.getChild(parent) != null) {
-                par = (Node) Scene.getChild(parent);
-            }
-            if (parent.equals("Scene Root")) {
-                par = Scene;
-            }
-
-            while (N != null && !N.getName().equals(parent) && N.getParent() != Scene) {
-                // N.detachAllChildren();
-                N = N.getParent();
-
-            }
-            // System.out.println("hello");
-            return N;
-
-        } catch (Exception e) {
-            System.out.println("mygame.rayCasting.find_parent()");
-        }
-        return null;
-
-    }
-
+   
     /**
      * detecting collectable items
      */
-    private List detect(boolean is_attacking) {
-        List<Geometry> attacked = new ArrayList<>(), touched = new ArrayList<>();
+    public List detect_Collision_with(String check_with) {
+        
+         this.Sword = (Node) Scene.getChild(check_with);
+         if(check_with.equals("Hercules"))
+             this.Sword=player;
+
+        List<Geometry> touched = new ArrayList<>();
         for (int i = 0; i < collidables_list.size(); i++) {
             CollisionResults results = new CollisionResults(), attackRes = new CollisionResults();
             player.collideWith(collidables_list.get(i).getWorldBound(), results);
@@ -80,53 +58,19 @@ public class rayCasting {
             String name = collidables_list.get(i).getName();
             String parent = "";
 
-            if (results.size() > 0) {
-
-                if (name.equals("12190_Heart_v1_L3-geom-0")) {
-                    parent = "HeartShape";
-                }
-                if (name.equals("HealthDrink")) {
-                    parent = "HealthDrink";
-                }
-                if (name.equals("CoinObj_Coin_0")) {
-                    parent = "Coin";
-                }
-                if (name.equals("Box001_Material #41_0")) {
-                    parent = "Bagmy";
-                }
-                Node N = find_parent(collidables_list.get(i), parent);
-                if (N != null) {
-                    // Scene.detachChild(N);
-                    System.out.println("hi i took " + name);
+                if (collidables_list.get(i) != null) {
                     touched.add(collidables_list.get(i));
                 }
+                
             }
-            if (attackRes.size() > 0) {
-                if (name.equals("Box001_Material #41_0")) {
-                    parent = "Bagmy";
-                }
-                Node N = find_parent(collidables_list.get(i), parent);
+        
 
-                if (N != null) {
-                    attacked.add(collidables_list.get(i));
-                }
-            }
-        }
-
-        if (is_attacking) {
-            return attacked;
-        }
+       
         return touched;
 
     }
 
-    public List attack_detect() {
-        return detect(true);
-    }
-
-    public List touch_detect() {
-        return detect(false);
-    }
+    
 
     /**
      * for detecting attackable items
@@ -140,7 +84,14 @@ public class rayCasting {
             if (name.equals("12190_Heart_v1_L3-geom-0")
                     || name.equals("HealthDrink")
                     || name.equals("CoinObj_Coin_0")
-                    || name.equals("Box001_Material #41_0")) {
+                    || name.equals("Box001_Material #41_0")
+                    || name.equals("Object_texture000.jpg.001")
+                    || name.equals("Object_texture001.jpg.001")
+                    || name.equals("Object_texture002.jpg.001")
+                    || name.equals("rdmobj00mesh.008")
+                    || name.equals("rdmobj01mesh.008")
+                    || name.equals("rdmobj02mesh.008")
+                    ) {
                 collidables_list.add(g);
 
             }

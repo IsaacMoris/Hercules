@@ -43,7 +43,7 @@ public class GamePlay {
             }
 
             while (N != null && !N.getName().equals(parent) && N.getParent() != Scene) {
-                N.detachAllChildren();
+                // N.detachAllChildren();
                 N = N.getParent();
 
             }
@@ -57,9 +57,10 @@ public class GamePlay {
 
     }
 
+
     public void update() {
         if (BetterInputManager.Sword_Attack) {
-            detected = rycast.attack_detect();
+            detected = rycast.detect_Collision_with("Sword");
             for (int i = 0; i < detected.size(); i++) {
                 Geometry child = detected.get(i);
                 String name = child.getName();
@@ -77,7 +78,7 @@ public class GamePlay {
             }
         }
 
-        detected = rycast.touch_detect();
+        detected = rycast.detect_Collision_with("Hercules");
         for (int i = 0; i < detected.size(); i++) {
             Geometry child = detected.get(i);
             String name = child.getName();

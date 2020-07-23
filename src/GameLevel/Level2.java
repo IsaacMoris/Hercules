@@ -27,6 +27,7 @@ public class Level2 extends Level{
     List<Spatial> StaticGroundObjectsChildren;
     private Player playerClass ;
     Node playerNode;
+    Node Hades;
 
     @Override
     public void startLevel() {
@@ -73,6 +74,10 @@ public class Level2 extends Level{
         
         Scene.attachChild(playerNode);
         cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, 1000f);
+        //hades 
+        Hades=(Node) assetManager.loadModel("Models/Hades/Hades.j3o"); 
+        Hades.setLocalTranslation(10,5,10);
+        Scene.attachChild(Hades);
         
       //  bulletAppState.setDebugEnabled(true);
 

@@ -12,9 +12,10 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 
 
-public class NPCManager extends AbstractControl{
+public abstract class NPCManager extends AbstractControl{
     private Vector3f positionToGO;
     private float speed, zOffSet;
+    protected boolean stayOnGround;
 
     public NPCManager(Spatial spatial) {
         super.setSpatial(spatial);
@@ -48,10 +49,8 @@ public class NPCManager extends AbstractControl{
     public void setSpeed(float speed) {
         this.speed = speed;
     }
-
-    //More Methods
-    @Override
-    protected void controlUpdate(float tpf) {
+    
+    protected void moveForward(float tpf){
         spatial.lookAt(positionToGO, Vector3f.ZERO);
         if(Math.abs(positionToGO.z - spatial.getLocalTranslation().z) > Math.abs(zOffSet)){
             if(positionToGO.z - Math.abs(zOffSet) > spatial.getLocalTranslation().z)
@@ -59,9 +58,5 @@ public class NPCManager extends AbstractControl{
             else if(positionToGO.z + Math.abs(zOffSet) < spatial.getLocalTranslation().z)
                 spatial.move(Vector3f.UNIT_Z.mult(tpf * speed * -1));
         }
-    }
-
-    @Override
-    protected void controlRender(RenderManager rm, ViewPort vp) {
     }
 }

@@ -8,12 +8,15 @@ import de.lessvoid.nifty.elements.events.NiftyMousePrimaryClickedEvent;
 import de.lessvoid.nifty.input.NiftyInputEvent;
 import de.lessvoid.nifty.input.NiftyStandardInputEvent;
 import de.lessvoid.nifty.screen.Screen;
+import mygame.Main;
 
 
 
 public class LevelsMenu extends Menu{
     
     
+    
+    private int pressedLevelBtn;
     public LevelsMenu(){
         super("levels");
     }
@@ -26,6 +29,7 @@ public class LevelsMenu extends Menu{
        levelPasswordPanel.setVisible(true);
        Element levelPassInput = screen.findElementById("levelPasswordField");
        levelPassInput.setFocus();
+       pressedLevelBtn = id.charAt(id.length()-1) -'0';
     }
     
     @NiftyEventSubscriber(id="btnCancelLevelPassword")
@@ -41,7 +45,7 @@ public class LevelsMenu extends Menu{
         String password = getTextFieldText("levelPasswordField");
         if(password.length()<1) return;
         
-        System.out.println(password);
+        Main.goToLevelByPassword(pressedLevelBtn, password);
         levelPasswordPanel.setVisible(false);
         setTextFieldText("levelPasswordField", "");
     }

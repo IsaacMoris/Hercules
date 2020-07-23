@@ -2,6 +2,7 @@ package NiftyGui;
 
 import de.lessvoid.nifty.NiftyEventSubscriber;
 import de.lessvoid.nifty.elements.events.NiftyMousePrimaryClickedEvent;
+import mygame.Main;
 
 
 public class StartMenu extends Menu{
@@ -15,8 +16,10 @@ public class StartMenu extends Menu{
     @NiftyEventSubscriber(id="btnStart")
     public void startGame(String id, NiftyMousePrimaryClickedEvent event)
     {
-        PreLevelScreen.nextLevel = PreLevelScreen.NextLevel.One;
-            nifty.gotoScreen("preLevel");
+        //PreLevelScreen.setNextLevel(1);
+        //nifty.gotoScreen("preLevel");
+        Main.setCurrentLevel(1);
+        Main.moveToNextLevel();
     }
     
     @NiftyEventSubscriber(id="btnLevels")

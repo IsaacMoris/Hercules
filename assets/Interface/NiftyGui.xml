@@ -16,7 +16,7 @@ www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://niftygui.sourcefo
                 
                 <panel childLayout="horizontal" margin="20%, 40%, 0%, 30%">
                     <control  name="label"  text="Name: " font="Interface/Fonts/ComicSansMS.fnt"  align="right" margin="2%"/>
-                    <control id = "playerNameField" name="textfield" width="20%" />
+                    <control id = "playerNameField" name="textfield" width="20%" maxLength="20" />
                 </panel>
                 
                 <panel childLayout="center" margin = "15%,0px, 0px, 0px">
@@ -76,7 +76,7 @@ www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://niftygui.sourcefo
                 
                 <panel childLayout="horizontal" margin="20%, 40%, 0%, 30%">
                     <control  name="label"  text="Level Password: " font="Interface/Fonts/ComicSansMS.fnt"  align="right" margin="2%"/>
-                    <control id = "levelPasswordField" name="textfield" width="20%" />
+                    <control id = "levelPasswordField" name="textfield" width="20%" maxLength="20"  passwordChar="*"/>
                 </panel>
                 
                 <panel childLayout="horizontal" alugn ="center" margin = "0%, 0%, 0%, 25%">
@@ -96,21 +96,16 @@ www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://niftygui.sourcefo
             <!-- Levels Panel -->
             <panel id="levelsPanel" childLayout="vertical" align="left" valign="bottom" height="55%">
                 <panel childLayout="center" margin="8px">
-                    <control  id="btnLevel_1" name="button" width="150px" height="40px"  margin="0px,0px,3%, 10%" />               
-                    <control id="1" name="label"  text="Level One" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 10%"/>
+                    <control  id="btnLevel_2" name="button" width="150px" height="40px"  margin="0px,0px,3%, 10%" />               
+                    <control id="" name="label"  text="Level two" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 10%"/>
                 </panel>
                 
                 <panel childLayout="center" margin="8px">
-                    <control  id="btnLevel_2" name="button" width="150px" height="40px"  margin="0px,0px,3%, 25%" />   
-                    <control  id="" name="label"  text="Level two" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 25%"/>           
+                    <control  id="btnLevel_3" name="button" width="150px" height="40px"  margin="0px,0px,3%, 25%" />   
+                    <control  id="" name="label"  text="Level three" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 25%"/>           
                 </panel>
                 
-                <panel childLayout="center" margin="8px">
-                    <control  id="btnLevel_3" name="button" width="150px" height="40px"  margin="0px,0px,3%, 45%" />   
-                    <control  id="" name="label"  text="Level three" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 45%"/>           
-                </panel>
-                
-                <panel childLayout="center" margin="20%, 0%, 0%, 120%">
+                <panel childLayout="center" margin="40%, 0%, 0%, 120%">
                     <control  id="btnBack" name="button" width="200px" height="50px"  margin="0px,0px,3%, 25%" />   
                     <control  id="" name="label"  text="Back" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 25%"/>           
                 </panel>

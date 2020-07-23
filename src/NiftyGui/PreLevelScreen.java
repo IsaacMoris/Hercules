@@ -5,7 +5,7 @@ import mygame.Main;
 
 public class PreLevelScreen extends Menu{
     
-    static NextLevel nextLevel;
+    private static NextLevel nextLevel;
     private Element level1Img, level2Img;
     
     enum NextLevel{
@@ -18,6 +18,15 @@ public class PreLevelScreen extends Menu{
         super("preLevel");
     }
     
+    public static void setNextLevel(int level)
+    {
+        if(level ==1 )
+        nextLevel = NextLevel.One;
+        
+        else if(level == 2)
+        nextLevel = NextLevel.Two;
+    }
+    
     @Override
     public void onStartScreen() {
         level1Img = screen.findElementById("preLevel1Img");
@@ -28,17 +37,12 @@ public class PreLevelScreen extends Menu{
             level1Img.setVisible(true);
             level2Img.setVisible(false);
             
-            Main.setCurrentLevel(1);
         }
         
         else
         {
             level1Img.setVisible(false);
             level2Img.setVisible(true);
-            Main.setCurrentLevel(1);
         }
-        
-        Main.moveToNextLevel();
-        //nifty.exit();
     }
 }

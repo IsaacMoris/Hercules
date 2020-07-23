@@ -5,6 +5,8 @@
  */
 package Player;
 
+import com.jme3.asset.AssetManager;
+import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
@@ -35,7 +37,7 @@ public class HadesMovement extends AbstractControl {
 
     @Override
     protected void controlUpdate(float tpf) {
-       /* if (distance < 50) {
+        /* if (distance < 50) {
 
         } else if (distance < 100) {
             np_obj.setPositionToGO(Hercules.getLocalTranslation());

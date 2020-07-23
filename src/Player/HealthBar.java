@@ -49,7 +49,7 @@ public class HealthBar extends AbstractControl {
         FrameHeight = SettingsHeight / 6.0f;
         FrameWidth = FrameHeight * FaceRatio;
         FrameX = Left ? 0 : SettingsWidth - FrameWidth * 1.2f;
-        FrameY = SettingsHeight - FrameHeight * 1.2f;
+        FrameY = SettingsHeight - FrameHeight * 1.1f;
 
         BloodHeight = BloodWidth = CircleRatio * FrameWidth;
         BloodX = FrameX + LeftPart * FrameWidth;

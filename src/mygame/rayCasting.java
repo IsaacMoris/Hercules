@@ -40,15 +40,15 @@ public class rayCasting {
 
     }
 
-   
     /**
      * detecting collectable items
      */
     public List detect_Collision_with(String check_with) {
-        
-         this.Sword = (Node) Scene.getChild(check_with);
-         if(check_with.equals("Hercules"))
-             this.Sword=player;
+
+        this.Sword = (Node) Scene.getChild(check_with);
+        if (check_with.equals("Hercules")) {
+            this.Sword = player;
+        }
 
         List<Geometry> touched = new ArrayList<>();
         for (int i = 0; i < collidables_list.size(); i++) {
@@ -58,19 +58,15 @@ public class rayCasting {
             String name = collidables_list.get(i).getName();
             String parent = "";
 
-                if (collidables_list.get(i) != null) {
-                    touched.add(collidables_list.get(i));
-                }
-                
+            if (collidables_list.get(i) != null) {
+                touched.add(collidables_list.get(i));
             }
-        
 
-       
+        }
+
         return touched;
 
     }
-
-    
 
     /**
      * for detecting attackable items
@@ -90,8 +86,7 @@ public class rayCasting {
                     || name.equals("Object_texture002.jpg.001")
                     || name.equals("rdmobj00mesh.008")
                     || name.equals("rdmobj01mesh.008")
-                    || name.equals("rdmobj02mesh.008")
-                    ) {
+                    || name.equals("rdmobj02mesh.008")) {
                 collidables_list.add(g);
 
             }

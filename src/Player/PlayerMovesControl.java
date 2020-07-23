@@ -90,7 +90,7 @@ public class PlayerMovesControl extends AbstractControl {
             walkDirection.addLocal(modelSideDir.mult(speed));
             animManager.setAnimation("left strife walk ", 1);
         } else if (BetterInputManager.Punch) {
-            animManager.setAnimation("punch" , 1);
+            animManager.setAnimation("punch", 1);
 
         } else if (BetterInputManager.Power_Punch) {
             animManager.setAnimation("cross punch with left", 1);
@@ -114,7 +114,7 @@ public class PlayerMovesControl extends AbstractControl {
                 fromAngleAxis(FastMath.PI * (BetterInputManager.MouseX), Vector3f.UNIT_Y);
         rotateRL.multLocal(viewDirection);
         playerControl.setViewDirection(viewDirection); // turn!
-        
+
         float theta = (float) (Math.PI / 2 - camNode.getCamera().getDirection().angleBetween(modelForwardDir) - 1e-6);
         Quaternion rotateUD = new Quaternion().
                 fromAngleAxis(BetterInputManager.dir * Float.min(FastMath.PI * (BetterInputManager.MouseY), theta), Vector3f.UNIT_X);

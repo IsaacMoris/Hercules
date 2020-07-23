@@ -132,7 +132,7 @@ public class Level1 extends Level{
         //ray casting
         
         //GamePlay
-        GP=new GamePlay(playerClass,Scene);
+       // GP=new GamePlay(playerClass,Scene);
         update(1);
     }
     
@@ -141,7 +141,7 @@ public class Level1 extends Level{
        // System.out.println("I'm working");
       
         npcManager.setPositionToGO(playerNode.getLocalTranslation());
-        GP.update();
+        //GP.update();
         
         if(BetterInputManager.Pause)
             Main.pauseButton =true;

@@ -66,7 +66,7 @@ public class Main extends SimpleApplication
             currentLevel++;
             if(currentLevel-2 == 1)
             {
-                level = new Level1();
+                level = new Level2();
                 level.init(stateManager, this);
                 level.Load();
                 menu.Unload();

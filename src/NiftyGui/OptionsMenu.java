@@ -20,6 +20,10 @@ public class OptionsMenu extends Menu{
         pause
     };
     
+    
+    public OptionsMenu(){
+        super("options");
+    }
     @Override
     public void onStartScreen() {
         soundSlider.setValue(Main.getSoundLevel()*100);

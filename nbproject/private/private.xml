@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/kirlos/JMEProjects/Hercules/src/mygame/NPCManager.java</file>
-            <file>file:/home/kirlos/JMEProjects/Hercules/src/mygame/Main.java</file>
-            <file>file:/home/kirlos/JMEProjects/Hercules/src/Player/Player.java</file>
-<<<<<<< HEAD
-            <file>file:/home/kirlos/JMEProjects/Hercules/src/mygame/Throwable.java</file>
-            <file>file:/home/kirlos/JMEProjects/Hercules/src/Player/PlayerMovesControl.java</file>
-=======
-            <file>file:/home/kirlos/JMEProjects/Hercules/src/Player/PlayerMovesControl.java</file>
-            <file>file:/home/kirlos/JMEProjects/Hercules/src/mygame/AnimationManager.java</file>
->>>>>>> Better-Animation
-        </group>
-    </open-files>
 </project-private>

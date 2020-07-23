@@ -10,6 +10,11 @@ import java.io.FileReader;
 
 public class ScoreMenu extends Menu{
     
+    
+    public ScoreMenu(){
+        super("score");
+    }
+    
     @Override
     public void onStartScreen() {
         Element e = screen.findElementById("displayScore");
@@ -18,7 +23,7 @@ public class ScoreMenu extends Menu{
             
              int counter = 1;
             String score="";
-            FileReader fileReader = new FileReader("assets/Interface/Score/score.txt");
+            FileReader fileReader = new FileReader("assets/Score/score.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             
             String line;

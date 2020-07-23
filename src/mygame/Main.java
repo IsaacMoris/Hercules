@@ -18,10 +18,8 @@ public class Main extends SimpleApplication
     private static boolean moveToNextLevel;
     private static float soundLevel = 0.1f;
     private static String playerName;
-    PlayerNameMenu startMenu;
-    PauseMenu pauseMenu;
-    Level1 level1;
-    Level2 level2;
+    Menu menu;
+    Level level;
     public AppSettings settings;
     BetterInputManager betterInputManager;
     boolean the_level_is_working=false;
@@ -44,12 +42,11 @@ public class Main extends SimpleApplication
        this.setShowSettings(true);
         
         //Declare Screens
-       startMenu = new PlayerNameMenu();
-       level1 = new Level1();
+       menu = new PreLoadScreen();
        
-       //Inizialize Screens
-       startMenu.init(stateManager, this); 
-       startMenu.Load();
+       //Inizialize Screen
+       menu.init(stateManager, this, menu); 
+       menu.Load();
        
        //Audio Manager
        audioManager = new AudioManager(assetManager, "menuTrack.ogg");
@@ -62,51 +59,43 @@ public class Main extends SimpleApplication
     public void simpleUpdate(float tpf)
     {
         if(the_level_is_working)
-            //level2.update(tpf);
-            level1.update(tpf);
+            level.update(tpf);
+        
         if(moveToNextLevel == true )
         {
-            if(currentLevel == 1)
+            currentLevel++;
+            if(currentLevel-2 == 1)
             {
-                startMenu.Unload();
-                level1 = new Level1();
-                level1.init(stateManager, this);
-                level1.Load();
-                the_level_is_working=true;
-                level1.update(tpf);
-//                level2 = new Level2();
-//                level2.init(stateManager, this);
-//                level2.Load();
+                level = new Level1();
+                level.init(stateManager, this);
+                level.Load();
+                menu.Unload();
                 
+                the_level_is_working = true;
+                moveToNextLevel = false;
+                currentLevel =1;
                 playMusic("basicGame.ogg");
             }
-            else if(currentLevel == 2) {} //To be implemented later
-            moveToNextLevel = false;
+            else if(currentLevel-2 == 2) {} //To be implemented later
         }
         
         
         if(isResumed)
         {
             playMusic("basicGame.ogg");
-            pauseMenu.Unload();
-           if(currentLevel == 1){
-            level1.Load();
-            the_level_is_working=true;
-           }
-               
-           else if(currentLevel == 2){} //To be implemented later
-           
-           isResumed = false;
+            menu.Unload();
+            level.Load();
+            the_level_is_working=true;          
+            isResumed = false;
         }
         if(pauseButton)
         {
-            level1.Unload();
-            //level2.Unload();
+            level.Unload();
             the_level_is_working=false;
             
-            pauseMenu = new PauseMenu();
-            pauseMenu.init(stateManager, this);
-            pauseMenu.Load();
+            menu = new PauseMenu();
+            menu.init(stateManager, this, menu);
+            menu.Load();
             
             playMusic("menuTrack.ogg");
             

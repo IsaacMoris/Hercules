@@ -13,6 +13,11 @@ import de.lessvoid.nifty.screen.Screen;
 
 public class LevelsMenu extends Menu{
     
+    
+    public LevelsMenu(){
+        super("levels");
+    }
+    
     private Element levelPasswordPanel;
     
      @NiftyEventSubscriber(pattern="btnLevel_.*")

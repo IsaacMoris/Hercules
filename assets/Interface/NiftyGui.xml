@@ -182,11 +182,29 @@ www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://niftygui.sourcefo
             </panel>
 
             <panel childLayout="center" margin="10%,0%, 0%, 0%" align="center" valign="bottom"> 
-                           <control id="btnBack" name="button" width="200px" height="50px" margin="0px,0px,3%, 15%" />
-                           <control  name="label"  text="Back" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 15%"/>
+                <control id="btnBack" name="button" width="200px" height="50px" margin="0px,0px,3%, 15%" />
+                <control  name="label"  text="Back" font="Interface/Fonts/ComicSansMS.fnt"  margin="0px,0px,0%, 15%"/>
             </panel>
         </panel>
         
       </layer>
  </screen>
+ 
+ 
+  <screen id="preLoad" controller="NiftyGui.PreLoadScreen"  >
+     <layer childLayout="center">
+         <control id="btnPreLoad" name="button" />
+         <image id="preLoadImg" filename="Textures/preLoadImg.png" width="100%" height="100%" visibleToMouse="true" />
+         <text font="Interface/Fonts/ComicSansMS.fnt" text="Press Enter to Continue . . ." margin="40%,0%,0%,0%"/>
+     </layer>
+ </screen>
+ 
+ 
+ <screen id="preLevel" controller="NiftyGui.PreLevelScreen">
+     <layer childLayout="center">
+         <image id="preLevel1Img" filename="Textures/TrainingLevel.jpg" width="100%" height="100%" visible = "false" />
+         <image id="preLevel2Img" filename="Textures/BossLevel.jpg" width="100%" height="100%" visible = "false" />
+     </layer>
+ </screen>
+
 </nifty>

@@ -15,6 +15,7 @@ import com.jme3.util.TangentBinormalGenerator;
 import java.util.List;
 import mygame.BetterInputManager;
 import mygame.Effects;
+import mygame.FlyableNPC;
 import mygame.GamePlay;
 import mygame.Main;
 import mygame.NPCManager;
@@ -35,7 +36,7 @@ public class Level1 extends Level{
     BetterCharacterControl dragoncontrol;
     private BulletAppState bulletAppState;
     private RigidBodyControl[] scenePhy; 
-    private NPCManager npcManager;
+    private FlyableNPC npcManager;
     List<Spatial> StaticGroundObjectsChildren;
     private Player playerClass ;
     
@@ -114,10 +115,11 @@ public class Level1 extends Level{
         audioManager.play();*/    //Moved to main 
 
         //NPC custom control
-        npcManager = new NPCManager((Spatial) dragon);
+        npcManager = new FlyableNPC((Spatial) dragon);
         npcManager.setZOffSet(15f);
         npcManager.setSpeed(5f);
         npcManager.setEnabled(true);
+        npcManager.setyOffSet(50);
         dragon.addControl(npcManager);
 
 

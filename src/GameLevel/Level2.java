@@ -76,7 +76,8 @@ public class Level2 extends Level {
         cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, 1000f);
         //hades 
         Hades = (Node) assetManager.loadModel("Models/Hades/Hades.j3o");
-        Hades.setLocalTranslation(10, 5, 10);
+        Hades.setLocalTranslation(10, 8, 10);
+        Hades.scale(1.5f);
         Scene.attachChild(Hades);
         HadesHealth = new HealthBar(cam, guiNode, 0L, false);
         HadesHealth.SetHealthPic(assetManager, "Textures/Hades/Frame.png", "Textures/Hades/Blood.png");

@@ -3,24 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/Hercules/src/mygame/Main.java</file>
-            <file>file:/F:/Hercules/src/Player/HadesMovement.java</file>
-            <file>file:/F:/Hercules/src/NiftyGui/ScoreMenu.java</file>
-            <file>file:/F:/Hercules/src/Player/HealthBar.java</file>
-            <file>file:/F:/Hercules/src/GameLevel/Level1.java</file>
-            <file>file:/F:/Hercules/src/Player/Player.java</file>
-            <file>file:/F:/Hercules/src/mygame/GamePlay.java</file>
-            <file>file:/F:/Hercules/src/GameLevel/Level2.java</file>
-            <file>file:/F:/Hercules/src/Player/PlayerMovesControl.java</file>
-            <file>file:/F:/Hercules/src/Player/Score.java</file>
-            <file>file:/F:/Hercules/src/NiftyGui/Menu.java</file>
-            <file>file:/F:/Hercules/src/Player/Lifes.java</file>
-            <file>file:/F:/Hercules/src/GameLevel/Level.java</file>
-            <file>file:/F:/Hercules/src/mygame/AnimationManager.java</file>
-            <file>file:/F:/Hercules/src/mygame/NonFlyableNPC.java</file>
-            <file>file:/F:/Hercules/src/mygame/Animation.java</file>
-            <file>file:/F:/Hercules/src/mygame/AudioManager.java</file>
-            <file>file:/F:/Hercules/src/mygame/rayCasting.java</file>
+            <file>file:/F:/University/Projects/Second%20Year/JMonkeyEngine3%20Projects/Hercules/src/GameLevel/Level2.java</file>
+            <file>file:/F:/University/Projects/Second%20Year/JMonkeyEngine3%20Projects/Hercules/src/GameLevel/Level1.java</file>
+            <file>file:/F:/University/Projects/Second%20Year/JMonkeyEngine3%20Projects/Hercules/src/mygame/rayCasting.java</file>
+            <file>file:/F:/University/Projects/Second%20Year/JMonkeyEngine3%20Projects/Hercules/src/mygame/GamePlay.java</file>
+            <file>file:/F:/University/Projects/Second%20Year/JMonkeyEngine3%20Projects/Hercules/src/mygame/Main.java</file>
+            <file>file:/F:/University/Projects/Second%20Year/JMonkeyEngine3%20Projects/Hercules/src/GameLevel/Level.java</file>
+            <file>file:/F:/University/Projects/Second%20Year/JMonkeyEngine3%20Projects/Hercules/src/Player/HadesMovement.java</file>
         </group>
     </open-files>
 </project-private>

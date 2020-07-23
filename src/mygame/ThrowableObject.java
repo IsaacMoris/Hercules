@@ -25,16 +25,22 @@ public class ThrowableObject extends AbstractControl{
     private CollisionResults collisionDetection;
     private final ArrayList<Geometry> collectables;
 
-    public ThrowableObject(Spatial spatial, ArrayList<Geometry> collectables, float speed) {
+    private ThrowableObject(Spatial spatial, ArrayList<Geometry> collectables, float speed) {
         super.setSpatial(spatial);
         this.speed = speed;
         this.enabled = true;
         this.collectables = collectables;
     }
+    
+    public static ThrowableObject getInstance(Spatial spatial, ArrayList<Geometry> collectables, float speed){
+        ThrowableObject instance = new ThrowableObject(spatial, collectables, speed);
+        return instance;
+    }
 
     @Override
     protected void controlUpdate(float tpf) {
         //spatial.lookAt(spatial.getLocalTranslation().add(Vector3f.UNIT_Z), Vector3f.ZERO);
+        System.out.println("mygame.ThrowableObject.controlUpdate()");
         spatial.move(Vector3f.UNIT_Z.mult(tpf * speed));
         for(Geometry obj : collectables){
             spatial.collideWith(obj, collisionDetection);

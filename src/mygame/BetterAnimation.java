@@ -115,5 +115,6 @@ public final class BetterAnimation extends AnimationManager {
         setUpperBodyAnimation(name, speed);
         LowerBodyChannal.setLoopMode(loopMode);
     }
+
     
 }

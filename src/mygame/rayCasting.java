@@ -5,6 +5,7 @@
  */
 package mygame;
 
+import com.jme3.bounding.BoundingVolume;
 import com.jme3.collision.CollisionResults;
 import static com.jme3.math.FastMath.abs;
 import static com.jme3.math.FastMath.acos;
@@ -54,10 +55,7 @@ public class rayCasting {
 
         List<Geometry> touched = new ArrayList<>();
         for (int i = 0; i < collidables_list.size(); i++) {
-            CollisionResults results = new CollisionResults();
-            Sword.collideWith(collidables_list.get(i).getWorldBound(), results);
-
-            if (results.size()>0&&collidables_list.get(i) != null) {
+            if (collided_items(Sword, collidables_list.get(i).getWorldBound())&&collidables_list.get(i) != null) {
                 touched.add(collidables_list.get(i));
                 System.out.println("hi i took "+collidables_list.get(i).getName());
             }
@@ -65,6 +63,12 @@ public class rayCasting {
         }
 
         return touched;
+
+    }
+    public static boolean collided_items(Node A,BoundingVolume B){
+    CollisionResults results = new CollisionResults();
+    A.collideWith(B, results);
+    return results.size()>0;
 
     }
 
@@ -81,9 +85,9 @@ public class rayCasting {
                     || name.equals("HealthDrink")
                     || name.equals("CoinObj_Coin_0")
                     || name.equals("Box001_Material #41_0")
-                   // || name.equals("Object_texture000.jpg.001")
-                   // || name.equals("Object_texture001.jpg.001")
-                   // || name.equals("Object_texture002.jpg.001")
+                    //|| name.equals("Object_texture000.jpg.001")
+                    //|| name.equals("Object_texture001.jpg.001")
+                    //|| name.equals("Object_texture002.jpg.001")
                     || name.equals("rdmobj00mesh.008")
                     || name.equals("rdmobj01mesh.008")
                     || name.equals("rdmobj02mesh.008")) {

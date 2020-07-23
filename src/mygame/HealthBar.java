@@ -1,4 +1,4 @@
-package Player;
+package mygame;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.renderer.Camera;
@@ -93,7 +93,10 @@ public class HealthBar extends AbstractControl {
     }
 
 
-
+    public boolean Died()
+    {
+        return CurHealth<=0 ;
+    }
     @Override
     protected void controlUpdate(float tpf) {
         if (System.currentTimeMillis() - LastAttacked > ShildTime) {

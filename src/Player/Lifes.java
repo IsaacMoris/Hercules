@@ -55,4 +55,8 @@ public class Lifes {
         System.out.println(heartList.size());
     }
 
+    public int getLifesCounter() {
+        return LifesCounter;
+    }
+
 }

@@ -5,6 +5,8 @@
  */
 package Hades;
 
+import mygame.*;
+import Player.*;
 import com.jme3.animation.AnimControl;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
@@ -27,7 +29,7 @@ import mygame.NPCManager;
 public class HadesMovement extends AbstractControl {
 
     Node Hercules;
-    private AnimationManager animManager;
+    private Animation animManager;
     private BetterCharacterControl HadesControl;
     private int speed = 4;
     private Vector3f walkDirection = new Vector3f(0, 0, 0);
@@ -69,6 +71,30 @@ public class HadesMovement extends AbstractControl {
         }
 
         HadesControl.setWalkDirection(walkDirection);
+        who_is_attacked();
+        if (spatial.getControl(HealthBar.class).Died()) {
+            Main.setCurrentLevel(1);
+            Main.moveToNextLevel();
+        }
+    }
+
+    public String who_is_attacked() {
+        if (BetterInputManager.Sword_Attack && rayCasting.collided_items((Node) Hercules.getChild("Sword"), spatial.getWorldBound())) {
+            spatial.getControl(HealthBar.class).DecreaseHealth(25);
+            Hercules.getControl(Score.class).IncreaseScore(100);
+            return "Hades";
+        }
+        if ((BetterInputManager.Power_Punch || BetterInputManager.Punch) && rayCasting.collided_items((Node) spatial, Hercules.getChild("Object_texture000.jpg.001").getWorldBound())) {
+            spatial.getControl(HealthBar.class).DecreaseHealth(25);
+            Hercules.getControl(Score.class).IncreaseScore(100);
+            return "Hades";
+        }
+        if ((animManager.getAnimation().equals("punch")) && rayCasting.collided_items(Hercules, spatial.getWorldBound())) {
+            Hercules.getControl(HealthBar.class).DecreaseHealth(25);
+            return "Hercules";
+        }
+        return "peace";
+
     }
 
     @Override

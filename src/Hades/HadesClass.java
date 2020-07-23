@@ -5,7 +5,7 @@
  */
 package Hades;
 
-import Player.HealthBar;
+import mygame.HealthBar;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.Vector3f;
@@ -19,21 +19,22 @@ import com.jme3.scene.Node;
 public class HadesClass {
 
     Node Hades;
-    Node Hercules ;
+    Node Hercules;
     private HealthBar HadesHealth;
-    private HadesMovement hadescontrol ;
-    public HadesClass(Node Hercules , AssetManager assetManager, BulletAppState bulletAppState, CameraNode camNode, Node GuiNode) {
-        
+    private HadesMovement hadescontrol;
+
+    public HadesClass(Node Hercules, AssetManager assetManager, BulletAppState bulletAppState, CameraNode camNode, Node GuiNode) {
+
         Hades = (Node) assetManager.loadModel("Models/Hades/Hades.j3o");
         Hades.setLocalTranslation(8, 1, 0);
         Hades.scale(2);
-        this.Hercules=Hercules;
-        
-        HadesHealth = new HealthBar(camNode.getCamera(), GuiNode, 0L, false);
+        this.Hercules = Hercules;
+
+        HadesHealth = new HealthBar(camNode.getCamera(), GuiNode, 1000L, false);
         HadesHealth.SetHealthPic(assetManager, "Textures/Hades/Frame.png", "Textures/Hades/Blood.png");
         Hades.addControl(HadesHealth);
-        
-        hadescontrol= new HadesMovement(Hercules, Hades, bulletAppState);
+
+        hadescontrol = new HadesMovement(Hercules, Hades, bulletAppState);
         Hades.addControl(hadescontrol);
     }
 

@@ -35,7 +35,10 @@ public final class Animation extends AnimationManager{
             System.out.print("Animation Name Not Found .. Error: " + e);
         }
     }
-
+    public String  getAnimation()
+    {
+        return  animChannal.getAnimationName();
+    }
     @Override
     public void setAnimation(String name, float speed) {
         setAnimation(name);

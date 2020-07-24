@@ -18,6 +18,7 @@ import mygame.Effects;
 import mygame.FlyableNPC;
 import mygame.GamePlay;
 import mygame.Main;
+import mygame.rayCasting;
 
 public class Level1 extends Level {
 
@@ -27,6 +28,7 @@ public class Level1 extends Level {
     Node Dummy;
     Node dragon;
     Node Coin;
+    Node Ball;
     Node HealthDrink;
     Node StaticGroundObjectsParent;
 
@@ -97,7 +99,15 @@ public class Level1 extends Level {
         //healthDrink
         HealthDrink = (Node) Scene.getChild("HealthDrink");
         HealthDrink.setLocalScale((float) (HealthDrink.getLocalScale().x + 0.5), (float) (HealthDrink.getLocalScale().y + 0.5), (float) (HealthDrink.getLocalScale().z + 0.5));
-
+        
+        //Ball
+        Ball= (Node)assetManager.loadModel("Models/ball/Ball.j3o");
+       Ball.scale(0.01f);
+       Scene.attachChild(Ball);
+       Ball.setLocalTranslation(10,10,10);
+        
+        
+        //Filter Processor
         processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
 
         //Sound
@@ -128,6 +138,16 @@ public class Level1 extends Level {
 
         npcManager.setPositionToGO(playerNode.getLocalTranslation());
         GP.update();
+        Ball.move(playerNode.getLocalTranslation().subtract(Ball.getLocalTranslation()));
+               
+               
+        if(rayCasting.collided_items(Ball, playerNode.getWorldBound())){
+            System.out.println("Ball hit Herc");
+          //  Scene.detachChild(Ball);
+             Ball.move(5,5,5);
+          //  Scene.attachChild(Ball);
+        }
+
 
         if (BetterInputManager.Pause) {
             Main.pauseButton = true;

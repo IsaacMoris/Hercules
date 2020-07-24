@@ -77,7 +77,7 @@ public class Level2 extends Level {
         Scene.attachChild(playerNode);
         cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, 1000f);
         //hades 
-        Hadesclass = new HadesClass(playerNode , assetManager, bulletAppState, camNode, guiNode );
+        Hadesclass = new HadesClass(playerNode , assetManager, bulletAppState, camNode, localGuiNode );
         Hades=Hadesclass.getHades();
        
         Scene.attachChild(Hades);

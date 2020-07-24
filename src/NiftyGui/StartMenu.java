@@ -18,8 +18,7 @@ public class StartMenu extends Menu{
     {
         //PreLevelScreen.setNextLevel(1);
         //nifty.gotoScreen("preLevel");
-        Main.setCurrentLevel(1);
-        Main.moveToNextLevel();
+        Main.goToLevel(1);
     }
     
     @NiftyEventSubscriber(id="btnLevels")

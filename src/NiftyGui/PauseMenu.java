@@ -29,6 +29,5 @@ public class PauseMenu extends Menu{
     public void endGameBtn(String id, NiftyMousePrimaryClickedEvent  event)
     {
         nifty.gotoScreen("start");
-        Main.setCurrentLevel(0);
     }
 }

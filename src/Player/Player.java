@@ -40,8 +40,8 @@ public class Player extends AbstractControl {
         this.camNode = camNode;
 
         player = (Node) assetManager.loadModel("Models/Hercules/Hercules.j3o");
-        
-        this.spatial=player;
+
+        this.spatial = player;
         CustomizeCamera();
         LoadHealth(GuiNode);
         LoadMoveMents();
@@ -52,13 +52,9 @@ public class Player extends AbstractControl {
 
     @Override
     protected void controlUpdate(float tpf) {
-        if(Health.Died())
-        {
-            if(lifes.getLifesCounter()==0)
-            {
-                 Main.setCurrentLevel(1);
-                 Main.moveToNextLevel();
-                 System.out.println("Player.Player.controlUpdate()");
+        if (Health.Died()) {
+            if (lifes.getLifesCounter() == 0) {
+                Die();
             }
             player.setLocalTranslation(new Vector3f(8f, 1f, 0));
             Health.IncreaseHealth(180);
@@ -103,7 +99,10 @@ public class Player extends AbstractControl {
     }
 
     private void Die() {
-        // animManager.setAnimation("fall");
+
+        //  Animation
+        //  Delay 
+        Main.HercDie = true;
     }
 
     public int getCoinCounter() {

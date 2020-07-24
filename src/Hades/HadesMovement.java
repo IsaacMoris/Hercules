@@ -73,8 +73,7 @@ public class HadesMovement extends AbstractControl {
         HadesControl.setWalkDirection(walkDirection);
         who_is_attacked();
         if (spatial.getControl(HealthBar.class).Died()) {
-            Main.setCurrentLevel(1);
-            Main.moveToNextLevel();
+            Main.HadesDie = true;
         }
     }
 

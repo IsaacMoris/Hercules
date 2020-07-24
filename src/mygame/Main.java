@@ -26,9 +26,14 @@ public class Main extends SimpleApplication {
     BetterInputManager betterInputManager;
     boolean the_level_is_working = false;
     static private AudioManager audioManager;
+    public static boolean HercDie = false, HadesDie = false;
 
     public static void main(String[] args) {
         Main app = new Main();
+
+        /*AppSettings settings = new AppSettings(true);
+        settings.setSettingsDialogImage("Textures/team.jpg");
+        app.setSettings(settings);*/
         app.start();
     }
 
@@ -63,7 +68,7 @@ public class Main extends SimpleApplication {
         if (moveToNextLevel == true) {
             waitCounter++;
             if (waitCounter == 1) {
-                menu.Unload();
+
                 if (currentLevel == 1) {
                     PreLevelScreen.setNextLevel(1);
                 }
@@ -75,17 +80,17 @@ public class Main extends SimpleApplication {
             }
             if (waitCounter == 2) {
                 if (currentLevel == 1) {
-                    if (level != null) {
-                        level.Unload();
-                    }
-                    level = startLevel(new Level1(), menu);
+
+                    level = loadLevel(new Level1());
                     the_level_is_working = true;
                     playMusic("basicGame.ogg");
-                } else if (currentLevel == 2) // For going to level 2
-                {
-                    level = startLevel(new Level2(), menu);
+
+                } else if (currentLevel == 2) {
+
+                    level = loadLevel(new Level2());
                     the_level_is_working = true;
                     playMusic("basicGame.ogg");
+
                 }
 
                 moveToNextLevel = false;
@@ -109,12 +114,9 @@ public class Main extends SimpleApplication {
         if (pauseButton) {
             level.Unload();
             the_level_is_working = false;
-
             menu = goToMenu(new PauseMenu());
-
             pauseButton = false;
             playMusic("menuTrack.ogg");
-
         }
 
         if (isResumed) {
@@ -124,6 +126,22 @@ public class Main extends SimpleApplication {
             the_level_is_working = true;
             isResumed = false;
         }
+
+        if (HercDie) {
+            HercDie = false;
+            menu = new PreLoadScreen();
+            ((PreLoadScreen) menu).setState(PreLoadScreen.State.loser);
+            menu = goToMenu(menu);
+
+        }
+
+        if (HadesDie) {
+            HadesDie = false;
+            
+            menu = new PreLoadScreen();
+            ((PreLoadScreen) menu).setState(PreLoadScreen.State.winner);
+            menu = goToMenu(menu);
+        }
     }
 
     public static void goToLevelByPassword(int level, String password) {
@@ -132,14 +150,6 @@ public class Main extends SimpleApplication {
             goToLevel = level;
 
         }
-    }
-
-    public static void setCurrentLevel(int level) {
-        currentLevel = level;
-    }
-
-    public static void moveToNextLevel() {
-        moveToNextLevel = true;
     }
 
     public static void setPlayerName(String name) {
@@ -165,17 +175,30 @@ public class Main extends SimpleApplication {
         audioManager.play();
     }
 
-    private Level startLevel(Level level, Menu menu) {
-        menu.Unload();
+    public static void goToLevel(int index) {
+        moveToNextLevel = true;
+        currentLevel = index;
+    }
+
+    private Level loadLevel(Level level) {
+
+        clearScene();
         level.init(stateManager, this);
         level.Load();
         return level;
     }
 
     private Menu goToMenu(Menu newMenu) {
+        clearScene();
         newMenu.init(stateManager, this, newMenu);
         newMenu.Load();
         return newMenu;
+    }
+
+    private void clearScene() {
+        this.rootNode.detachAllChildren();
+        this.guiNode.detachAllChildren();
+        this.viewPort.clearProcessors();
     }
 
     @Override

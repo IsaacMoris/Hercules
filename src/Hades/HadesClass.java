@@ -5,11 +5,10 @@
  */
 package Hades;
 
+import GUI_2D.HealthBar;
 import mygame.*;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.math.Vector3f;
-import static com.jme3.post.filters.BloomFilter.GlowMode.Scene;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 

@@ -18,12 +18,9 @@ import mygame.Effects;
 import mygame.FlyableNPC;
 import mygame.GamePlay;
 import mygame.Main;
-import mygame.NPCManager;
 
+public class Level1 extends Level {
 
-
-public class Level1 extends Level{
-    
     private GamePlay GP;
     Node playerNode;
     Spatial Grass;
@@ -32,17 +29,17 @@ public class Level1 extends Level{
     Node Coin;
     Node HealthDrink;
     Node StaticGroundObjectsParent;
-    
+
     BetterCharacterControl dragoncontrol;
     private BulletAppState bulletAppState;
-    private RigidBodyControl[] scenePhy; 
+    private RigidBodyControl[] scenePhy;
     private FlyableNPC npcManager;
     List<Spatial> StaticGroundObjectsChildren;
-    private Player playerClass ;
-    
+    private Player playerClass;
+
     @Override
     public void startLevel() {
-        
+
         betterInput = new BetterInputManager(inputManager);
         bulletAppState = new BulletAppState();  //Physics Lib
         bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
@@ -71,17 +68,14 @@ public class Level1 extends Level{
 
         // Player
         CameraNode camNode = new CameraNode("CamNode", cam);
-        playerClass = new  Player(assetManager , bulletAppState,camNode,localGuiNode);
+        playerClass = new Player(assetManager, bulletAppState, camNode, localGuiNode);
         playerNode = playerClass.getPlayer();
         TangentBinormalGenerator.generate(playerNode);
-        
+
         Scene.attachChild(playerNode);
         cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, 1000f);
-        
-        
-       
-        
-          // Dummy
+
+        // Dummy
         Dummy = (Node) Scene.getChild("Dummy");
         Dummy.scale(3);
         localRootNode.attachChild(Dummy);
@@ -99,21 +93,16 @@ public class Level1 extends Level{
         // animControl.addListener(this);
         animChannal = animControl.createChannel();
         animChannal.setAnim("CoinObj|Coin");
-        
+
         //healthDrink
         HealthDrink = (Node) Scene.getChild("HealthDrink");
-        HealthDrink.setLocalScale((float) (HealthDrink.getLocalScale().x+0.5), (float) (HealthDrink.getLocalScale().y+0.5), (float) (HealthDrink.getLocalScale().z+0.5));
-        
-       
+        HealthDrink.setLocalScale((float) (HealthDrink.getLocalScale().x + 0.5), (float) (HealthDrink.getLocalScale().y + 0.5), (float) (HealthDrink.getLocalScale().z + 0.5));
 
-       processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
-
-        
+        processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
 
         //Sound
         /*audioManager = new AudioManager(assetManager, "basicGame.ogg");
         audioManager.play();*/    //Moved to main 
-
         //NPC custom control
         npcManager = new FlyableNPC((Spatial) dragon);
         npcManager.setZOffSet(15f);
@@ -122,29 +111,31 @@ public class Level1 extends Level{
         npcManager.setyOffSet(50);
         dragon.addControl(npcManager);
 
-
         //Effect
         Effects Fire = new Effects("smoke", "dragonMouth_node", Scene, localRootNode, assetManager, 5.0f);
         dragon.addControl(Fire);
 
-
         //  bulletAppState.setDebugEnabled(true);
         //ray casting
-        
         //GamePlay
-        GP=new GamePlay(playerClass,Scene);
+        GP = new GamePlay(playerClass, Scene);
         update(1);
     }
-    
+
     @Override
     public void update(float tpf) {
-       // System.out.println("I'm working");
-      
+        // System.out.println("I'm working");
+
         npcManager.setPositionToGO(playerNode.getLocalTranslation());
         GP.update();
-        
-        if(BetterInputManager.Pause)
-            Main.pauseButton =true;
+
+        if (BetterInputManager.Pause) {
+            Main.pauseButton = true;
+        }
+        if(playerClass.getScoreCounter()>=900)
+        {
+           Main.GOLVL2FROM1=true ;
+        }
     }
-    
+
 }

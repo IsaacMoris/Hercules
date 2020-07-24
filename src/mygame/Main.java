@@ -26,7 +26,7 @@ public class Main extends SimpleApplication {
     BetterInputManager betterInputManager;
     boolean the_level_is_working = false;
     static private AudioManager audioManager;
-    public static boolean HercDie = false, HadesDie = false;
+    public static boolean HercDie = false, HadesDie = false , GOLVL2FROM1=false;
 
     public static void main(String[] args) {
         Main app = new Main();
@@ -142,6 +142,11 @@ public class Main extends SimpleApplication {
             ((PreLoadScreen) menu).setState(PreLoadScreen.State.winner);
             menu = goToMenu(menu);
         }
+        if(GOLVL2FROM1)
+        {
+             goToLevel(2);
+             GOLVL2FROM1=false ;
+        }
     }
 
     public static void goToLevelByPassword(int level, String password) {
@@ -199,6 +204,7 @@ public class Main extends SimpleApplication {
         this.rootNode.detachAllChildren();
         this.guiNode.detachAllChildren();
         this.viewPort.clearProcessors();
+        System.gc();
     }
 
     @Override

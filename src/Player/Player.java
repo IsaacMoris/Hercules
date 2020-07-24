@@ -1,6 +1,10 @@
 package Player;
 
-import mygame.HealthBar;
+import GUI_2D.Lifes;
+import GUI_2D.Score;
+import GUI_2D.HealthBar;
+import com.jme3.animation.AnimControl;
+import com.jme3.animation.LoopMode;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.FastMath;
@@ -12,6 +16,7 @@ import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.control.CameraControl;
+import mygame.Animation;
 import mygame.AnimationManager;
 import mygame.BetterInputManager;
 import mygame.Main;
@@ -32,6 +37,7 @@ public class Player extends AbstractControl {
     private HealthBar Health;
     private Score score;
     private Lifes lifes;
+    private AnimationManager CharacterAnimation;
 
     public Player(AssetManager assetManager, BulletAppState bulletAppState, CameraNode camNode, Node GuiNode) {
         // intialize Player Attributes
@@ -40,8 +46,8 @@ public class Player extends AbstractControl {
         this.camNode = camNode;
 
         player = (Node) assetManager.loadModel("Models/Hercules/Hercules.j3o");
-
         this.spatial = player;
+        CharacterAnimation = new Animation(player.getChild("Armature").getControl(AnimControl.class), "idle");
         CustomizeCamera();
         LoadHealth(GuiNode);
         LoadMoveMents();
@@ -73,7 +79,7 @@ public class Player extends AbstractControl {
     }
 
     private void LoadMoveMents() {
-        PlayerMoves = new PlayerMovesControl(player, bulletAppState, camNode);
+        PlayerMoves = new PlayerMovesControl(CharacterAnimation, player, bulletAppState, camNode);
         player.addControl(PlayerMoves);
     }
 
@@ -100,12 +106,12 @@ public class Player extends AbstractControl {
 
     private void Die() {
 
-        //  Animation
+        CharacterAnimation.setAnimation("fall", 1, LoopMode.DontLoop);
         //  Delay 
         Main.HercDie = true;
     }
 
-    public int getCoinCounter() {
+    public int getScoreCounter() {
         return score.getScoreCounter();
     }
 

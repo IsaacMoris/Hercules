@@ -1,4 +1,4 @@
-package Player;
+package GUI_2D;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.math.Quaternion;

@@ -1,7 +1,6 @@
 package GameLevel;
 
 import Hades.HadesClass;
-import mygame.HealthBar;
 import Player.Player;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.BetterCharacterControl;

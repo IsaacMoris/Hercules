@@ -1,4 +1,4 @@
-package mygame;
+package GUI_2D;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.renderer.Camera;
@@ -6,11 +6,8 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
 import com.jme3.scene.control.AbstractControl;
-import com.jme3.texture.Texture;
 import com.jme3.texture.Texture2D;
 import com.jme3.ui.Picture;
-import java.sql.Time;
-import jme3tools.optimize.TextureAtlas;
 
 /**
  *

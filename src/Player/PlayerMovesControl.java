@@ -29,7 +29,7 @@ import mygame.BetterInputManager;
  */
 public class PlayerMovesControl extends AbstractControl {
 
-    private AnimationManager animManager;
+   
 
     private BetterCharacterControl playerControl;
 
@@ -40,8 +40,8 @@ public class PlayerMovesControl extends AbstractControl {
     private Vector3f viewDirection = new Vector3f(0, 0, 1);
     private float speed = 8;
     private CameraNode camNode;
-
-    public PlayerMovesControl(Spatial player, BulletAppState bulletAppState, CameraNode camNode) {
+    private AnimationManager animManager;
+    public PlayerMovesControl(AnimationManager animManager, Spatial player, BulletAppState bulletAppState, CameraNode camNode) {
 
         spatial = player;
         this.camNode = camNode;
@@ -58,7 +58,7 @@ public class PlayerMovesControl extends AbstractControl {
         bulletAppState.getPhysicsSpace().add(playerControl);
 
         //Animation
-        animManager = new Animation(((Node) player).getChild("Armature").getControl(AnimControl.class), "idle");
+        this.animManager=animManager;
         //intialKeys();
     }
 //float time;           Delay

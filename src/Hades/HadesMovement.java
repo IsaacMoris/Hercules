@@ -5,6 +5,8 @@
  */
 package Hades;
 
+import GUI_2D.Score;
+import GUI_2D.HealthBar;
 import mygame.*;
 import Player.*;
 import com.jme3.animation.AnimControl;
@@ -63,7 +65,6 @@ public class HadesMovement extends AbstractControl {
         } else if (distance < 30) {
             animManager.setAnimation("flying2", 1);
             walkDirection.addLocal(Dir.mult(speed));
-            System.out.println(walkDirection);
 
         } else {
 

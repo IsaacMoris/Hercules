@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Player;
+package GUI_2D;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapFont;
@@ -21,7 +21,7 @@ import com.jme3.scene.control.AbstractControl;
  */
 public class Score extends AbstractControl {
 
-    private int ScoreCounter = 0;
+    private int ScoreCounter = 0 , Toincrease=0;
     BitmapFont myFont;
     BitmapText hudText;
 
@@ -39,11 +39,16 @@ public class Score extends AbstractControl {
 
     @Override
     protected void controlUpdate(float tpf) {
+        if(Toincrease>=5)
+        {
+            Toincrease-=5;
+            ScoreCounter+=5;
+        }
         hudText.setText("Score : " + ScoreCounter);
     }
 
     public  void IncreaseScore(int Amount) {
-        ScoreCounter += Amount;
+        Toincrease += Amount;
     }
 
     public int getScoreCounter() {

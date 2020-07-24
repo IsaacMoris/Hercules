@@ -31,7 +31,7 @@ public class Ball_control {
         this.rootNode = rootNode;
         Ball = (Node) assetManager.loadModel("Models/ball/Ball.j3o");
         Ball.scale(0.01f);
-        Ball.setLocalTranslation(Original_position.getLocalTranslation());
+        Ball.setLocalTranslation(Original_position.getWorldTranslation());
 
         
         Scene.attachChild(Ball);
@@ -43,7 +43,6 @@ public class Ball_control {
     public void Update(float tpf) {
         if (counter == -1) {
             pos = playerNode.getLocalTranslation().subtract(Ball.getLocalTranslation()).divide(200);
-
         }
         counter++;
 
@@ -51,7 +50,7 @@ public class Ball_control {
         if (Ball.getWorldBound().intersects(playerNode.getWorldBound())) {
              playerNode.getControl(HealthBar.class).DecreaseHealth(50);
 
-            System.out.println("Ball hit Herc");
+          //  System.out.println("Ball hit Herc");
             Ball.setLocalTranslation(Original_position.getLocalTranslation());
             counter = 0;
         }
@@ -62,10 +61,14 @@ public class Ball_control {
 
         } else {
             counter = 0;
-            Ball.setLocalTranslation(Original_position.getLocalTranslation());
+            Ball.setLocalTranslation(Original_position.getWorldTranslation());
             pos = new Vector3f(playerNode.getLocalTranslation().x, (float) (playerNode.getLocalTranslation().y ), playerNode.getLocalTranslation().z).subtract(Ball.getLocalTranslation()).divide(200);
 
         }
+    }
+
+    public void setOriginal_position(Node Original_position) {
+        this.Original_position = Original_position;
     }
 
     

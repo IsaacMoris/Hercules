@@ -117,21 +117,23 @@ public class Level1 extends Level {
         dragon.addControl(npcManager);
 
         //Effect
-        Effects Fire = new Effects("smoke", "dragonMouth_node", Scene, localRootNode, assetManager, 5.0f);
+        Effects Fire = new Effects("fire", "dragonMouth_node", Scene, localRootNode, assetManager, 5.0f);
         dragon.addControl(Fire);
 //Ball
-        Ball_cont = new Ball_control("fire", (Node) dragon.getChild("dragonMouth_node"), playerNode, Scene, localRootNode, assetManager);
+        Ball_cont = new Ball_control("fire", (Node) Scene.getChild("dragonMouth_node"), playerNode, Scene, localRootNode, assetManager);
         //  bulletAppState.setDebugEnabled(true);
         //ray casting
         //GamePlay
         GP = new GamePlay(playerClass, Scene);
         update(1);
     }
-    Vector3f pos;
+
+    
 
     @Override
     public void update(float tpf) {
         GP.update();
+        Ball_cont.setOriginal_position((Node) Scene.getChild("dragonMouth_node"));
         Ball_cont.Update(tpf);
         npcManager.setPositionToGO(playerNode.getLocalTranslation());
 

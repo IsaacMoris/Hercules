@@ -215,6 +215,7 @@ public class Main extends SimpleApplication {
             buff.write(record); 
             buff.close();
             fileWriter.close();
+            score=0;
          }catch (Exception ex){System.out.println(ex);}
     }
     

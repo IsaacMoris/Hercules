@@ -59,7 +59,11 @@ public class AudioManager {
             System.out.println(e.getMessage());
         }
     }
-
+    
+     public float getTimePassed(){
+        return audio.getPlaybackTime();
+    }
+    
     public void stop(){
         audio.stop();
     }

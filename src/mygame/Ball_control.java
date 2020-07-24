@@ -23,7 +23,7 @@ public class Ball_control {
     Node rootNode;
     int counter;
     Vector3f pos;
-
+    Effects e;
     public Ball_control(String effectName, Node Original_position, Node playerNode, Node Scene, Node rootNode, AssetManager assetManager) {
         this.Original_position = Original_position;
         this.playerNode = playerNode;
@@ -35,18 +35,23 @@ public class Ball_control {
 
         
         Scene.attachChild(Ball);
-        Effects e = new Effects(effectName, Ball.getName(), Scene, rootNode, assetManager,2.0f);
+         e = new Effects(effectName, Ball.getName(), Scene, rootNode, assetManager,2.0f);
         Ball.addControl(e);
         counter = -1;
     }
 
     public void Update(float tpf) {
-        if (counter == -1) {
+        if (counter < -1) {
             pos = playerNode.getLocalTranslation().subtract(Ball.getLocalTranslation()).divide(200);
+            Ball.setLocalTranslation(Original_position.getWorldTranslation());
+            Ball.addControl(e);
+            counter++;
+            return;
+
         }
         counter++;
 
-        System.out.println(counter);
+       // System.out.println(counter);
         if (Ball.getWorldBound().intersects(playerNode.getWorldBound())) {
              playerNode.getControl(HealthBar.class).DecreaseHealth(50);
 

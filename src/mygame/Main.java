@@ -5,6 +5,9 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
 import NiftyGui.*;
 import GameLevel.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Main extends SimpleApplication {
 
@@ -14,10 +17,12 @@ public class Main extends SimpleApplication {
     private static boolean moveToNextLevel;
     private static float soundLevel = 0.1f;
     private static String playerName;
+    private static int score;
     final private static String LEVEL2Password = "Hades";
     private static boolean goToLevelByPassword = false;
     private static int goToLevel = 0;
     private int waitCounter;
+    private boolean restartGame;
 
     Menu menu;
     Level level;
@@ -104,8 +109,7 @@ public class Main extends SimpleApplication {
                     currentLevel = 2;
                     moveToNextLevel = true;
                 }
-
-                waitCounter = 0;
+                
                 goToLevel = 0;
                 goToLevelByPassword = false;
             }
@@ -128,24 +132,40 @@ public class Main extends SimpleApplication {
         }
 
         if (HercDie) {
-            HercDie = false;
+            restartGame =true;
+             HercDie = false;
+            playMusic("GameOver.ogg");
             menu = new PreLoadScreen();
             ((PreLoadScreen) menu).setState(PreLoadScreen.State.loser);
             menu = goToMenu(menu);
+            saveScore();
 
         }
 
         if (HadesDie) {
+            restartGame =true;
             HadesDie = false;
-            
+            playMusic("winner.ogg");
             menu = new PreLoadScreen();
             ((PreLoadScreen) menu).setState(PreLoadScreen.State.winner);
             menu = goToMenu(menu);
+            saveScore();
+            
         }
         if(GOLVL2FROM1)
         {
+             clearScene();
              goToLevel(2);
-             GOLVL2FROM1=false ;
+             GOLVL2FROM1=false;
+        }
+        
+        if(restartGame == true)
+        {
+            if(audioManager.getTimePassed() >= 7)
+            {
+                playMusic("menuTrack.ogg");
+                restartGame =false;
+            }
         }
     }
 
@@ -179,7 +199,26 @@ public class Main extends SimpleApplication {
         audioManager.setVolume(soundLevel);
         audioManager.play();
     }
-
+    
+    public static void setPlayerScore(int value){
+        score = value;
+    }
+    
+    private void saveScore(){
+        try{
+            File file = new File("assets/Score/score.txt");
+            FileWriter fileWriter = new FileWriter(file, true);
+            BufferedWriter buff = new BufferedWriter(fileWriter);
+            String record = playerName;
+            for(int i=record.length(); i< 20; i++ )record += ' ';
+            record += String.valueOf(score) + "\n";
+            buff.write(record); 
+            buff.close();
+            fileWriter.close();
+         }catch (Exception ex){System.out.println(ex);}
+    }
+    
+    
     public static void goToLevel(int index) {
         moveToNextLevel = true;
         currentLevel = index;

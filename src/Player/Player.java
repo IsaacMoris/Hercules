@@ -108,6 +108,7 @@ public class Player extends AbstractControl {
 
         CharacterAnimation.setAnimation("fall", 1, LoopMode.DontLoop);
         //  Delay 
+        Main.setPlayerScore(getScoreCounter());
         Main.HercDie = true;
     }
 

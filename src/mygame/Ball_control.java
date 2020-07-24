@@ -24,6 +24,7 @@ public class Ball_control {
     int counter;
     Vector3f pos;
     Effects e;
+
     public Ball_control(String effectName, Node Original_position, Node playerNode, Node Scene, Node rootNode, AssetManager assetManager) {
         this.Original_position = Original_position;
         this.playerNode = playerNode;
@@ -33,9 +34,8 @@ public class Ball_control {
         Ball.scale(0.01f);
         Ball.setLocalTranslation(Original_position.getWorldTranslation());
 
-        
         Scene.attachChild(Ball);
-         e = new Effects(effectName, Ball.getName(), Scene, rootNode, assetManager,2.0f);
+        e = new Effects(effectName, Ball.getName(), Scene, rootNode, assetManager, 2.0f);
         Ball.addControl(e);
         counter = -1;
     }
@@ -51,11 +51,11 @@ public class Ball_control {
         }
         counter++;
 
-       // System.out.println(counter);
+        // System.out.println(counter);
         if (Ball.getWorldBound().intersects(playerNode.getWorldBound())) {
-             playerNode.getControl(HealthBar.class).DecreaseHealth(50);
+            playerNode.getControl(HealthBar.class).DecreaseHealth(50);
 
-          //  System.out.println("Ball hit Herc");
+            //  System.out.println("Ball hit Herc");
             Ball.setLocalTranslation(Original_position.getLocalTranslation());
             counter = 0;
         }
@@ -67,7 +67,7 @@ public class Ball_control {
         } else {
             counter = 0;
             Ball.setLocalTranslation(Original_position.getWorldTranslation());
-            pos = new Vector3f(playerNode.getLocalTranslation().x, (float) (playerNode.getLocalTranslation().y ), playerNode.getLocalTranslation().z).subtract(Ball.getLocalTranslation()).divide(200);
+            pos = new Vector3f(playerNode.getLocalTranslation().x, (float) (playerNode.getLocalTranslation().y), playerNode.getLocalTranslation().z).subtract(Ball.getLocalTranslation()).divide(200);
 
         }
     }
@@ -76,5 +76,4 @@ public class Ball_control {
         this.Original_position = Original_position;
     }
 
-    
 }

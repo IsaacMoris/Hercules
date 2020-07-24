@@ -74,6 +74,7 @@ public class HadesMovement extends AbstractControl {
         HadesControl.setWalkDirection(walkDirection);
         who_is_attacked();
         if (spatial.getControl(HealthBar.class).Died()) {
+            Main.setPlayerScore(Hercules.getControl(Score.class).getScoreCounter());
             Main.HadesDie = true;
         }
     }

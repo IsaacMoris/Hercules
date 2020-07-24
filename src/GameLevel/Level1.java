@@ -13,6 +13,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.util.TangentBinormalGenerator;
 import java.util.List;
+import mygame.Ball_control;
 import mygame.BetterInputManager;
 import mygame.Effects;
 import mygame.FlyableNPC;
@@ -38,6 +39,7 @@ public class Level1 extends Level {
     private FlyableNPC npcManager;
     List<Spatial> StaticGroundObjectsChildren;
     private Player playerClass;
+    Ball_control Ball_cont;
 
     @Override
     public void startLevel() {
@@ -99,15 +101,7 @@ public class Level1 extends Level {
         //healthDrink
         HealthDrink = (Node) Scene.getChild("HealthDrink");
         HealthDrink.setLocalScale((float) (HealthDrink.getLocalScale().x + 0.5), (float) (HealthDrink.getLocalScale().y + 0.5), (float) (HealthDrink.getLocalScale().z + 0.5));
-        
-        //Ball
-        Ball= (Node)assetManager.loadModel("Models/ball/Ball.j3o");
-       Ball.scale(0.01f);
-       Scene.attachChild(Ball);
-       Ball.setLocalTranslation(20,20,20);
-      // Ball.move(playerNode.getLocalTranslation().subtract(Ball.getLocalTranslation()));
 
-        
         //Filter Processor
         processor = (FilterPostProcessor) assetManager.loadAsset("Filters/newfilter.j3f");
 
@@ -125,54 +119,27 @@ public class Level1 extends Level {
         //Effect
         Effects Fire = new Effects("smoke", "dragonMouth_node", Scene, localRootNode, assetManager, 5.0f);
         dragon.addControl(Fire);
-
+//Ball
+        Ball_cont = new Ball_control("fire", (Node) dragon.getChild("dragonMouth_node"), playerNode, Scene, localRootNode, assetManager);
         //  bulletAppState.setDebugEnabled(true);
         //ray casting
         //GamePlay
         GP = new GamePlay(playerClass, Scene);
         update(1);
     }
-int counter=-1;
-Vector3f pos;
+    Vector3f pos;
+
     @Override
     public void update(float tpf) {
-        // System.out.println("I'm working");
-        npcManager.setPositionToGO(playerNode.getLocalTranslation());
         GP.update();
-        if(counter==-1){
-     pos=playerNode.getLocalTranslation().subtract(Ball.getLocalTranslation()).divide(20);
-
-        }
-        counter++;    
-        
-        System.out.println(counter);
-//           if(rayCasting.collided_items(Ball, playerNode.getWorldBound())){
-//            System.out.println("Ball hit Herc");
-//          //  Scene.detachChild(Ball);
-//             Ball.setLocalTranslation(20,20,20);
-//          //  Scene.attachChild(Ball);
-//       //   counter=0;
-//        }
-               if(counter<=400){
-                   if(counter>100)
-                 Ball.move(pos);
-                 
-               }
-               else{ 
-                   counter=0;
-                   Ball.setLocalTranslation(20,20,20);
-               pos=playerNode.getLocalTranslation().subtract(Ball.getLocalTranslation()).divide(20);
-               
-
-               }
-
+        Ball_cont.Update(tpf);
+        npcManager.setPositionToGO(playerNode.getLocalTranslation());
 
         if (BetterInputManager.Pause) {
             Main.pauseButton = true;
         }
-        if(playerClass.getScoreCounter()>=900)
-        {
-           Main.GOLVL2FROM1=true ;
+        if (playerClass.getScoreCounter() >= 900) {
+            Main.GOLVL2FROM1 = true;
         }
     }
 

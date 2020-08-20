@@ -80,17 +80,17 @@ public class HadesMovement extends AbstractControl {
     }
 
     public String who_is_attacked() {
-        if (BetterInputManager.Sword_Attack && rayCasting.collided_items((Node) Hercules.getChild("Sword"), spatial.getWorldBound())) {
+        if (BetterInputManager.Sword_Attack && CollisionDetection.collided_items((Node) Hercules.getChild("Sword"), spatial.getWorldBound())) {
             spatial.getControl(HealthBar.class).DecreaseHealth(25);
             Hercules.getControl(Score.class).IncreaseScore(100);
             return "Hades";
         }
-        if ((BetterInputManager.Power_Punch || BetterInputManager.Punch) && rayCasting.collided_items((Node) spatial, Hercules.getChild("Object_texture000.jpg.001").getWorldBound())) {
+        if ((BetterInputManager.Power_Punch || BetterInputManager.Punch) && CollisionDetection.collided_items((Node) spatial, Hercules.getChild("Object_texture000.jpg.001").getWorldBound())) {
             spatial.getControl(HealthBar.class).DecreaseHealth(25);
             Hercules.getControl(Score.class).IncreaseScore(100);
             return "Hades";
         }
-        if ((animManager.getAnimation().equals("punch")) && rayCasting.collided_items(Hercules, spatial.getWorldBound())) {
+        if ((animManager.getAnimation().equals("punch")) && CollisionDetection.collided_items(Hercules, spatial.getWorldBound())) {
             Hercules.getControl(HealthBar.class).DecreaseHealth(25);
             return "Hercules";
         }

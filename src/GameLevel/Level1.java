@@ -19,7 +19,7 @@ import mygame.Effects;
 import mygame.FlyableNPC;
 import mygame.GamePlay;
 import mygame.Main;
-import mygame.rayCasting;
+import mygame.CollisionDetection;
 
 public class Level1 extends Level {
 

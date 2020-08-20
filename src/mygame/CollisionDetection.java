@@ -24,7 +24,7 @@ import java.util.Map;
  *
  * @author Mariv
  */
-public class rayCasting {
+public class CollisionDetection {
 
     Node player;
     Node Scene;
@@ -32,7 +32,7 @@ public class rayCasting {
     List<Geometry> collidables_list;
     Map<Spatial, Boolean> visited;
 
-    public rayCasting(Node player, Node Scene) {
+    public CollisionDetection(Node player, Node Scene) {
         this.Scene = Scene;
         this.player = player;
         this.Sword = (Node) player.getChild("Sword");

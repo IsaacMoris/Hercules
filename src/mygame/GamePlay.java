@@ -20,7 +20,7 @@ import java.util.Map;
 public class GamePlay {
 
     List<Geometry> detected;
-    rayCasting rycast;
+    CollisionDetection rycast;
     Node Scene;
     private Player playerClass;
     private Node player;
@@ -30,7 +30,7 @@ public class GamePlay {
         this.playerClass = playerClass;
         this.player = this.playerClass.getPlayer();
         this.Scene = Scene;
-        this.rycast = new rayCasting(player, Scene);
+        this.rycast = new CollisionDetection(player, Scene);
         visited = new HashMap<Geometry, Boolean>();
     }
 
@@ -96,13 +96,16 @@ public class GamePlay {
             if (child == null) {
                 continue;
             }
+             String name = child.getName();
+             String parent = "";
+
+
             if (visited.containsKey(child)) {
                 continue;
             }
+            if(!name.equals("Box001_Material #41_0"))
             visited.put(child, Boolean.TRUE);
 
-            String name = child.getName();
-            String parent = "";
             if (name.equals("12190_Heart_v1_L3-geom-0")) {
                 playerClass.increaseCoinCounter(100);
                 playerClass.AddLife();
@@ -121,7 +124,7 @@ public class GamePlay {
 
             }
             if (name.equals("Box001_Material #41_0")) {
-                player.getControl(HealthBar.class).DecreaseHealth(50);
+                player.getControl(HealthBar.class).DecreaseHealth(30);
                 parent = "Bagmy";
                 continue;
 

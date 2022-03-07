@@ -5,7 +5,7 @@ AI was implemented to make Hades(the villain) attack Hercules more professionall
 You can find your score in the game scoreboard.
 
 ## Table of Contents
-1) [Demo](https://besh-chat.herokuapp.com)
+1) [Demo]()
 
 2) [Features](features)
 

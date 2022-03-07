@@ -2,7 +2,7 @@
 A 3d game built in Java with applying of OOP Concepts with Jmonkey engine and Nifty GUI. 3d models where created and modified using Blender.<br>
 Hercules consists of 2 levels, and you can go to second level directly using level password you get when you reach the level first time.<br>
 AI was implemented to make Hades(the villain) attack Hercules more professionally.<br>
-You can find you score in the game scoreboard
+You can find your score in the game scoreboard.
 
 ## Table of Contents
 1) [Demo](https://besh-chat.herokuapp.com)
